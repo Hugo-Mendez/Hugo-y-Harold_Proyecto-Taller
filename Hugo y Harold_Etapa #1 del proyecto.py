@@ -18,6 +18,9 @@ def login():
             elif comando == 3 :
                 print("\nEsta en usuario Usuario")
         else :
-            print("Chao")
+            print("\n*****************")
+            print("                *")
+            print(" Hasta luego!   *")
+            print("                *")
+            print("*****************")
 login()
-print("rama terciaria12121212")
