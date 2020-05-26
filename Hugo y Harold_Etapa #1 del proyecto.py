@@ -1,4 +1,6 @@
 import random
+import time
+
 
 def Crea_cedulas():
     cedulas = random.sample(list(range(200000000,209999999)), 800)
@@ -38,28 +40,22 @@ def Crea_Atributos_Ojos():
     return Atr_ojos
 
 def Crea_Fecha_Nac():
-    Fecha_Nacimiento = {"dia": random.randint(1,30), "mes": random.randint(1,12), "año": random.randint(1920,2019)}
+    Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(1920,2019)}
     return Fecha_Nacimiento
-"""
-def Administrador(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atributos_cabello,atributos_ojos):
-    comando = 0
-    while comando < 3 :
-        print("\n**************************************************************")
-        print("*                                                             *") 
-        print("* Digite:  1     para crear una persona atomaticamente        *")   
-        print("* Digite:  2     para crear una persona manualmente           *")
-        print("* Digite: #>2:   para salir                                   *")  
-        print("*                                                             *")  
-        print("**************************************************************\n")
-        comando=int(input("Digite un número correspondiente con el menú: "))
-        if comando < 3 :
-            if comando == 1 :
-                print("\nEsta como Administrador")
-                Administrador()
-            elif comando == 2 :
-                print("\nEsta como Analista")
-    return
-"""
+
+def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+    Lista_Personas = []
+    for i in cedulas:
+        Fecha_na = Crea_Fecha_Nac()
+        dic_persona = {1: i, 2: random.choice(provincias), 3: random.choice(accesorios),
+                       4: random.choice(genero), 5: random.choice(colores_de_piel),
+                       6: random.choice(rostro), 7: random.choice(emociones),
+                       8: atri_cabello[0][random.randint(1,6)], 9: atri_cabello[1][random.randint(1,3)],
+                       10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)], 
+                       12: atri_ojos[1][random.randint(1,8)]}
+        Lista_Personas.append(dic_persona)
+    print(Lista_Personas)
+    return Lista_Personas
 
 def login():
     comando = 0
@@ -75,15 +71,9 @@ def login():
         comando=int(input("Digite un número correspondiente con el menú: "))
         if comando < 4 :
 
-            cedulas = Crea_cedulas()
-            provincias = Crea_provincias()
-            accesorios = Crea_accesorios()
-            genero = Crea_genero()
-            colores_de_piel = Crea_color_piel()
-            rostro = Crea_rostro()
-            emociones = Crea_emociones()
-            atributos_cabello = Crea_Atributos_Cabello()
-            atributos_ojos = Crea_Atributos_Ojos()
+            Personas = Crea_Personas(Crea_cedulas(), Crea_provincias(), Crea_accesorios(),
+                                      Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
+                                      Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
 
             if comando == 1 :
                 print("\nEsta como Administrador")
@@ -97,6 +87,7 @@ def login():
             print(" Hasta luego!   *")
             print("                *")
             print("*****************")
+            return
 login()
 
 
