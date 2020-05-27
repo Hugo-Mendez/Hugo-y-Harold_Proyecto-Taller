@@ -1,9 +1,10 @@
 import random
-import time
+from datetime import date
+
 
 
 def Crea_cedulas():
-    cedulas = random.sample(list(range(200000000,209999999)), 800)
+    cedulas = random.sample(list(range(200000000,209999999)), 10)
     return cedulas
  
 def Crea_provincias():
@@ -43,19 +44,37 @@ def Crea_Fecha_Nac():
     Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(1920,2019)}
     return Fecha_Nacimiento
 
+def Calcula_Edad(Fecha_na):
+    fecha_a = date.today()
+    Fecha_Actual = {1: fecha_a.day, 2: fecha_a.month, 3: fecha_a.year}
+    Años = Fecha_Actual[3] - Fecha_na[3]
+    if Fecha_na[2] > Fecha_Actual[2] :
+        Años = Años - 1 
+        Meses = 12 - (Fecha_na[2] - Fecha_Actual[2])
+    else :    
+        Meses = Fecha_Actual[2] - Fecha_na[2]
+    if Fecha_na[1] > Fecha_Actual[1] :
+        Meses = Meses - 1
+        Dias = 30 - (Fecha_na[1]-Fecha_Actual[1])
+    else :
+        Dias = Fecha_Actual[1] - Fecha_na[1]    
+    return Años
+
 def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
     Lista_Personas = []
     for i in cedulas:
         Fecha_na = Crea_Fecha_Nac()
+        Edad_Años = Calcula_Edad(Fecha_na)
         dic_persona = {1: i, 2: random.choice(provincias), 3: random.choice(accesorios),
                        4: random.choice(genero), 5: random.choice(colores_de_piel),
                        6: random.choice(rostro), 7: random.choice(emociones),
                        8: atri_cabello[0][random.randint(1,6)], 9: atri_cabello[1][random.randint(1,3)],
                        10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)], 
-                       12: atri_ojos[1][random.randint(1,8)]}
+                       12: atri_ojos[1][random.randint(1,8)], 13: Edad_Años}
         Lista_Personas.append(dic_persona)
-    print(Lista_Personas)
     return Lista_Personas
+
+
 
 def login():
     comando = 0
