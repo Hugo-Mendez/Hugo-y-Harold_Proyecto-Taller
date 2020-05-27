@@ -3,8 +3,8 @@ from datetime import date
 
 
 
-def Crea_cedulas():
-    cedulas = random.sample(list(range(200000000,209999999)), 10)
+def Crea_cedulas(cantidad):
+    cedulas = random.sample(list(range(200000000,209999999)), cantidad)
     return cedulas
  
 def Crea_provincias():
@@ -75,6 +75,61 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
     return Lista_Personas
 
 
+def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+    while nueva_cedula[0] in cedulas:
+        nueva_cedula = Crea_cedulas(1)
+    Fecha_na = Crea_Fecha_Nac()
+    Edad_Años = Calcula_Edad(Fecha_na)
+    dic_persona = {1: nueva_cedula, 2: random.choice(provincias), 3: random.choice(accesorios),
+                    4: random.choice(genero), 5: random.choice(colores_de_piel),
+                    6: random.choice(rostro), 7: random.choice(emociones),
+                    8: atri_cabello[0][random.randint(1,6)], 9: atri_cabello[1][random.randint(1,3)],
+                    10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)], 
+                    12: atri_ojos[1][random.randint(1,8)], 13: Edad_Años}
+    Personas.append(dic_persona)
+    return
+
+def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+    while nueva_cedula[0] in cedulas:
+        nueva_cedula = Crea_cedulas(1)
+    print("\n Para crear una persona manualmente por favor indica cada uno de los siguientes atributos:")
+    provincia = 0
+    while provincia not in range(1,8):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*          Provincias                  *")   
+        print("* Digite:  1     para San José         *")
+        print("* Digite:  2     para Alajuela         *")
+        print("* Digite:  3     para Cartago          *")
+        print("* Digite:  4     para Heredia          *")
+        print("* Digite:  5     para Puntarenas       *")
+        print("* Digite:  6     para Guanacaste       *")
+        print("* Digite:  7     para Limón            *") 
+        print("*                                      *")  
+        print("****************************************\n")
+        provincia = int(input("Digite un número correspondiente con el menú: "))
+        if provincia not in range(1,8):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
+    return
+
+
+def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+    comando = 0
+    while comando < 3:
+        print("\n*********************************************************")
+        print("*                                                       *") 
+        print("* Digite:  1     para crear persona automáticamente     *")   
+        print("* Digite:  2     para crear persona manualmente         *")
+        print("* Digite: #>2    para regresar                          *") 
+        print("*                                                       *")  
+        print("*********************************************************\n")
+        comando = int(input("Digite un número correspondiente con el menú: "))
+        if comando == 1: 
+            Crear_Persona_Auto(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+        elif comando == 2:
+            Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+    return
+
 
 def login():
     comando = 0
@@ -90,12 +145,15 @@ def login():
         comando=int(input("Digite un número correspondiente con el menú: "))
         if comando < 4 :
 
-            Personas = Crea_Personas(Crea_cedulas(), Crea_provincias(), Crea_accesorios(),
+            Personas = Crea_Personas(Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
                                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
 
             if comando == 1 :
                 print("\nEsta como Administrador")
+                Administrador(Personas, Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
+                              Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
+                              Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
             elif comando == 2 :
                 print("\nEsta como Analista")
             elif comando == 3 :
