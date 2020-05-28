@@ -317,7 +317,7 @@ def validar_contraseña(contraseña,comando,Personas) :
     contraseña_Usuario = "usu789"
     if comando == 1 :        
         while contraseña != contraseña_Admin :
-            contraseña = input("Contraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
+            contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Administrador")
@@ -327,14 +327,14 @@ def validar_contraseña(contraseña,comando,Personas) :
 
     elif comando == 2 :
         while contraseña != contraseña_Analista :
-            contraseña = input("Contraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
+            contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Analista")
 
     else :
         while contraseña != contraseña_Usuario :
-            contraseña = input("Contraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
+            contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Usuario")
