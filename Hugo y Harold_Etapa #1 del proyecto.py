@@ -91,7 +91,182 @@ def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,gener
 def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
     while nueva_cedula[0] in cedulas:
         nueva_cedula = Crea_cedulas(1)
-    print("\n Para crear una persona manualmente por favor indica cada uno de los siguientes atributos:")
+    print("\nPara crear una persona manualmente por favor indica cada uno de los siguientes atributos:")
+
+    print("\nIngrese su fecha de nacimiento, en formato dd(1-30)/mm(1-12)/aaaa(1920-2019)")
+    dia = 0
+    mes = 0
+    año = 0
+    while dia not in range(1, 31) and mes not in range(1,13) and año not in range(1920, 2020):
+        dia = int(input("\Ingrese el día de nacimiento: "))
+        mes = int(input("\Ingrese el mes de nacimiento: "))
+        año = int(input("\Ingrese el año de nacimiento: "))
+        if dia not in range(1, 31) and mes not in range(1,13) and año not in range(1920, 2020):
+            print("\nDía, mes o año fuera del rango establecido")
+    fecha_naci = {1: dia, 2: mes, 3: año}
+
+    F_rostro = 0
+    while F_rostro not in range(1,7):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*       Forma del rostro               *")   
+        print("* Digite:  1     para redondo          *")
+        print("* Digite:  2     para alargado         *")
+        print("* Digite:  3     para corazón          *")
+        print("* Digite:  4     para cuadrado         *")
+        print("* Digite:  5     para ovalado          *")
+        print("* Digite:  6     para rectangular      *") 
+        print("*                                      *")  
+        print("****************************************\n")
+        F_rostro = int(input("Digite un número correspondiente con el menú: "))
+        if F_rostro not in range(1,7):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
+    
+    Color_piel = 0
+    while Color_piel not in range(1,6):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*        Color de piel                 *")   
+        print("* Digite:  1     para negra            *")
+        print("* Digite:  2     para marrón           *")
+        print("* Digite:  3     para morena           *")
+        print("* Digite:  4     para clara            *")
+        print("* Digite:  5     para blanca           *")
+        print("*                                      *")  
+        print("****************************************\n")
+        Color_piel = int(input("Digite un número correspondiente con el menú: "))
+        if Color_piel not in range(1,6):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    emocion = 0
+    while emocion not in range(1,9):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*           Emoción                    *")   
+        print("* Digite:  1     para enfado           *")
+        print("* Digite:  2     para desprecio        *")
+        print("* Digite:  3     para disgusto         *")
+        print("* Digite:  4     para miedo            *")
+        print("* Digite:  5     para sorpresa         *")
+        print("* Digite:  6     para alegría          *")
+        print("* Digite:  7     para neutral          *") 
+        print("* Digite:  8     para tristeza         *")
+        print("*                                      *")  
+        print("****************************************\n")
+        emocion = int(input("Digite un número correspondiente con el menú: "))
+        if emocion not in range(1,9):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    genero = 0
+    while genero not in range(1,3):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*           Género                     *")   
+        print("* Digite:  1     para femenino         *")
+        print("* Digite:  2     para masculino        *")
+        print("*                                      *")  
+        print("****************************************\n")
+        genero = int(input("Digite un número correspondiente con el menú: "))
+        if genero not in range(1,3):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    accesorio = 0
+    while accesorio not in range(1,5):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*          Accesorio                   *")   
+        print("* Digite:  1     para lentes           *")
+        print("* Digite:  2     para aretes           *")
+        print("* Digite:  3     para piercing         *")
+        print("* Digite:  4     para ninguno          *")
+        print("*                                      *")  
+        print("****************************************\n")
+        accesorio = int(input("Digite un número correspondiente con el menú: "))
+        if accesorio not in range(1,5):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    color_cabello = 0
+    while color_cabello not in range(1,7):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*      Color del cabello               *")   
+        print("* Digite:  1     para negro            *")
+        print("* Digite:  2     para rubio            *")
+        print("* Digite:  3     para café             *")
+        print("* Digite:  4     para castaño          *")
+        print("* Digite:  5     para gris             *")
+        print("* Digite:  6     para invisible        *")
+        print("*                                      *")  
+        print("****************************************\n")
+        color_cabello = int(input("Digite un número correspondiente con el menú: "))
+        if color_cabello not in range(1,7):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    densidad_cabello = 0
+    while densidad_cabello not in range(1,4):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*      Densidad del cabello            *")   
+        print("* Digite:  1     para escaso           *")
+        print("* Digite:  2     para moderado         *")
+        print("* Digite:  3     para abundante        *")
+        print("*                                      *")  
+        print("****************************************\n")
+        densidad_cabello = int(input("Digite un número correspondiente con el menú: "))
+        if densidad_cabello not in range(1,4):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    textura_cabello = 0
+    while textura_cabello not in range(1,4):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*      Textura del cabello             *")   
+        print("* Digite:  1     para lacio            *")
+        print("* Digite:  2     para ondulado         *")
+        print("* Digite:  3     para rizado           *")
+        print("*                                      *")  
+        print("****************************************\n")
+        textura_cabello = int(input("Digite un número correspondiente con el menú: "))
+        if textura_cabello not in range(1,4):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
+    Forma_ojos = 0
+    while Forma_ojos not in range(1,9):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*      Forma de los ojos               *")   
+        print("* Digite:  1     para almendrados      *")
+        print("* Digite:  2     para separados        *")
+        print("* Digite:  3     para redondos         *")
+        print("* Digite:  4     para caídos           *")
+        print("* Digite:  5     para saltones         *")
+        print("* Digite:  6     para juntos           *")
+        print("* Digite:  7     para profundos        *")
+        print("* Digite:  8     para asiáticos        *") 
+        print("*                                      *")  
+        print("****************************************\n")
+        Forma_ojos = int(input("Digite un número correspondiente con el menú: "))
+        if Forma_ojos not in range(1,9):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
+
+    Color_ojos = 0
+    while Color_ojos not in range(1,8):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*       Color de los ojos              *")   
+        print("* Digite:  1     para negro            *")
+        print("* Digite:  2     para castaño          *")
+        print("* Digite:  3     para ámbar            *")
+        print("* Digite:  4     para abellana         *")
+        print("* Digite:  5     para verde            *")
+        print("* Digite:  6     para azul             *")
+        print("* Digite:  7     para gris             *") 
+        print("*                                      *")  
+        print("****************************************\n")
+        Color_ojos = int(input("Digite un número correspondiente con el menú: "))
+        if Color_ojos not in range(1,8):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+
     provincia = 0
     while provincia not in range(1,8):
         print("\n****************************************")
@@ -109,6 +284,13 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
         provincia = int(input("Digite un número correspondiente con el menú: "))
         if provincia not in range(1,8):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
+    
+    Edad_Años = Calcula_Edad(fecha_naci)
+    dic_persona = {1: nueva_cedula, 2: provincia, 3: accesorio,
+                    4: genero, 5: Color_piel, 6: F_rostro, 7: emocion,
+                    8: color_cabello, 9: densidad_cabello, 10: textura_cabello, 
+                    11: Forma_ojos, 12: Color_ojos, 13: Edad_Años}
+    Personas.append(dic_persona)
     return
 
 
