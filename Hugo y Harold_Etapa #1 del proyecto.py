@@ -97,11 +97,11 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
     dia = 0
     mes = 0
     año = 0
-    while dia not in range(1, 31) and mes not in range(1,13) and año not in range(1920, 2020):
-        dia = int(input("\Ingrese el día de nacimiento: "))
-        mes = int(input("\Ingrese el mes de nacimiento: "))
-        año = int(input("\Ingrese el año de nacimiento: "))
-        if dia not in range(1, 31) and mes not in range(1,13) and año not in range(1920, 2020):
+    while dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020):
+        dia = int(input("\nIngrese el día de nacimiento: "))
+        mes = int(input("\nIngrese el mes de nacimiento: "))
+        año = int(input("\nIngrese el año de nacimiento: "))
+        if dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020):
             print("\nDía, mes o año fuera del rango establecido")
     fecha_naci = {1: dia, 2: mes, 3: año}
 
@@ -157,8 +157,8 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
         if emocion not in range(1,9):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
 
-    genero = 0
-    while genero not in range(1,3):
+    Genero = 0
+    while Genero not in range(1,3):
         print("\n****************************************")
         print("*                                      *") 
         print("*           Género                     *")   
@@ -166,8 +166,8 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
         print("* Digite:  2     para masculino        *")
         print("*                                      *")  
         print("****************************************\n")
-        genero = int(input("Digite un número correspondiente con el menú: "))
-        if genero not in range(1,3):
+        Genero = int(input("Digite un número correspondiente con el menú: "))
+        if Genero not in range(1,3):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
 
     accesorio = 0
@@ -286,11 +286,14 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
     
     Edad_Años = Calcula_Edad(fecha_naci)
-    dic_persona = {1: nueva_cedula, 2: provincia, 3: accesorio,
-                    4: genero, 5: Color_piel, 6: F_rostro, 7: emocion,
-                    8: color_cabello, 9: densidad_cabello, 10: textura_cabello, 
-                    11: Forma_ojos, 12: Color_ojos, 13: Edad_Años}
+    dic_persona = {1: nueva_cedula[0], 2: provincias[provincia-1], 3: accesorios[accesorio-1],
+                   4: genero[Genero-1], 5: colores_de_piel[Color_piel-1],
+                   6: rostro[F_rostro-1], 7: emociones[emocion-1],
+                   8: atri_cabello[0][color_cabello], 9: atri_cabello[1][densidad_cabello],
+                   10: atri_cabello[2][textura_cabello], 11: atri_ojos[0][Forma_ojos], 
+                   12: atri_ojos[1][Color_ojos], 13: Edad_Años}
     Personas.append(dic_persona)
+    print(Personas)
     return
 
 
