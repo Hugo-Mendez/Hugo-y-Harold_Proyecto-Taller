@@ -2,7 +2,6 @@ import random
 from datetime import date
 
 
-
 def Crea_cedulas(cantidad):
     cedulas = random.sample(list(range(200000000,209999999)), cantidad)
     return cedulas
@@ -130,42 +129,58 @@ def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,
             Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
     return
 
+def validar_contraseña(contraseña,comando,Personas) :
+    contraseña_Admin = "admi123"
+    contraseña_Analista = "ana456"
+    contraseña_Usuario = "usu789"
+    if comando == 1 :        
+        while contraseña != contraseña_Admin :
+            contraseña = input("Contraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
+            if contraseña == "0" :
+                return
+        print("\nIngresó como Administrador")
+        Administrador(Personas, Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
+                      Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
+                      Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+
+    elif comando == 2 :
+        while contraseña != contraseña_Analista :
+            contraseña = input("Contraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
+            if contraseña == "0" :
+                return
+        print("\nIngresó como Analista")
+
+    else :
+        while contraseña != contraseña_Usuario :
+            contraseña = input("Contraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
+            if contraseña == "0" :
+                return
+        print("\nIngresó como Usuario")
+    return
 
 def login():
     comando = 0
     while comando < 4 :
         print("\n*******************************************************")
-        print("*                                                     *") 
-        print("* Digite:  1     para ingresar como Administrador     *")   
+        print("*                                                     *")
+        print("* Digite:  1     para ingresar como Administrador     *")
         print("* Digite:  2     para ingresar como Analista          *")
-        print("* Digite:  3     para ingresar como Usuario           *") 
-        print("* Digite: #>3:   para salir                           *")  
-        print("*                                                     *")  
+        print("* Digite:  3     para ingresar como Usuario           *")
+        print("* Digite: #>3:   para salir                           *")
+        print("*                                                     *")
         print("*******************************************************\n")
         comando=int(input("Digite un número correspondiente con el menú: "))
         if comando < 4 :
-
             Personas = Crea_Personas(Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
                                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
-
-            if comando == 1 :
-                print("\nEsta como Administrador")
-                Administrador(Personas, Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
-                              Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
-                              Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
-            elif comando == 2 :
-                print("\nEsta como Analista")
-            elif comando == 3 :
-                print("\nEsta como Usuario")
+            contraseña = input("\nDigite su contraseña: ")
+            validar_contraseña(contraseña,comando,Personas)
         else :
-            print("\n*****************")
-            print("                *")
-            print(" Hasta luego!   *")
-            print("                *")
-            print("*****************")
+            print("\n******************")
+            print("*                *")
+            print("* Hasta luego!   *")
+            print("*                *")
+            print("******************")
             return
 login()
-
-
-
