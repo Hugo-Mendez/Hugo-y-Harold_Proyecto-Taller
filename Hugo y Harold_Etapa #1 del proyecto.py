@@ -84,7 +84,7 @@ def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,gener
                     4: random.choice(genero), 5: random.choice(colores_de_piel),
                     6: random.choice(rostro), 7: random.choice(emociones),
                     8: atri_cabello[0][random.randint(1,6)], 9: atri_cabello[1][random.randint(1,3)],
-                    10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)], 
+                    10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)],
                     12: atri_ojos[1][random.randint(1,8)], 13: Edad_Años}
     Personas.append(dic_persona)
     return
@@ -315,23 +315,22 @@ def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,
             Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
     return
 
-def Impresión_Datos_Usuario(usuario):
+def Impresion_Datos_Usuario(usuario,mensaje):
+    print("\n****************************************************************************")
+    print("*                      ",mensaje,"                *")
     print("****************************************************************************")
     print("| Cédula \t Grupo Etario \t Provincia \t Género \t Emoción   |")
-    print("|__________________________________________________________________________|")
     print("|", usuario[1],"\t",usuario[13],"\t\t",usuario[2],"\t", usuario[4],"\t", usuario[7],"|")
     print("|__________________________________________________________________________|")
     print("| Color de piel\t     Forma del rostro\t  Forma ojos\t  Color de ojos    |")
-    print("|__________________________________________________________________________|")
     print("|", usuario[5],"\t    ",usuario[6],"\t ",usuario[12],"\t ", usuario[11],"        |")
     print("|__________________________________________________________________________|")
     print("| Color cabello      Densidad cabello     Textura cabello     Accesorio    |")
-    print("|__________________________________________________________________________|")
     print("|", usuario[8], "        ", usuario[9], "          ", usuario[10], "          ", usuario[3],"    |")
     print("|__________________________________________________________________________|")
     return
 
-def Modificar_emoción(usuario,emociones):
+def Modificar_emocion(usuario,emociones):
     emocion = 0
     while emocion not in range(1,9):
         print("\n****************************************")
@@ -351,14 +350,14 @@ def Modificar_emoción(usuario,emociones):
         if emocion not in range(1,9):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
     usuario[7] = emociones[emocion-1]
-    Impresion_Datos_Usuario(usuario)
+    Impresion_Datos_Usuario(usuario,"Ahora esta es su nueva información")
     return 
 
 def Modificar_provincia(usuario, provincias):
     provincia = 0
     while provincia not in range(1,8):
         print("\n****************************************")
-        print("*                                      *") 
+        print("*                                      *")
         print("*          Provincias                  *")   
         print("* Digite:  1     para San José         *")
         print("* Digite:  2     para Alajuela         *")
@@ -367,38 +366,35 @@ def Modificar_provincia(usuario, provincias):
         print("* Digite:  5     para Puntarenas       *")
         print("* Digite:  6     para Guanacaste       *")
         print("* Digite:  7     para Limón            *") 
-        print("*                                      *")  
+        print("*                                      *")
         print("****************************************\n")
         provincia = int(input("Digite un número correspondiente con el menú: "))
         if provincia not in range(1,8):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
     usuario[2] = provincias[provincia-1]
-    print("\n****************************************************************************")
-    print("*                 Ahora esta es su nueva información                       *")
-    Impresion_Datos_Usuario(usuario)
+    Impresion_Datos_Usuario(usuario,"Ahora esta es su nueva información")
     return
 
 def Usuario(Personas,emociones,provincias):
     usuario = random.choice(Personas)
+    mensaje = "Esta es su información actual     "
     comando = 0
+    Impresion_Datos_Usuario(usuario,mensaje)
     while comando < 3:
-        print("\n****************************************************************************")
-        print("*                      Esta es su información                              *")
-        Impresion_Datos_Usuario(usuario)
-
-        print("\n************************************************************************")
+        print("\n**************************************************************************")
         print("*                                                                        *") 
-        print("*  Sin embargo, únicamente se pueden modificar los siguientes atributos  *")
+        print("*        Los atributos que se pueden modificar son los siguientes        *")
         print("*                                                                        *")
         print("* Digite:  1     para modificar emoción                                  *")   
         print("* Digite:  2     para modificar provincia                                *")
-        print("*                                                                        *")  
+        print("* Digite: #>2:   para regresar                                           *")  
+        print("*                                                                        *")
         print("**************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-    if comando == 1:
-        Modificar_emoción(usuario,emociones)
-    else:
-        Modificar_provincia(usuario,provincias)
+        if comando == 1:
+            Modificar_emocion(usuario,emociones)
+        elif comando == 2:
+            Modificar_provincia(usuario,provincias)
     return
 
 def validar_contraseña(contraseña,comando,Personas) :
@@ -428,7 +424,7 @@ def validar_contraseña(contraseña,comando,Personas) :
             if contraseña == "0" :
                 return
         print("\nIngresó como Usuario")
-        Usuario(Personas, Crea_provincias(), Crea_emociones())
+        Usuario(Personas,  Crea_emociones(), Crea_provincias())
     return
 
 def login():
