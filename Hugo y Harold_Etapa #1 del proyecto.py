@@ -15,7 +15,7 @@ def Crea_accesorios():
     return accesorios
 
 def Crea_genero():
-    genero = ["Masculino", "Femenino "]
+    genero = ["Femenino ", "Masculino"]
     return  genero
 
 def Crea_color_piel():
@@ -36,8 +36,8 @@ def Crea_Atributos_Cabello():
     return Atr_cabello
 
 def Crea_Atributos_Ojos():
-    Atr_ojos = [{1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "},
-                {1: "Almendrados", 2: "Separados  ", 3: "Redondos   ", 4: "Caídos     ", 5: "Saltones   ", 6: "Juntos     ", 7: "Profundos  ", 8: "Asiáticos  "}]         
+    Atr_ojos = [{1: "Almendrados", 2: "Separados  ", 3: "Redondos   ", 4: "Caídos     ", 5: "Saltones   ", 6: "Juntos     ", 7: "Profundos  ", 8: "Asiáticos  "},
+                {1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "}]         
     return Atr_ojos
 
 def Crea_Fecha_Nac():
@@ -69,8 +69,8 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
                        4: random.choice(genero), 5: random.choice(colores_de_piel),
                        6: random.choice(rostro), 7: random.choice(emociones),
                        8: atri_cabello[0][random.randint(1,6)], 9: atri_cabello[1][random.randint(1,3)],
-                       10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)], 
-                       12: atri_ojos[1][random.randint(1,8)], 13: Edad_Años}
+                       10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,8)], 
+                       12: atri_ojos[1][random.randint(1,7)], 13: Edad_Años}
         Lista_Personas.append(dic_persona)
     return Lista_Personas
 
@@ -87,6 +87,7 @@ def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,gener
                     10: atri_cabello[2][random.randint(1,3)], 11: atri_ojos[0][random.randint(1,7)],
                     12: atri_ojos[1][random.randint(1,8)], 13: Edad_Años}
     Personas.append(dic_persona)
+    print("\nPersona creada y agregada a la lista satisfactoriamente")
     return
 
 def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
@@ -103,7 +104,7 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
         mes = int(input("\nIngrese el mes de nacimiento: "))
         año = int(input("\nIngrese el año de nacimiento: "))
         if dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020):
-            print("\nDía, mes o año fuera del rango establecido")
+            print("\nError: día, mes o año fuera del rango establecido")
     fecha_naci = {1: dia, 2: mes, 3: año}
 
     F_rostro = 0
@@ -323,7 +324,7 @@ def Impresion_Datos_Usuario(usuario,mensaje):
     print("|", usuario[1],"\t",usuario[13],"\t\t",usuario[2],"\t", usuario[4],"\t", usuario[7],"|")
     print("|__________________________________________________________________________|")
     print("| Color de piel\t     Forma del rostro\t  Forma ojos\t  Color de ojos    |")
-    print("|", usuario[5],"\t    ",usuario[6],"\t ",usuario[12],"\t ", usuario[11],"        |")
+    print("|", usuario[5],"\t    ",usuario[6],"\t ",usuario[11],"\t ", usuario[12],"        |")
     print("|__________________________________________________________________________|")
     print("| Color cabello      Densidad cabello     Textura cabello     Accesorio    |")
     print("|", usuario[8], "        ", usuario[9], "          ", usuario[10], "          ", usuario[3],"    |")
@@ -377,9 +378,8 @@ def Modificar_provincia(usuario, provincias):
 
 def Usuario(Personas,emociones,provincias):
     usuario = random.choice(Personas)
-    mensaje = "Esta es su información actual     "
     comando = 0
-    Impresion_Datos_Usuario(usuario,mensaje)
+    Impresion_Datos_Usuario(usuario,"Esta es su información actual     ")
     while comando < 3:
         print("\n**************************************************************************")
         print("*                                                                        *") 
@@ -387,7 +387,7 @@ def Usuario(Personas,emociones,provincias):
         print("*                                                                        *")
         print("* Digite:  1     para modificar emoción                                  *")   
         print("* Digite:  2     para modificar provincia                                *")
-        print("* Digite: #>2:   para regresar                                           *")  
+        print("* Digite: #>2    para regresar                                           *")  
         print("*                                                                        *")
         print("**************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
@@ -435,7 +435,7 @@ def login():
         print("* Digite:  1     para ingresar como Administrador     *")
         print("* Digite:  2     para ingresar como Analista          *")
         print("* Digite:  3     para ingresar como Usuario           *")
-        print("* Digite: #>3:   para salir                           *")
+        print("* Digite: #>3    para salir                           *")
         print("*                                                     *")
         print("*******************************************************\n")
         comando=int(input("Digite un número correspondiente con el menú: "))
