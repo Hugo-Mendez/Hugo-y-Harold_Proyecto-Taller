@@ -7,36 +7,37 @@ def Crea_cedulas(cantidad):
     return cedulas
  
 def Crea_provincias():
-    provincias = ["San José", "Alajuela", "Cartago", "Heredia", "Puntarenas", "Guanacaste", "Limón"]
+    provincias = ["San José  ", "Alajuela  ", "Cartago   ", "Heredia   ", "Puntarenas", "Guanacaste", "Limón     "]
     return provincias
 
 def Crea_accesorios():
-    accesorios = ["Lentes", "Aretes", "Piercing", "Ninguno"]
+    accesorios = ["Lentes  ", "Aretes  ", "Piercing", "Ninguno "]
     return accesorios
 
 def Crea_genero():
-    genero = ["Masculino", "Femenino"]
+    genero = ["Masculino", "Femenino "]
     return  genero
 
 def Crea_color_piel():
-    colorpiel = ["Negra", "Marrón", "Morena", "Clara", "Blanca"]
+    colorpiel = ["Negra ", "Marrón", "Morena", "Clara ", "Blanca"]
     return colorpiel
 
 def Crea_rostro():
-    rostro = ["Redondo", "Alargado", "Corazón", "Cuadrado", "Ovalado", "Rectangular"]
+    rostro = ["Redondo    ", "Alargado   ", "Corazón    ", "Cuadrado   ", "Ovalado    ", "Rectangular"]
     return rostro
 
 def Crea_emociones():
-    emociones = ["Enfado", "Desprecio", "Disgusto", "Miedo", "Sorpresa", "Alegría", "Neutral", "Tristeza"]
+    emociones = ["Enfado   ", "Desprecio", "Disgusto ", "Miedo    ", "Sorpresa ", "Alegría  ", "Neutral  ", "Tristeza "]
     return emociones
 
 def Crea_Atributos_Cabello():
-    Atr_cabello = [{1:"Negro", 2:"Rubio", 3:"Café", 4:"Castaño", 5:"Gris", 6:"Invisible"},{1:"Escaso", 2:"Moderado", 3:"Abundante"}, {1:"Lacio", 2:"Ondulado", 3:"Rizado"}]
+    Atr_cabello = [{1:"Negro    ", 2:"Rubio    ", 3:"Café     ", 4:"Castaño  ", 5:"Gris     ", 6:"Invisible"},
+                   {1:"Escaso   ", 2:"Moderado ", 3:"Abundante"}, {1:"Lacio   ", 2:"Ondulado", 3:"Rizado  "}]
     return Atr_cabello
 
 def Crea_Atributos_Ojos():
-    Atr_ojos = [{1: "Negro", 2: "Castaño", 3: "Ámbar", 4: "Abellana", 5: "Verde", 6: "Azul", 7: "Gris"},
-                {1: "Almendrados", 2: "Separados", 3: "Redondos", 4: "Caídos", 5: "Saltones", 6: "Juntos", 7: "Profundos", 8: "Asiáticos"}]         
+    Atr_ojos = [{1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "},
+                {1: "Almendrados", 2: "Separados  ", 3: "Redondos   ", 4: "Caídos     ", 5: "Saltones   ", 6: "Juntos     ", 7: "Profundos  ", 8: "Asiáticos  "}]         
     return Atr_ojos
 
 def Crea_Fecha_Nac():
@@ -314,6 +315,92 @@ def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,
             Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
     return
 
+def Impresión_Datos_Usuario(usuario):
+    print("****************************************************************************")
+    print("| Cédula \t Grupo Etario \t Provincia \t Género \t Emoción   |")
+    print("|__________________________________________________________________________|")
+    print("|", usuario[1],"\t",usuario[13],"\t\t",usuario[2],"\t", usuario[4],"\t", usuario[7],"|")
+    print("|__________________________________________________________________________|")
+    print("| Color de piel\t     Forma del rostro\t  Forma ojos\t  Color de ojos    |")
+    print("|__________________________________________________________________________|")
+    print("|", usuario[5],"\t    ",usuario[6],"\t ",usuario[12],"\t ", usuario[11],"        |")
+    print("|__________________________________________________________________________|")
+    print("| Color cabello      Densidad cabello     Textura cabello     Accesorio    |")
+    print("|__________________________________________________________________________|")
+    print("|", usuario[8], "        ", usuario[9], "          ", usuario[10], "          ", usuario[3],"    |")
+    print("|__________________________________________________________________________|")
+    return
+
+def Modificar_emoción(usuario,emociones):
+    emocion = 0
+    while emocion not in range(1,9):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*           Emoción                    *")   
+        print("* Digite:  1     para enfado           *")
+        print("* Digite:  2     para desprecio        *")
+        print("* Digite:  3     para disgusto         *")
+        print("* Digite:  4     para miedo            *")
+        print("* Digite:  5     para sorpresa         *")
+        print("* Digite:  6     para alegría          *")
+        print("* Digite:  7     para neutral          *") 
+        print("* Digite:  8     para tristeza         *")
+        print("*                                      *")  
+        print("****************************************\n")
+        emocion = int(input("Digite un número correspondiente con el menú: "))
+        if emocion not in range(1,9):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+    usuario[7] = emociones[emocion-1]
+    Impresion_Datos_Usuario(usuario)
+    return 
+
+def Modificar_provincia(usuario, provincias):
+    provincia = 0
+    while provincia not in range(1,8):
+        print("\n****************************************")
+        print("*                                      *") 
+        print("*          Provincias                  *")   
+        print("* Digite:  1     para San José         *")
+        print("* Digite:  2     para Alajuela         *")
+        print("* Digite:  3     para Cartago          *")
+        print("* Digite:  4     para Heredia          *")
+        print("* Digite:  5     para Puntarenas       *")
+        print("* Digite:  6     para Guanacaste       *")
+        print("* Digite:  7     para Limón            *") 
+        print("*                                      *")  
+        print("****************************************\n")
+        provincia = int(input("Digite un número correspondiente con el menú: "))
+        if provincia not in range(1,8):
+            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
+    usuario[2] = provincias[provincia-1]
+    print("\n****************************************************************************")
+    print("*                 Ahora esta es su nueva información                       *")
+    Impresion_Datos_Usuario(usuario)
+    return
+
+def Usuario(Personas,emociones,provincias):
+    usuario = random.choice(Personas)
+    comando = 0
+    while comando < 3:
+        print("\n****************************************************************************")
+        print("*                      Esta es su información                              *")
+        Impresion_Datos_Usuario(usuario)
+
+        print("\n************************************************************************")
+        print("*                                                                        *") 
+        print("*  Sin embargo, únicamente se pueden modificar los siguientes atributos  *")
+        print("*                                                                        *")
+        print("* Digite:  1     para modificar emoción                                  *")   
+        print("* Digite:  2     para modificar provincia                                *")
+        print("*                                                                        *")  
+        print("**************************************************************************\n")
+        comando = int(input("Digite un número correspondiente con el menú: "))
+    if comando == 1:
+        Modificar_emoción(usuario,emociones)
+    else:
+        Modificar_provincia(usuario,provincias)
+    return
+
 def validar_contraseña(contraseña,comando,Personas) :
     contraseña_Admin = "admi123"
     contraseña_Analista = "ana456"
@@ -341,6 +428,7 @@ def validar_contraseña(contraseña,comando,Personas) :
             if contraseña == "0" :
                 return
         print("\nIngresó como Usuario")
+        Usuario(Personas, Crea_provincias(), Crea_emociones())
     return
 
 def login():
