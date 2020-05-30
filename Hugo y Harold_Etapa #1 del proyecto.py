@@ -44,7 +44,7 @@ def Crea_Atributos_Ojos():
     return Atr_ojos
 
 def Crea_Fecha_Nac():
-    Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(2015,2019)}
+    Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(1920,2018)}
     return Fecha_Nacimiento
 
 def Calcula_Edad(Fecha_na):
@@ -90,7 +90,7 @@ def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,gener
                    12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años}
     Personas.append(dic_persona)
     print("\nPersona creada y agregada a la lista satisfactoriamente")
-    return
+    return Personas
 
 def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
     while nueva_cedula[1] in cedulas:
@@ -297,11 +297,9 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
                    10: atri_cabello[3][textura_cabello], 11: atri_ojos[1][Forma_ojos], 
                    12: atri_ojos[2][Color_ojos], 13: Edad_Años}
     Personas.append(dic_persona)
-    print(Personas)
-    return
+    return Personas
 
-def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    comando = 0
+def Administrador(comando,Personas,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
     while comando < 3:
         print("\n*********************************************************")
         print("*                                                       *") 
@@ -311,37 +309,58 @@ def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,
         print("*                                                       *")  
         print("*********************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-        if comando == 1: 
-            Crear_Persona_Auto(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+        if comando == 1:
+            Personas = Crear_Persona_Auto(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
         elif comando == 2:
-            Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+            Personas = Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+    return Personas
+
+def Informes(Personas):
+    print(Personas)
+    return
+
+def Analista(Personas):
+    comando = 0
+    while comando < 2:
+        print("\n*********************************************************")
+        print("*                                                       *") 
+        print("* Digite:  1     para ver informes                      *")   
+        print("* Digite: #>1    para regresar                          *") 
+        print("*                                                       *")  
+        print("*********************************************************\n")
+        comando = int(input("Digite un número correspondiente con el menú: "))
+        if comando == 1:
+            Informes(Personas)
     return
 
 def Impresion_Datos_Usuario(usuario,mensaje):
-    print("\n******************************************************************************")
-    print("*                       ",mensaje,"                 *")
-    print("******************************************************************************")
-    print("| Cédula         Edad    Provincia       Género          Grupo Etario        |")
+    print("\n ________________________________________________________________________________ ")
+    print("|                                                                                |")
+    print("|                         ",mensaje,"                   |")
+    print("|________________________________________________________________________________|")
+    print("| Cédula        | Edad   | Provincia      | Género         | Grupo Etario        |")
     if usuario[13] < 4:
-        print("|", usuario[1],"    ",str(usuario[13])+" ","    ",usuario[2],"    ", usuario[4],"      Bebe                |")
+        print("|", usuario[1],"    |",str(usuario[13])+" ","    |",usuario[2],"    |", usuario[4],"     | Bebe                |")
     elif usuario[13] < 12:
         if usuario[13] < 10:
-            print("|", usuario[1],"    ",str(usuario[13])+" ","    ",usuario[2],"    ", usuario[4],"      Bebe                |")
+            print("|", usuario[1],"    |",str(usuario[13])+" ","    |",usuario[2],"    |", usuario[4],"     | Bebe                |")
         else:
-            print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Niño                |")
+            print("|", usuario[1],"    |",usuario[13],"    |",usuario[2],"    |", usuario[4],"     | Niño                |")
     elif usuario[13] < 18:
-        print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Adolescente         |")
+        print("|", usuario[1],"    |",usuario[13],"    |",usuario[2],"    |", usuario[4],"     | Adolescente         |")
     elif usuario[13] < 60:
-        print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Adulto              |")
+        print("|", usuario[1],"    |",usuario[13],"    |",usuario[2],"    |", usuario[4],"     | Adulto              |")
     else:
-        print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Adulto mayor        |")
-    print("|____________________________________________________________________________|")
-    print("| Color de piel    Forma del rostro    Forma ojos   Color ojos    Emoción    |")
-    print("|", usuario[5],"         ",usuario[6],"       ",usuario[11],"",usuario[12],"    ", usuario[7]," |")
-    print("|____________________________________________________________________________|")
-    print("| Color cabello      Densidad cabello     Textura cabello     Accesorio      |")
-    print("|", usuario[8], "        ", usuario[9], "          ", usuario[10], "          ", usuario[3],"      |")
-    print("|____________________________________________________________________________|")
+        print("|", usuario[1],"    |",usuario[13],"    |",usuario[2],"    |", usuario[4],"     | Adulto mayor        |")
+    print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
+    print("|________________________________________________________________________________|")
+    print("| Color de piel   | Forma del rostro   | Forma ojos  | Color ojos   | Emoción    |")
+    print("|", usuario[5],"         |",usuario[6],"       |",usuario[11],"|",usuario[12],"    |", usuario[7]," |")
+    print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
+    print("|________________________________________________________________________________|")
+    print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio       |")
+    print("|", usuario[8], "        |", usuario[9], "          |", usuario[10], "          |", usuario[3],"       |")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     return
 
 def Modificar_emocion(usuario,emociones):
@@ -408,7 +427,7 @@ def Usuario(Personas,emociones,provincias):
             Modificar_emocion(usuario,emociones)
         elif comando == 2:
             Modificar_provincia(usuario,provincias)
-    return
+    return Personas
 
 def validar_contraseña(contraseña,comando,Personas) :
     if comando == 1 :        
@@ -417,16 +436,17 @@ def validar_contraseña(contraseña,comando,Personas) :
             if contraseña == "0" :
                 return
         print("\nIngresó como Administrador")
-        Administrador(Personas, Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
+        Administrador(0,Personas, Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
-
+                      
     elif comando == 2 :
         while contraseña != "ana456" :
             contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Analista")
+        Analista(Personas)
 
     else :
         while contraseña != "usu789" :
