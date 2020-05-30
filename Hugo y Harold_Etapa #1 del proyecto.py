@@ -44,7 +44,7 @@ def Crea_Atributos_Ojos():
     return Atr_ojos
 
 def Crea_Fecha_Nac():
-    Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(1920,2019)}
+    Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(2015,2019)}
     return Fecha_Nacimiento
 
 def Calcula_Edad(Fecha_na):
@@ -318,19 +318,30 @@ def Administrador(Personas,cedulas,provincias,accesorios,genero,colores_de_piel,
     return
 
 def Impresion_Datos_Usuario(usuario,mensaje):
-    
-    print("\n****************************************************************************")
-    print("*                      ",mensaje,"                *")
-    print("****************************************************************************")
-    print("| Cédula \t Grupo Etario \t Provincia \t Género \t Emoción   |")
-    print("|", usuario[1],"\t",usuario[13],"\t\t",usuario[2],"\t", usuario[4],"\t", usuario[7],"|")
-    print("|__________________________________________________________________________|")
-    print("| Color de piel\t     Forma del rostro\t  Forma ojos\t  Color de ojos    |")
-    print("|", usuario[5],"\t    ",usuario[6],"\t ",usuario[11],"\t ", usuario[12],"        |")
-    print("|__________________________________________________________________________|")
-    print("| Color cabello      Densidad cabello     Textura cabello     Accesorio    |")
-    print("|", usuario[8], "        ", usuario[9], "          ", usuario[10], "          ", usuario[3],"    |")
-    print("|__________________________________________________________________________|")
+    print("\n******************************************************************************")
+    print("*                       ",mensaje,"                 *")
+    print("******************************************************************************")
+    print("| Cédula         Edad    Provincia       Género          Grupo Etario        |")
+    if usuario[13] < 4:
+        print("|", usuario[1],"    ",str(usuario[13])+" ","    ",usuario[2],"    ", usuario[4],"      Bebe                |")
+    elif usuario[13] < 12:
+        if usuario[13] < 10:
+            print("|", usuario[1],"    ",str(usuario[13])+" ","    ",usuario[2],"    ", usuario[4],"      Bebe                |")
+        else:
+            print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Niño                |")
+    elif usuario[13] < 18:
+        print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Adolescente         |")
+    elif usuario[13] < 60:
+        print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Adulto              |")
+    else:
+        print("|", usuario[1],"    ",usuario[13],"    ",usuario[2],"    ", usuario[4],"      Adulto mayor        |")
+    print("|____________________________________________________________________________|")
+    print("| Color de piel    Forma del rostro    Forma ojos   Color ojos    Emoción    |")
+    print("|", usuario[5],"         ",usuario[6],"       ",usuario[11],"",usuario[12],"    ", usuario[7]," |")
+    print("|____________________________________________________________________________|")
+    print("| Color cabello      Densidad cabello     Textura cabello     Accesorio      |")
+    print("|", usuario[8], "        ", usuario[9], "          ", usuario[10], "          ", usuario[3],"      |")
+    print("|____________________________________________________________________________|")
     return
 
 def Modificar_emocion(usuario,emociones):
