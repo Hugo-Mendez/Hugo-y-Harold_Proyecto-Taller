@@ -77,9 +77,10 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
         Lista_Personas.append(dic_persona)
     return Lista_Personas
 
-def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    while nueva_cedula[1] in cedulas:
-        nueva_cedula = Crea_cedulas(1)
+def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+    for i in range(1, (len(Personas)+1)):
+        while nueva_cedula[1] == Personas[i-1][1]:
+            nueva_cedula = Crea_cedulas(1)
     Fecha_na = Crea_Fecha_Nac()
     Edad_Años = Calcula_Edad(Fecha_na)
     dic_persona = {1: nueva_cedula[1], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
@@ -92,9 +93,10 @@ def Crear_Persona_Auto(Personas,nueva_cedula,cedulas,provincias,accesorios,gener
     print("\nPersona creada y agregada a la lista satisfactoriamente")
     return Personas
 
-def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    while nueva_cedula[1] in cedulas:
-        nueva_cedula = Crea_cedulas(1)
+def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+    for i in range(1, (len(Personas)+1)):
+        while nueva_cedula[1] == Personas[i-1][1]:
+            nueva_cedula = Crea_cedulas(1)
     print("\nPara crear una persona manualmente por favor indica cada uno de los siguientes atributos:")
 
     print("\nIngrese su fecha de nacimiento, en formato dd(1-30)/mm(1-12)/aaaa(1920-2019)")
@@ -299,7 +301,7 @@ def Crear_Persona_Manual(Personas,nueva_cedula,cedulas,provincias,accesorios,gen
     Personas.append(dic_persona)
     return Personas
 
-def Administrador(comando,Personas,cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+def Administrador(comando,Personas):
     while comando < 3:
         print("\n*********************************************************")
         print("*                                                       *") 
@@ -310,9 +312,9 @@ def Administrador(comando,Personas,cedulas,provincias,accesorios,genero,colores_
         print("*********************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:
-            Personas = Crear_Persona_Auto(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+            Personas = Crear_Persona_Auto(Personas,Crea_cedulas(1),Crea_provincias(),Crea_accesorios(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
         elif comando == 2:
-            Personas = Crear_Persona_Manual(Personas,Crea_cedulas(1),cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos)
+            Personas = Crear_Persona_Manual(Personas,Crea_cedulas(1),Crea_provincias(),Crea_accesorios(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
     return Personas
 
 def Informes(Personas):
@@ -429,17 +431,16 @@ def Usuario(Personas,emociones,provincias):
             Modificar_provincia(usuario,provincias)
     return Personas
 
-def validar_contraseña(contraseña,comando,Personas) :
+def validar_contraseña(contraseña,comando,Personas):
     if comando == 1 :        
         while contraseña != "admi123" :
             contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Administrador")
-        Administrador(0,Personas, Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
-                      Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
-                      Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
-                      
+        Personas = Administrador(0,Personas)
+        print(Personas)
+        
     elif comando == 2 :
         while contraseña != "ana456" :
             contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
@@ -455,10 +456,14 @@ def validar_contraseña(contraseña,comando,Personas) :
                 return
         print("\nIngresó como Usuario")
         Usuario(Personas,  Crea_emociones(), Crea_provincias())
-    return
+        print(Personas)
+    return 
 
 def login():
     comando = 0
+    Personas = Crea_Personas(Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
+                                      Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
+                                      Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
         print("\n*******************************************************")
         print("*                                                     *")
@@ -470,9 +475,6 @@ def login():
         print("*******************************************************\n")
         comando=int(input("Digite un número correspondiente con el menú: "))
         if comando < 4 :
-            Personas = Crea_Personas(Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
-                                      Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
-                                      Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
             contraseña = input("\nDigite su contraseña: ")
             validar_contraseña(contraseña,comando,Personas)
         else :
