@@ -318,7 +318,44 @@ def Administrador(comando,Personas):
     return Personas
 
 def Informes(Personas):
-    print(Personas)
+    Provincias = Crea_provincias()
+    Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
+    for e in range(1,(len(Provincias)+1)):
+        print("\n",Provincias[e])
+        PersonasProvi = 0
+        for i in range(0, (len(Personas))):
+            Bebes = 0
+            Niños = 0
+            Adolescentes = 0
+            Adultos = 0
+            Adultos_Mayores = 0
+            if Personas[i][2] == Provincias[e]  :                
+                PersonasProvi += 1
+                print(" ________________________________________________________________________________ ")
+                print("| Cédula        | Edad   | Provincia      | Género        |")
+                if Personas[i][13] < 4:
+                    print("|", Personas[i][1],"    |",str(Personas[i][13])+" ","    |",Personas[i][2],"    |", Personas[i][4],"    |")
+                elif Personas[i][13] < 12:
+                    if Personas[i][13] < 10:
+                        print("|", Personas[i][1],"    |",str(Personas[i][13])+" ","    |",Personas[i][2],"    |", Personas[i][4],"    |")
+                    else:
+                        print("|", Personas[i][1],"    |",Personas[i][13],"    |",Personas[i][2],"    |", Personas[i][4],"    |")
+                elif Personas[i][13] < 18:
+                    print("|", Personas[i][1],"    |",Personas[i][13],"    |",Personas[i][2],"    |", Personas[i][4],"    |")
+                elif Personas[i][13] < 60:
+                    print("|", Personas[i][1],"    |",Personas[i][13],"    |",Personas[i][2],"    |", Personas[i][4],"    |")
+                else:
+                    print("|", Personas[i][1],"    |",Personas[i][13],"    |",Personas[i][2],"    |", Personas[i][4],"    |")
+                print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
+                print("|________________________________________________________________________________|")
+                print("| Color de piel   | Forma del rostro   | Forma ojos  | Color ojos   | Emoción    |")
+                print("|", Personas[i][5],"         |",Personas[i][6],"       |",Personas[i][11],"|",Personas[i][12],"    |", Personas[i][7]," |")
+                print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
+                print("|________________________________________________________________________________|")
+                print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio       |")
+                print("|", Personas[i][8], "        |", Personas[i][9], "          |", Personas[i][10], "          |", Personas[i][3],"       |")
+                print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+        print("\nTotal de personas en ",Provincias[e],":",PersonasProvi)
     return
 
 def Analista(Personas):
@@ -439,7 +476,6 @@ def validar_contraseña(contraseña,comando,Personas):
                 return
         print("\nIngresó como Administrador")
         Personas = Administrador(0,Personas)
-        print(Personas)
         
     elif comando == 2 :
         while contraseña != "ana456" :
@@ -456,12 +492,11 @@ def validar_contraseña(contraseña,comando,Personas):
                 return
         print("\nIngresó como Usuario")
         Usuario(Personas,  Crea_emociones(), Crea_provincias())
-        print(Personas)
     return 
 
 def login():
     comando = 0
-    Personas = Crea_Personas(Crea_cedulas(2), Crea_provincias(), Crea_accesorios(),
+    Personas = Crea_Personas(Crea_cedulas(20), Crea_provincias(), Crea_accesorios(),
                                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
