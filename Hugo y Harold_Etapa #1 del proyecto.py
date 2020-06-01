@@ -337,7 +337,7 @@ def Cuenta_Grupos_Etarios(Rango_edades,contador,Personas, provincia):
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")       
     return
 
-def Informes(Personas):
+def Informes_Provincias(Personas):
     Provincias = Crea_provincias()
     Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
     for e in range(1,(len(Provincias)+1)):
@@ -373,18 +373,49 @@ def Informes(Personas):
         print("---------------------------------------------------------------------------------")
     return
 
+def Informes_Grupos_Etarios(Personas):
+    Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
+    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
+    for i in range(1, len(Rango_edades)):
+        Total_etarios = 0
+        for j in range(0, len(Personas)):
+            if Personas[j][13] < Rango_edades[i] and Personas[j][13] > Rango_edades[i-1]:
+                Total_etarios += 1
+        print("\n ______________________________________________________________")
+        print("|  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " |") 
+        if Total_etarios < 10: 
+            print("| ", str(Total_etarios)+"                         | ", round(Total_etarios*100/len(Personas), 1), "                           |")
+        elif Total_etarios < 100 or round(Total_etarios*100/len(Personas), 1) < 10:
+            print("| ", str(Total_etarios)+"                        | ", round(Total_etarios*100/len(Personas), 1), "                           |")
+        else:
+             print("| ", Total_etarios, "                    | ", round(Total_etarios*100/len(Personas), 1), "                          |")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+        print("-------------------------------------------------------------------------")
+    return
+
+def Informes_Emociones(Personas):
+    return
+ 
+def Informes_Nacionales(Personas):
+    Informes_Grupos_Etarios(Personas)
+    Informes_Emociones(Personas)
+    return
+
 def Analista(Personas):
     comando = 0
     while comando < 2:
         print("\n*********************************************************")
         print("*                                                       *") 
-        print("* Digite:  1     para ver informes                      *")   
-        print("* Digite: #>1    para regresar                          *") 
+        print("* Digite:  1     para ver informes por provincias       *")  
+        print("* Digite:  2     para ver informes nacionales           *")
+        print("* Digite: #>2    para regresar                          *") 
         print("*                                                       *")  
         print("*********************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:
-            Informes(Personas)
+            Informes_Provincias(Personas)
+        elif comando == 2:
+            Informes_Nacionales(Personas)
     return
 
 def Impresion_Datos_Usuario(usuario,mensaje):
@@ -511,7 +542,7 @@ def validar_contraseña(contraseña,comando,Personas):
 
 def login():
     comando = 0
-    Personas = Crea_Personas(Crea_cedulas(40), Crea_provincias(), Crea_accesorios(),
+    Personas = Crea_Personas(Crea_cedulas(20), Crea_provincias(), Crea_accesorios(),
                                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
