@@ -318,21 +318,32 @@ def Administrador(comando,Personas):
     return Personas
 
 def Cuenta_Grupos_Etarios(Rango_edades,contador,Personas, provincia):
-    Grupos_Etarios = {1: "Bebés" , 2: "Niños", 3: "Adolescentes", 4: "Adultos", 5: "Adultos mayores"}
+    Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
     Grupo_Etario = 0
     for i in range(0, (len(Personas))):
         if Personas[i][2] == provincia and Personas[i][13] < Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:
             Grupo_Etario += 1
-    print("\n____________________________________________________________")
-    print(Grupos_Etarios[contador], ":", Grupo_Etario)
-    print("____________________________________________________________")
+    if Grupo_Etario < 10 :
+        print("\n _______________________")
+        print("|",Grupos_Etarios[contador], "|", str(Grupo_Etario)+"  ","|")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+    elif Grupo_Etario < 100 :
+        print("\n _______________________")
+        print("|",Grupos_Etarios[contador], "|", str(Grupo_Etario)+" ","|")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")        
+    else: 
+        print("\n _______________________")
+        print("|",Grupos_Etarios[contador], "|",Grupo_Etario,"|")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")       
     return
 
 def Informes(Personas):
-    Provincias = {1: "San José", 2: "Alajuela", 3: "Cartago", 4: "Heredia", 5: "Puntarenas", 6: "Guanacaste", 7: "Limón"}
+    Provincias = Crea_provincias()
     Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
     for e in range(1,(len(Provincias)+1)):
-        print("\n",Provincias[e])
+        print("\n ___________")
+        print("|",Provincias[e])
+        print(" ¯¯¯¯¯¯¯¯¯¯¯")
         PersonasProvi = 0
         contador = 1
         while contador < len(Rango_edades):
@@ -340,24 +351,26 @@ def Informes(Personas):
             for i in range(0, (len(Personas))):
                 if Personas[i][2] == Provincias[e]:
                     if Personas[i][13] < Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:       
-                        print(" ________________________________________________________________________________ ")
-                        print("| Cédula        | Edad   | Provincia      | Género        | Emoción    |")
+                        print(" ___________________________________________________________________________ ")
+                        print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
                         if Personas[i][13] < 10:
-                            print("|", Personas[i][1],"    |",str(Personas[i][13])+" ","    |",Personas[i][2],"    |", Personas[i][4],"    |",Personas[i][7],"   |")
+                            print("|", Personas[i][1],"    |",str(Personas[i][13])+" ","      |",Personas[i][2],"    |", Personas[i][4],"    |",Personas[i][7],"    |")
                         else:
-                            print("|", Personas[i][1],"    |",Personas[i][13],"    |",Personas[i][2],"    |", Personas[i][4],"    |",Personas[i][7],"   |")
-                        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
-                        print("|________________________________________________________________________________|")
-                        print("| Color de piel   | Forma del rostro   | Forma de ojos  | Color de ojos   |")
-                        print("|", Personas[i][5],"         |",Personas[i][6],"       |",Personas[i][11],"   |",Personas[i][12],"       |")
-                        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
-                        print("|________________________________________________________________________________|")
-                        print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio       |")
-                        print("|", Personas[i][8], "        |", Personas[i][9], "          |", Personas[i][10], "          |", Personas[i][3]," |")
-                        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+                            print("|", Personas[i][1],"    |",Personas[i][13],"      |",Personas[i][2],"    |", Personas[i][4],"    |",Personas[i][7],"    |")
+                        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
+                        print("|___________________________________________________________________________|")
+                        print("| Color de piel   | Forma del rostro   | Forma de ojos   | Color de ojos    |")
+                        print("|", Personas[i][5],"         |",Personas[i][6],"       |",Personas[i][11],"    |",Personas[i][12],"        |")
+                        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
+                        print("|___________________________________________________________________________|")
+                        print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio  |")
+                        print("|", Personas[i][8], "        |", Personas[i][9], "          |", Personas[i][10], "          |", Personas[i][3],"  |")
+                        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+                        print("---------------------------------------------------------------------------------")
                         PersonasProvi += 1
             contador += 1  
-        print("\nTotal de personas en ",Provincias[e],":",PersonasProvi)
+        print("\nTotal de personas en ",Provincias[e],":",PersonasProvi,"\n")
+        print("---------------------------------------------------------------------------------")
     return
 
 def Analista(Personas):
@@ -498,7 +511,7 @@ def validar_contraseña(contraseña,comando,Personas):
 
 def login():
     comando = 0
-    Personas = Crea_Personas(Crea_cedulas(20), Crea_provincias(), Crea_accesorios(),
+    Personas = Crea_Personas(Crea_cedulas(40), Crea_provincias(), Crea_accesorios(),
                                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
