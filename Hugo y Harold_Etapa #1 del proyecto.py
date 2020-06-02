@@ -340,6 +340,9 @@ def Cuenta_Grupos_Etarios(Rango_edades,contador,Personas, provincia):
 def Informes_Provincias(Personas):
     Provincias = Crea_provincias()
     Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
+    print("\n _________________________________________________")
+    print("|     Estadística por provincia en Costa Rica     |")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     for e in range(1,(len(Provincias)+1)):
         print("\n ___________")
         print("|",Provincias[e])
@@ -376,6 +379,9 @@ def Informes_Provincias(Personas):
 def Informes_Grupos_Etarios(Personas):
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
     Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
+    print("\n ____________________________________________________")
+    print("|     Estadística por grupo etario en Costa Rica     |")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     for i in range(1, len(Rango_edades)):
         Total_etarios = 0
         for j in range(0, len(Personas)):
@@ -384,67 +390,59 @@ def Informes_Grupos_Etarios(Personas):
         print("\n ____________________________________________________________")
         print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ") 
         if Total_etarios < 10: 
-            print(" ", str(Total_etarios)+"                         | ", round(Total_etarios*100/len(Personas), 1))
+            print(" ", str(Total_etarios)+"                         | ", round(Total_etarios*100/len(Personas), 1), "%")
         elif Total_etarios < 100 :
-            print(" ", str(Total_etarios)+"                        | ", round(Total_etarios*100/len(Personas), 1))
+            print(" ", str(Total_etarios)+"                        | ", round(Total_etarios*100/len(Personas), 1), "%")
         else:
-             print(" ", Total_etarios, "                      | ", round(Total_etarios*100/len(Personas), 1))
+             print(" ", Total_etarios, "                      | ", round(Total_etarios*100/len(Personas), 1), "%")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
         print("-----------------------------------------------------------------------")
     return
 
 def Informes_Emociones(Personas):
-    cantidad_Emociones = {}
+    Cantidad_Emociones = {}
     Emociones = Crea_emociones()
+    print("\n ________________________________________________________________")
+    print("|     Estadística de emociones en las personas de Costa Rica     |")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     for i in range(1,len(Emociones)+1):
         Personas_Emocion = 0
         for j in range(0,len(Personas)):
             if Personas[j][7] == Emociones[i]:
                 Personas_Emocion += 1
-        cantidad_Emociones[i] = Personas_Emocion
-    print(cantidad_Emociones)
+        Cantidad_Emociones[i] = Personas_Emocion
+    print(Cantidad_Emociones)  
 
-    cantidad_e_ordenado = sorted(cantidad_Emociones.items())
-    print(cantidad_e_ordenado)
-
-    valores_ordenados = sorted(cantidad_Emociones.values())
-    valores_ordenados.reverse()
-    print(valores_ordenados)
-    lista_claves = []
-    e = 0
-
-    while e < len(valores_ordenados):    
-        c = 0
-        while valores_ordenados[e] != cantidad_e_ordenado[c][1]:
-            c +=1
-        if cantidad_e_ordenado[c][0] not in lista_claves:
-            lista_claves.append(cantidad_e_ordenado[c][0])
-            e += 1
-        else:
-            e += 1
-    print(lista_claves)    
-    return        
+    Lista_Clave_Valor = []
+    for x in range(1, len(Cantidad_Emociones)+1):
+        Lista_Clave_Valor.append(x)
+        Lista_Clave_Valor.append(Cantidad_Emociones[x])
+    print(Lista_Clave_Valor) 
     
-def Informes_Nacionales(Personas):
-    Informes_Grupos_Etarios(Personas)
-    Informes_Emociones(Personas)
-    return
+    Lista_Claves_Ordenadas = []
+    for y in range(1, len(Cantidad_Emociones)+1):
+        Mayor = max(Lista_Clave_Valor)
+        Lista_Claves_Ordenadas.append(Lista_Clave_Valor[(Lista_Clave_Valor.index(Mayor))-1])
+        Lista_Clave_Valor.remove(Mayor)
+    print(Lista_Claves_Ordenadas)
+    return        
 
 def Analista(Personas):
     comando = 0
-    while comando < 2:
-        print("\n*********************************************************")
-        print("*                                                       *") 
-        print("* Digite:  1     para ver informes por provincias       *")  
-        print("* Digite:  2     para ver informes nacionales           *")
-        print("* Digite: #>2    para regresar                          *") 
-        print("*                                                       *")  
-        print("*********************************************************\n")
+    while comando < 3:
+        print("\n************************************************************************************")
+        print("*                                                                                  *") 
+        print("* Digite:  1     para ver estadísticas por provincia y por grupo etario            *")  
+        print("* Digite:  2     para ver estadísticas de emoción en las personas de Costa Rica    *")
+        print("* Digite: #>2    para regresar                                                     *") 
+        print("*                                                                                  *")  
+        print("************************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:
             Informes_Provincias(Personas)
+            Informes_Grupos_Etarios(Personas)
         elif comando == 2:
-            Informes_Nacionales(Personas)
+            Informes_Emociones(Personas)
     return
 
 def Impresion_Datos_Usuario(usuario,mensaje):
@@ -571,7 +569,7 @@ def validar_contraseña(contraseña,comando,Personas):
 
 def login():
     comando = 0
-    Personas = Crea_Personas(Crea_cedulas(1000), Crea_provincias(), Crea_accesorios(),
+    Personas = Crea_Personas(Crea_cedulas(200), Crea_provincias(), Crea_accesorios(),
                                       Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
                                       Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
