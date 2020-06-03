@@ -1,7 +1,6 @@
 import random
 from datetime import date
 
-
 def Crea_cedulas(cantidad):
     Cedulas = {}
     for i in range(1,cantidad+1):
@@ -51,16 +50,8 @@ def Calcula_Edad(Fecha_na):
     fecha_a = date.today()
     Fecha_Actual = {1: fecha_a.day, 2: fecha_a.month, 3: fecha_a.year}
     Años = Fecha_Actual[3] - Fecha_na[3]
-    if Fecha_na[2] > Fecha_Actual[2] :
-        Años = Años - 1 
-        Meses = 12 - (Fecha_na[2] - Fecha_Actual[2])
-    else :    
-        Meses = Fecha_Actual[2] - Fecha_na[2]
-    if Fecha_na[1] > Fecha_Actual[1] :
-        Meses = Meses - 1
-        Dias = 30 - (Fecha_na[1]-Fecha_Actual[1])
-    else :
-        Dias = Fecha_Actual[1] - Fecha_na[1]    
+    if Fecha_na[2] > Fecha_Actual[2] or Fecha_na[2] >= Fecha_Actual[2] and Fecha_na[1] > Fecha_Actual[1] :
+        Años = Años - 1
     return Años
 
 def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
@@ -402,29 +393,46 @@ def Informes_Grupos_Etarios(Personas):
 def Informes_Emociones(Personas):
     Cantidad_Emociones = {}
     Emociones = Crea_emociones()
-    print("\n ________________________________________________________________")
-    print("|     Estadística de emociones en las personas de Costa Rica     |")
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+    print("\n                        ________________________________________________________________")
+    print("                       |     Estadística de emociones en las personas de Costa Rica     |")
+    print("                        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     for i in range(1,len(Emociones)+1):
         Personas_Emocion = 0
         for j in range(0,len(Personas)):
             if Personas[j][7] == Emociones[i]:
                 Personas_Emocion += 1
         Cantidad_Emociones[i] = Personas_Emocion
-    print(Cantidad_Emociones)  
 
     Lista_Clave_Valor = []
     for x in range(1, len(Cantidad_Emociones)+1):
         Lista_Clave_Valor.append(x)
         Lista_Clave_Valor.append(Cantidad_Emociones[x])
-    print(Lista_Clave_Valor) 
-    
-    Lista_Claves_Ordenadas = []
+
+    Cantidad_Emociones_Ordenadas = {}
     for y in range(1, len(Cantidad_Emociones)+1):
         Mayor = max(Lista_Clave_Valor)
-        Lista_Claves_Ordenadas.append(Lista_Clave_Valor[(Lista_Clave_Valor.index(Mayor))-1])
+        Cantidad_Emociones_Ordenadas[Lista_Clave_Valor[(Lista_Clave_Valor.index(Mayor))-1]] = Mayor
         Lista_Clave_Valor.remove(Mayor)
-    print(Lista_Claves_Ordenadas)
+    Lista_Claves_Ordenadas = list(Cantidad_Emociones_Ordenadas.keys())
+    print("              _______________________________________________________________________________________________")
+    print("             |",Emociones[Lista_Claves_Ordenadas[0]],"|",Emociones[Lista_Claves_Ordenadas[1]],"|",Emociones[Lista_Claves_Ordenadas[2]],"|",
+          Emociones[Lista_Claves_Ordenadas[3]],"|",Emociones[Lista_Claves_Ordenadas[4]],"|",Emociones[Lista_Claves_Ordenadas[5]],"|",
+          Emociones[Lista_Claves_Ordenadas[6]],"|",Emociones[Lista_Claves_Ordenadas[7]],"|")
+    print(" ____________|___________|___________|___________|___________|___________|___________|___________|___________|")
+    print("| Total     ","|",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[0]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[1]],"      |",
+          Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[2]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[3]],"      |",
+          Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[4]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[5]],"      |",
+          Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[6]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[7]],"      |")
+    print("|------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|")    
+    print("| Porcentaje","|",round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[0]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[1]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[2]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[3]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[4]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[5]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[6]]*100/len(Personas), 1),"%    |",
+          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[7]]*100/len(Personas), 1),"%    |")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     return        
 
 def Analista(Personas):
@@ -569,9 +577,7 @@ def validar_contraseña(contraseña,comando,Personas):
 
 def login():
     comando = 0
-    Personas = Crea_Personas(Crea_cedulas(200), Crea_provincias(), Crea_accesorios(),
-                                      Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),
-                                      Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Personas = Crea_Personas(Crea_cedulas(1450), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
         print("\n*******************************************************")
         print("*                                                     *")
@@ -586,10 +592,6 @@ def login():
             contraseña = input("\nDigite su contraseña: ")
             validar_contraseña(contraseña,comando,Personas)
         else :
-            print("\n******************")
-            print("*                *")
-            print("* Hasta luego!   *")
-            print("*                *")
-            print("******************")
+            print("\n********************\n*   Hasta luego!   *\n********************")
             return
 login()
