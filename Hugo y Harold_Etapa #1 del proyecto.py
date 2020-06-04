@@ -2,85 +2,143 @@ import random
 from datetime import date
 
 def Crea_cedulas(cantidad):
+    """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
+    After, returns the dictionary.
+    
+    Keyword arguments:
+    cantidad -- Number that indicates the quantity of ID cards, that will be generated.
+    """
     Cedulas = {}
-    for i in range(1,cantidad+1):
-        cedula = random.sample(range(200000000,209999999), cantidad)
-        Cedulas[i] = cedula[i-1]
+    cedula = random.sample(range(200000000,209999999), cantidad)#Depending on "cantidad" (the given number), the ID cards are randomly created
+    for i in range(0, len(cedula)):    #The list of ID cards is toured
+        Cedulas[i+1] = cedula[i]       #It is added each ID card to the dictionary
     return Cedulas
  
 def Crea_provincias():
+    """Function that creates a dictionary which stores the provinces of Costa Rica, then returns the dictionary."""
     provincias = {1: "San José  ", 2: "Alajuela  ", 3: "Cartago   ", 4: "Heredia   ", 5: "Puntarenas", 6: "Guanacaste", 7: "Limón     "}
     return provincias
 
 def Crea_accesorios():
+    """Function that creates a dictionary which stores the accessories, then returns the dictionary."""
     accesorios = {1: "Lentes  ", 2: "Aretes  ", 3: "Piercing", 4: "Ninguno "}
     return accesorios
 
 def Crea_genero():
+    """Function that creates a dictionary which stores the two possible genres (female or male), then returns the dictionary."""
     genero = {1: "Femenino ", 2: "Masculino"}
     return  genero
 
 def Crea_color_piel():
+    """Function that creates a dictionary which stores diferent skin colors (just five, in this case), then returns the dictionary."""
     colorpiel = {1: "Negra ", 2: "Marrón", 3: "Morena", 4: "Clara ", 5: "Blanca"}
     return colorpiel
 
 def Crea_rostro():
+    """Function that creates a dictionary which stores diferent face shapes (just six, in this case), then returns the dictionary."""
     rostro = {1: "Redondo    ", 2: "Alargado   ", 3: "Corazón    ", 4: "Cuadrado   ", 5: "Ovalado    ", 6: "Rectangular"}
     return rostro
 
 def Crea_emociones():
+    """Function that creates a dictionary which stores diferent expressions (just eight, in this case), then returns the dictionary."""
     emociones = {1: "Enfado   ", 2: "Desprecio", 3: "Disgusto ", 4: "Miedo    ", 5: "Sorpresa ", 6: "Alegría  ", 7: "Neutral  ", 8: "Tristeza "}
     return emociones
 
 def Crea_Atributos_Cabello():
+    """    Function that creates a dictionary (with three dictionaries inside).
+    These dictionaries stores diferent hair attributes (such as: color, density or texture), then returns the dictionary.
+    """
     Atr_cabello = {1: {1:"Negro    ", 2:"Rubio    ", 3:"Café     ", 4:"Castaño  ", 5:"Gris     ", 6:"Invisible"},
                    2: {1:"Escaso   ", 2:"Moderado ", 3:"Abundante"}, 3: {1:"Lacio   ", 2:"Ondulado", 3:"Rizado  "}}
     return Atr_cabello
 
 def Crea_Atributos_Ojos():
+    """    Function that creates a dictionary (with two dictionaries inside).
+    Both dictionaries stores diferent eye characteristics (the first one stores shapes and the second one stores colors).
+    After, returns the dictionary.
+    """
     Atr_ojos = {1: {1: "Almendrados", 2: "Separados  ", 3: "Redondos   ", 4: "Caídos     ", 5: "Saltones   ", 6: "Juntos     ", 7: "Profundos  ", 8: "Asiáticos  "},
                 2: {1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "}}       
     return Atr_ojos
 
-def Crea_Fecha_Nac():
+def Crea_Fecha_Nac(): 
+    """    Function that generates a random date of birth: a random day since 1 to 30, month since 1 to 12 and year since 1920 to 2018).
+    Also stores these values in a dictionary and returns it.
+    """
     Fecha_Nacimiento = {1: random.randint(1,30), 2: random.randint(1,12), 3: random.randint(1920,2018)}
     return Fecha_Nacimiento
 
 def Calcula_Edad(Fecha_na):
-    fecha_a = date.today()
-    Fecha_Actual = {1: fecha_a.day, 2: fecha_a.month, 3: fecha_a.year}
-    Años = Fecha_Actual[3] - Fecha_na[3]
+    """    Function that calculates the age of a person, depending on his date of birth and the current date.
+
+    Keyword arguments:
+    Fecha_na -- Contains the person's date of birth.
+    """
+    fecha_a = date.today()             
+    Fecha_Actual = {1: fecha_a.day, 2: fecha_a.month, 3: fecha_a.year}  #It is obtained the current date through the system. 
+    Años = Fecha_Actual[3] - Fecha_na[3]                                #It is compared boht dates to calculate the person's age.
     if Fecha_na[2] > Fecha_Actual[2] or Fecha_na[2] >= Fecha_Actual[2] and Fecha_na[1] > Fecha_Actual[1] :
-        Años = Años - 1
+        Años = Años - 1 
     return Años
 
 def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    Lista_Personas = []
-    for i in range(1,len(cedulas)+1):
-        Fecha_na = Crea_Fecha_Nac()
-        Edad_Años = Calcula_Edad(Fecha_na)
+    """    Function that creates a list to store persons. 
+    Depending on the quantity of ID cards, the function creates persons, through a "for" loop.
+    All of the attributes are randomly selected and saved in a dictionary, for each person.
+    Then, each dictionary is appended to the list.
+
+    Keyword arguments:
+    cedulas -- Dictionary that contains all the ID cards, previously created.
+    provincias -- Dictionary that contains all the provinces of Costa Rica.
+    accesorios -- Dictionary that contains all the possible attributes.
+    genero -- Dictionary that contains the two possible genres.
+    colores_de_piel -- Dictionary that contains all the possible skin colors.
+    rostro -- Dictionary that contains all the possible face shapes.
+    emociones -- Dictionary that contains all the possible expressions.
+    atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain all the possible hair attributes.
+    atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain all the possible eye attributes.
+    """
+    Lista_Personas = []                     #It is created the list
+    for i in range(1,len(cedulas)+1):       #The dictionary that contains ID cards, is toured
+        Fecha_na = Crea_Fecha_Nac()         #The function "Crea_Fecha_Nac" is called to generate a random date of birth
+        Edad_Años = Calcula_Edad(Fecha_na)  #The function "Calcula_Edad" is called to calculate the person's age
         dic_persona = {1: cedulas[random.randint(1,len(cedulas))], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
                        4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
                        6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
                        8: atri_cabello[1][random.randint(1,6)], 9: atri_cabello[2][random.randint(1,3)],
                        10: atri_cabello[3][random.randint(1,3)], 11: atri_ojos[1][random.randint(1,8)], 
-                       12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años}
-        Lista_Personas.append(dic_persona)
+                       12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años} #The attributes are randomly selected and saved in a dictionary
+        Lista_Personas.append(dic_persona) #It is appended each dictionary to the person's list
     return Lista_Personas
 
 def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    for i in range(1, (len(Personas)+1)):
-        while nueva_cedula[1] == Personas[i-1][1]:
+    """    Function that creates a person and add him to the list of persons. 
+    The attributes of this person are randomly selected.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    nueva_cedula -- An ID card is generated trough the "Crea_cedulas" function.
+    provincias -- Dictionary that contains all the provinces of Costa Rica.
+    accesorios -- Dictionary that contains all the possible attributes.
+    genero -- Dictionary that contains the two possible genres.
+    colores_de_piel -- Dictionary that contains all the possible skin colors.
+    rostro -- Dictionary that contains all the possible face shapes.
+    emociones -- Dictionary that contains all the possible expressions.
+    atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain all the possible hair attributes.
+    atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain all the possible eye attributes.
+    """
+    for i in range(1, (len(Personas)+1)):  #The list of persons is toured to comprove that the new ID card isn't repeat
+        while nueva_cedula[1] == Personas[i-1][1]: #If the new ID card already exist, another one is created
             nueva_cedula = Crea_cedulas(1)
-    Fecha_na = Crea_Fecha_Nac()
-    Edad_Años = Calcula_Edad(Fecha_na)
+    Fecha_na = Crea_Fecha_Nac()                   #The function "Crea_Fecha_Nac" is called to generate a random date of birth
+    Edad_Años = Calcula_Edad(Fecha_na)            #The function "Calcula_Edad" is called to calculate the person's age
     dic_persona = {1: nueva_cedula[1], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
                    4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
                    6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
                    8: atri_cabello[1][random.randint(1,6)], 9: atri_cabello[2][random.randint(1,3)],
                    10: atri_cabello[3][random.randint(1,3)], 11: atri_ojos[1][random.randint(1,8)], 
-                   12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años}
-    Personas.append(dic_persona)
+                   12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años}  #The attributes are randomly selected and saved in a dictionary
+    Personas.append(dic_persona)                                          #The dictionary is appended to the person's list
     print("\nPersona creada y agregada a la lista satisfactoriamente")
     return Personas
 
@@ -577,7 +635,7 @@ def validar_contraseña(contraseña,comando,Personas):
 
 def login():
     comando = 0
-    Personas = Crea_Personas(Crea_cedulas(1450), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Personas = Crea_Personas(Crea_cedulas(100), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
         print("\n*******************************************************")
         print("*                                                     *")
