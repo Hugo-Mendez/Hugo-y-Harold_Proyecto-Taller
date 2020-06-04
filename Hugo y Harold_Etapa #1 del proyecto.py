@@ -13,7 +13,7 @@ def Crea_cedulas(cantidad):
     for i in range(0, len(cedula)):    #The list of ID cards is toured
         Cedulas[i+1] = cedula[i]       #It is added each ID card to the dictionary
     return Cedulas
- 
+
 def Crea_provincias():
     """Function that creates a dictionary which stores the provinces of Costa Rica, then returns the dictionary."""
     provincias = {1: "San José  ", 2: "Alajuela  ", 3: "Cartago   ", 4: "Heredia   ", 5: "Puntarenas", 6: "Guanacaste", 7: "Limón     "}
@@ -143,8 +143,23 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colore
     return Personas
 
 def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    for i in range(1, (len(Personas)+1)):
-        while nueva_cedula[1] == Personas[i-1][1]:
+    """    Function that creates a person and add him to the list of persons. 
+    The attributes of this person are selected by the administrator user.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    nueva_cedula -- An ID card is generated trough the "Crea_cedulas" function.
+    provincias -- Dictionary that contains all the provinces of Costa Rica.
+    accesorios -- Dictionary that contains all the possible attributes.
+    genero -- Dictionary that contains the two possible genres.
+    colores_de_piel -- Dictionary that contains all the possible skin colors.
+    rostro -- Dictionary that contains all the possible face shapes.
+    emociones -- Dictionary that contains all the possible expressions.
+    atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain all the possible hair attributes.
+    atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain all the possible eye attributes.
+    """
+    for i in range(1, (len(Personas)+1)):  #The list of persons is toured to comprove that the new ID card isn't repeat
+        while nueva_cedula[1] == Personas[i-1][1]: #If the new ID card already exist, another one is created
             nueva_cedula = Crea_cedulas(1)
     print("\nPara crear una persona manualmente por favor indica cada uno de los siguientes atributos:")
 
@@ -153,15 +168,15 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
     mes = 0
     año = 0
     while dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020):
-        dia = int(input("\nIngrese el día de nacimiento: "))
+        dia = int(input("\nIngrese el día de nacimiento: ")) #The administrator types the new person's date of birth
         mes = int(input("\nIngrese el mes de nacimiento: "))
         año = int(input("\nIngrese el año de nacimiento: "))
-        if dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020):
-            print("\nError: día, mes o año fuera del rango establecido")
-    fecha_naci = {1: dia, 2: mes, 3: año}
+        if dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020): 
+            print("\nError: día, mes o año fuera del rango establecido") #If the date isn't in range, the administrator should type it again
+    fecha_naci = {1: dia, 2: mes, 3: año} #The day, month and year are saved in a dictionary, in that order 
 
     F_rostro = 0
-    while F_rostro not in range(1,7):
+    while F_rostro not in range(1,7): #There is a menu for each attribute
         print("\n****************************************")
         print("*                                      *") 
         print("*       Forma del rostro               *")   
@@ -172,18 +187,18 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
         print("* Digite:  5     para ovalado          *")
         print("* Digite:  6     para rectangular      *") 
         print("*                                      *")  
-        print("****************************************\n")
-        F_rostro = int(input("Digite un número correspondiente con el menú: "))
+        print("****************************************\n") #The administrator selects the option that he wants
+        F_rostro = int(input("Digite un número correspondiente con el menú: ")) 
         if F_rostro not in range(1,7):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
     
     Color_piel = 0
-    while Color_piel not in range(1,6):
+    while Color_piel not in range(1,6): #The same way for the next menus
         print("\n****************************************")
         print("*                                      *") 
         print("*        Color de piel                 *")   
         print("* Digite:  1     para negra            *")
-        print("* Digite:  2     para marrón           *")
+        print("* Digite:  2     para marrón           *")             
         print("* Digite:  3     para morena           *")
         print("* Digite:  4     para clara            *")
         print("* Digite:  5     para blanca           *")
@@ -340,14 +355,14 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
         if provincia not in range(1,8):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
     
-    Edad_Años = Calcula_Edad(fecha_naci)
+    Edad_Años = Calcula_Edad(fecha_naci)  #The function "Calcula_Edad" is called to calculate the person's age
     dic_persona = {1: nueva_cedula[1], 2: provincias[provincia], 3: accesorios[accesorio],
                    4: genero[Genero], 5: colores_de_piel[Color_piel],
                    6: rostro[F_rostro], 7: emociones[emocion],
                    8: atri_cabello[1][color_cabello], 9: atri_cabello[2][densidad_cabello],
                    10: atri_cabello[3][textura_cabello], 11: atri_ojos[1][Forma_ojos], 
-                   12: atri_ojos[2][Color_ojos], 13: Edad_Años}
-    Personas.append(dic_persona)
+                   12: atri_ojos[2][Color_ojos], 13: Edad_Años}  #It is created a dictionary with each attribute, previously selected by the administrator                                       
+    Personas.append(dic_persona)                                 #The dictionary is appended to the person's list
     return Personas
 
 def Administrador(comando,Personas):
