@@ -366,14 +366,14 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
     return Personas
 
 def Administrador(Personas):
-    """    Is the administrator user's function, it allows him to create a new person either manually or automatically.
-    The administrator user can do this process as many times as he wants.
+    """    Is the "Administrador" user's function, it allows him to create a new person either manually or automatically.
+    The "Administrador" user can do this process as many times as he wants.
 
     Keyword arguments:
     Personas -- The list with persons.
     """
     comando = 0
-    while comando < 3:   #There is a menu, where the administrator can select the option that he wants.
+    while comando < 3:   #There is a menu, where the "Administrador" can select the option that he wants.
         print("\n*********************************************************")
         print("*                                                       *")   
         print("* Digite:  1     para crear persona automáticamente     *")   
@@ -420,21 +420,27 @@ def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
     return
 
 def Informes_Provincias(Personas):
+    """    Function that shows the statistics per province(population density) in Costa Rica.  
+    For each person shows his personal information, such as: ID card, age, genre, among others. 
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    """
     Provincias = Crea_provincias()
-    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
+    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}        #Dictionary that contains the limits for belong to an specific age group.
     print("\n _________________________________________________")
     print("|     Estadística por provincia en Costa Rica     |")
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    for e in range(1,(len(Provincias)+1)):
+    for e in range(1,(len(Provincias)+1)):     #For each province the list of persons will be toured.
         print("\n ___________")
         print("|",Provincias[e])
         print(" ¯¯¯¯¯¯¯¯¯¯¯")
-        PersonasProvi = 0
-        contador = 1
-        while contador < len(Rango_edades):
+        PersonasProvi = 0                      #Quantity of persons per province.
+        contador = 1                           #Number that represents an specific age group(since babies to older adults).
+        while contador < len(Rango_edades):    #For each age group, the function "Cuenta_Grupos_Etarios" is called.
             Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e])
-            for i in range(0, (len(Personas))):
-                if Personas[i][2] == Provincias[e]:
+            for i in range(0, (len(Personas))):         #The list of persons is toured.
+                if Personas[i][2] == Provincias[e]:     #If someone from that province and that age group is found, his imformation is printed. 
                     if Personas[i][13] < Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:       
                         print(" ___________________________________________________________________________ ")
                         print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
@@ -452,25 +458,30 @@ def Informes_Provincias(Personas):
                         print("|", Personas[i][8], "        |", Personas[i][9], "          |", Personas[i][10], "          |", Personas[i][3],"  |")
                         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
                         print("---------------------------------------------------------------------------------")
-                        PersonasProvi += 1
-            contador += 1  
-        print("\nTotal de personas en ",Provincias[e],":",PersonasProvi,"\n")
+                        PersonasProvi += 1                                     #The quantity of persons from that province increases.
+            contador += 1                                                      #The "contador" increases, looking for the next age group.
+        print("\nTotal de personas en ",Provincias[e],":",PersonasProvi,"\n")  #The quantity of persons for each province is printed.
         print("---------------------------------------------------------------------------------")
     return
 
 def Informes_Grupos_Etarios(Personas):
+    """    Function that shows the statistics per age group in Costa Rica.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    """
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
-    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}
+    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}       #Dictionary that contains the limits for belong to an specific age group.
     print("\n ____________________________________________________")
     print("|     Estadística por grupo etario en Costa Rica     |")
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    for i in range(1, len(Rango_edades)):
-        Total_etarios = 0
-        for j in range(0, len(Personas)):
-            if Personas[j][13] < Rango_edades[i] and Personas[j][13] > Rango_edades[i-1]:
-                Total_etarios += 1
-        print("\n ____________________________________________________________")
-        print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ") 
+    for i in range(1, len(Rango_edades)):    #For each age group the list of persons will be toured.
+        Total_etarios = 0                    #Quantity of persons per age group.
+        for j in range(0, len(Personas)):    #The list of persons is toured.
+            if Personas[j][13] < Rango_edades[i] and Personas[j][13] > Rango_edades[i-1]: 
+                Total_etarios += 1           #If someone from that age group is found his quantity of persons increases.
+        print("\n ____________________________________________________________")    #For each age group: his quantity of persons and his percentage are printed.
+        print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ")  
         if Total_etarios < 10: 
             print(" ", str(Total_etarios)+"                         | ", round(Total_etarios*100/len(Personas), 1), "%")
         elif Total_etarios < 100 :
@@ -482,30 +493,35 @@ def Informes_Grupos_Etarios(Personas):
     return
 
 def Informes_Emociones(Personas):
-    Cantidad_Emociones = {}
+    """    Function that shows the statistics per emotion in Costa Rica.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    """
+    Cantidad_Emociones = {}    #Dictionary that will contain the quantity of persons for each emotion.
     Emociones = Crea_emociones()
     print("\n                        ________________________________________________________________")
     print("                       |     Estadística de emociones en las personas de Costa Rica     |")
     print("                        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    for i in range(1,len(Emociones)+1):
-        Personas_Emocion = 0
-        for j in range(0,len(Personas)):
+    for i in range(1,len(Emociones)+1):                     #For each emotion the list of persons will be toured.
+        Personas_Emocion = 0                                #Quantity of persons with that emotion.
+        for j in range(0,len(Personas)):                    #The list of persons is toured.
             if Personas[j][7] == Emociones[i]:
-                Personas_Emocion += 1
-        Cantidad_Emociones[i] = Personas_Emocion
+                Personas_Emocion += 1                       #If someone with that emotion is found, the quantity of persons with that emotion increases.    
+        Cantidad_Emociones[i] = Personas_Emocion            #The quantity of persons with that emotion is added to the dictionary.
 
-    Lista_Clave_Valor = []
-    for x in range(1, len(Cantidad_Emociones)+1):
-        Lista_Clave_Valor.append(x)
-        Lista_Clave_Valor.append(Cantidad_Emociones[x])
+    Lista_Clave_Valor = []                                  #List that will contain the key and value, for each element contained in the dictionary(Cantidad_Emociones).
+    for x in range(1, len(Cantidad_Emociones)+1):           #The dictionary "Cantidad_Emociones" is toured.
+        Lista_Clave_Valor.append(x)                         #The key is appended to the list.
+        Lista_Clave_Valor.append(Cantidad_Emociones[x])     #The value is appended to the list.
 
-    Cantidad_Emociones_Ordenadas = {}
-    for y in range(1, len(Cantidad_Emociones)+1):
-        Mayor = max(Lista_Clave_Valor)
-        Cantidad_Emociones_Ordenadas[Lista_Clave_Valor[(Lista_Clave_Valor.index(Mayor))-1]] = Mayor
-        Lista_Clave_Valor.remove(Mayor)
-    Lista_Claves_Ordenadas = list(Cantidad_Emociones_Ordenadas.keys())
-    print("              _______________________________________________________________________________________________")
+    Cantidad_Emociones_Ordenadas = {}                       #Dictionary that will contain the same that "Cantidad_Emociones", but ordered from the highest value to the lowest.
+    for y in range(1, len(Cantidad_Emociones)+1):           #The dictionary "Cantidad_Emociones" is toured.
+        Mayor = max(Lista_Clave_Valor)                      #The max value is obtained.
+        Cantidad_Emociones_Ordenadas[Lista_Clave_Valor[(Lista_Clave_Valor.index(Mayor))-1]] = Mayor  #The key that contained the max value is added to the dictionary with his value.
+        Lista_Clave_Valor.remove(Mayor)                                                              #The max value is removed.
+    Lista_Claves_Ordenadas = list(Cantidad_Emociones_Ordenadas.keys())   #List that contains the keys of "Cantidad_Emociones_Ordenadas". 
+    print("              _______________________________________________________________________________________________")    #The statistics per emotion are printed.
     print("             |",Emociones[Lista_Claves_Ordenadas[0]],"|",Emociones[Lista_Claves_Ordenadas[1]],"|",Emociones[Lista_Claves_Ordenadas[2]],"|",
           Emociones[Lista_Claves_Ordenadas[3]],"|",Emociones[Lista_Claves_Ordenadas[4]],"|",Emociones[Lista_Claves_Ordenadas[5]],"|",
           Emociones[Lista_Claves_Ordenadas[6]],"|",Emociones[Lista_Claves_Ordenadas[7]],"|")
@@ -527,8 +543,14 @@ def Informes_Emociones(Personas):
     return        
 
 def Analista(Personas):
+    """    Is the "Analista" user's function, it allows him to apply for statatistics of the country.
+    The "Analista" user can do this process as many times as he wants.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    """
     comando = 0
-    while comando < 3:
+    while comando < 3:    #There is a menu, where the "Analista" can select the option that he wants.
         print("\n************************************************************************************")
         print("*                                                                                  *") 
         print("* Digite:  1     para ver estadísticas por provincia y por grupo etario            *")  
@@ -537,10 +559,10 @@ def Analista(Personas):
         print("*                                                                                  *")  
         print("************************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-        if comando == 1:
+        if comando == 1:                      #Option number 1: Show the statistics per province and age group in Costa Rica.
             Informes_Provincias(Personas)
             Informes_Grupos_Etarios(Personas)
-        elif comando == 2:
+        elif comando == 2:                    #Option number 2: Show the statistics per emotion in Costa Rica.
             Informes_Emociones(Personas)
     return
 
@@ -620,23 +642,31 @@ def Modificar_provincia(usuario, provincias):
     return
 
 def Usuario(Personas,emociones,provincias):
-    usuario = random.choice(Personas)
+    """    Is the "Usuario" user's function, it allows him to modify his province and emotion.
+    The "Usuario" user can do this process as many times as he wants.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    emociones -- Dictionary that contains the emotions.
+    provincias -- Dictionary that contains the provinces.
+    """
+    usuario = random.choice(Personas)   #The user is randomly selected from de persons's list.
     comando = 0
-    Impresion_Datos_Usuario(usuario,"Esta es su información actual     ")
-    while comando < 3:
+    Impresion_Datos_Usuario(usuario,"Esta es su información actual     ")   #The "Impresion_Datos_Usuario" function is called.
+    while comando < 3:    #There is a menu, where the "Usuario" can select the option that he wants.
         print("\n**************************************************************************")
-        print("*                                                                        *") 
+        print("*                                                                        *")
         print("*        Los atributos que se pueden modificar son los siguientes        *")
         print("*                                                                        *")
-        print("* Digite:  1     para modificar emoción                                  *")   
+        print("* Digite:  1     para modificar emoción                                  *")
         print("* Digite:  2     para modificar provincia                                *")
-        print("* Digite: #>2    para regresar                                           *")  
+        print("* Digite: #>2    para regresar                                           *")
         print("*                                                                        *")
         print("**************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-        if comando == 1:
+        if comando == 1:                                       #Option number 1: Modify his emotion.
             Modificar_emocion(usuario,emociones)
-        elif comando == 2:
+        elif comando == 2:                                     #Option number 2: Modify his province.
             Modificar_provincia(usuario,provincias)
     return Personas
 
