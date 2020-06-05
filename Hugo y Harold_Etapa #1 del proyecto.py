@@ -1,3 +1,7 @@
+
+#Authors: Hugo Méndez and Harold Ramírez
+#Date: May 24th 2020
+
 import random
 from datetime import date
 
@@ -70,6 +74,7 @@ def Crea_Fecha_Nac():
 
 def Calcula_Edad(Fecha_na):
     """    Function that calculates the age of a person, depending on his date of birth and the current date.
+    Then, returns the person's age.
 
     Keyword arguments:
     Fecha_na -- Contains the person's date of birth.
@@ -85,7 +90,7 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
     """    Function that creates a list to store persons. 
     Depending on the quantity of ID cards, the function creates persons, through a "for" loop.
     All of the attributes are randomly selected and saved in a dictionary, for each person.
-    Then, each dictionary is appended to the list.
+    Then, each dictionary is appended to the list. After that, returns the list.
 
     Keyword arguments:
     cedulas -- Dictionary that contains all the ID cards, previously created.
@@ -112,7 +117,7 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
     return Lista_Personas
 
 def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    """    Function that creates a person and add him to the list of persons. 
+    """    Function that creates a person and add him to the list of persons, after that, returns the list. 
     The attributes of this person are randomly selected.
 
     Keyword arguments:
@@ -143,7 +148,7 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colore
     return Personas
 
 def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    """    Function that creates a person and add him to the list of persons. 
+    """    Function that creates a person and add him to the list of persons, after that, returns the list. 
     The attributes of this person are selected by the administrator user.
 
     Keyword arguments:
@@ -367,6 +372,7 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
 
 def Administrador(Personas):
     """    Is the "Administrador" user's function, it allows him to create a new person either manually or automatically.
+    Then, the new person is added to the persons's list and returns the list.
     The "Administrador" user can do this process as many times as he wants.
 
     Keyword arguments:
@@ -567,8 +573,15 @@ def Analista(Personas):
     return
 
 def Impresion_Datos_Usuario(usuario,mensaje):
+    """Function that shows the "Usuario" user's personal information.
+
+    Keyword arguments:
+    usuario -- Dictionary that contains all the information (attributes) of the selected user.
+    mensaje -- String with a message that is wished to print.
+    """
+    #The message and "Usuario" user's personal information are printed.
     print("\n ________________________________________________________________________________ ")
-    print("|                                                                                |")
+    print("|                                                                                |") 
     print("|                         ",mensaje,"                   |")
     print("|________________________________________________________________________________|")
     print("| Cédula        | Edad   | Provincia      | Género         | Grupo Etario        |")
@@ -597,8 +610,14 @@ def Impresion_Datos_Usuario(usuario,mensaje):
     return
 
 def Modificar_emocion(usuario,emociones):
+    """Allows to the "Usuario" user modify his emotion.
+
+    Keyword arguments:
+    usuario -- Dictionary that contains all the information (attributes) of the selected user.
+    emociones -- Dictionary that contains the emotions.
+    """
     emocion = 0
-    while emocion not in range(1,9):
+    while emocion not in range(1,9):                  #There is a menu, where the "Usuario" can select the emotion that he wants.
         print("\n****************************************")
         print("*                                      *") 
         print("*           Emoción                    *")   
@@ -615,13 +634,19 @@ def Modificar_emocion(usuario,emociones):
         emocion = int(input("Digite un número correspondiente con el menú: "))
         if emocion not in range(1,9):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-    usuario[7] = emociones[emocion]
-    Impresion_Datos_Usuario(usuario,"Ahora esta es su nueva información")
+    usuario[7] = emociones[emocion]                                        #The previous emotion is replaced by the chosen emotion.
+    Impresion_Datos_Usuario(usuario,"Ahora esta es su nueva información")  #The "Impresion_Datos_Usuario" function is called.
     return 
 
 def Modificar_provincia(usuario, provincias):
+    """Allows to the "Usuario" user modify his province.
+
+    Keyword arguments:
+    usuario -- Dictionary that contains all the information (attributes) of the selected user.
+    provincias -- Dictionary that contains the provinces.
+    """
     provincia = 0
-    while provincia not in range(1,8):
+    while provincia not in range(1,8):       #There is a menu, where the "Usuario" can select the province that he wants.
         print("\n****************************************")
         print("*                                      *")
         print("*          Provincias                  *")   
@@ -637,8 +662,8 @@ def Modificar_provincia(usuario, provincias):
         provincia = int(input("Digite un número correspondiente con el menú: "))
         if provincia not in range(1,8):
             print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-    usuario[2] = provincias[provincia]
-    Impresion_Datos_Usuario(usuario,"Ahora esta es su nueva información")
+    usuario[2] = provincias[provincia]                                    #The previous province is replaced by the chosen province.
+    Impresion_Datos_Usuario(usuario,"Ahora esta es su nueva información") #The "Impresion_Datos_Usuario" function is called.
     return
 
 def Usuario(Personas,emociones,provincias):
@@ -650,10 +675,10 @@ def Usuario(Personas,emociones,provincias):
     emociones -- Dictionary that contains the emotions.
     provincias -- Dictionary that contains the provinces.
     """
-    usuario = random.choice(Personas)   #The user is randomly selected from de persons's list.
+    usuario = random.choice(Personas)   #The user is randomly selected from the persons's list.
     comando = 0
     Impresion_Datos_Usuario(usuario,"Esta es su información actual     ")   #The "Impresion_Datos_Usuario" function is called.
-    while comando < 3:    #There is a menu, where the "Usuario" can select the option that he wants.
+    while comando < 3:                              #There is a menu, where the "Usuario" can select the option that he wants.
         print("\n**************************************************************************")
         print("*                                                                        *")
         print("*        Los atributos que se pueden modificar son los siguientes        *")
@@ -671,37 +696,46 @@ def Usuario(Personas,emociones,provincias):
     return Personas
 
 def validar_contraseña(contraseña,comando,Personas):
+    """    Function that verify the user password, independently of which user was chosen ("Usuario", "Analista", or "Administrador").
+
+    Keyword arguments:
+    contraseña -- The typed password.
+    comando -- Number that indicates which user was chosen ("Usuario", "Analista", or "Administrador").
+    Personas -- The list with persons.
+    """
     if comando == 1 :        
-        while contraseña != "admi123" :
+        while contraseña != "admi123" : #If the typed password was incorrect, the user has to type it again or return to the menu
             contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Administrador")
-        Personas = Administrador(Personas)
+        Administrador(Personas)         #If the typed password was correct, the "Administrador" function is called
         
     elif comando == 2 :
-        while contraseña != "ana456" :
+        while contraseña != "ana456" :  #If the typed password was incorrect, the user has to type it again or return to the menu
             contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Analista")
-        Analista(Personas)
+        Analista(Personas)              #If the typed password was correct, the "Analista" function is called
 
     else :
-        while contraseña != "usu789" :
+        while contraseña != "usu789" :  #If the typed password was incorrect, the user has to type it again or return to the menu
             contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
             if contraseña == "0" :
                 return
         print("\nIngresó como Usuario")
-        Usuario(Personas,  Crea_emociones(), Crea_provincias())
+        Usuario(Personas,  Crea_emociones(), Crea_provincias()) #If the typed password was correct, the "Usuario" function is called
     return 
 
 def login():
+    """Is the main function, allows select as which user login."""
     comando = 0
+    #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
     Personas = Crea_Personas(Crea_cedulas(100), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
         print("\n*******************************************************")
-        print("*                                                     *")
+        print("*                                                     *")  #There is a menu for select as which user login
         print("* Digite:  1     para ingresar como Administrador     *")
         print("* Digite:  2     para ingresar como Analista          *")
         print("* Digite:  3     para ingresar como Usuario           *")
@@ -710,8 +744,8 @@ def login():
         print("*******************************************************\n")
         comando=int(input("Digite un número correspondiente con el menú: "))
         if comando < 4 :
-            contraseña = input("\nDigite su contraseña: ")
-            validar_contraseña(contraseña,comando,Personas)
+            contraseña = input("\nDigite su contraseña: ")    #The password is typed, even if it's incorrect
+            validar_contraseña(contraseña,comando,Personas)   #The "validar_contraseña" function is called
         else :
             print("\n********************\n*   Hasta luego!   *\n********************")
             return
