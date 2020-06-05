@@ -365,39 +365,57 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
     Personas.append(dic_persona)                                 #The dictionary is appended to the person's list
     return Personas
 
-def Administrador(comando,Personas):
-    while comando < 3:
+def Administrador(Personas):
+    """    Is the administrator user's function, it allows him to create a new person either manually or automatically.
+    The administrator user can do this process as many times as he wants.
+
+    Keyword arguments:
+    Personas -- The list with persons.
+    """
+    comando = 0
+    while comando < 3:   #There is a menu, where the administrator can select the option that he wants.
         print("\n*********************************************************")
-        print("*                                                       *") 
+        print("*                                                       *")   
         print("* Digite:  1     para crear persona automáticamente     *")   
         print("* Digite:  2     para crear persona manualmente         *")
         print("* Digite: #>2    para regresar                          *") 
         print("*                                                       *")  
         print("*********************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-        if comando == 1:
+        if comando == 1:                                                       #Option number 1: Create a person automatically
             Personas = Crear_Persona_Auto(Personas,Crea_cedulas(1),Crea_provincias(),Crea_accesorios(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
-        elif comando == 2:
+        elif comando == 2:                                                     #Option number 2: Create a person manually
             Personas = Crear_Persona_Manual(Personas,Crea_cedulas(1),Crea_provincias(),Crea_accesorios(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
     return Personas
 
-def Cuenta_Grupos_Etarios(Rango_edades,contador,Personas, provincia):
+def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
+    """    Function that recieves: the list with persons, an specific province, a dictionary with an ages range and a "comando" (number).
+    That number represents an specific age group, such as: babies, kids, teenagers, adults or older adults.
+    Depending on the number and the province recieved, the function searchs on the person's list and find out:
+    How many persons from that province and that age group there are on the list, then prints that quantity.
+
+    Keyword arguments:
+    Rango_edades -- Dictionary that contains the limits for belong to an specific age group.
+    comando -- Number that represents an specific age group, such as: babies, kids, among others.
+    Personas -- The list with persons.
+    provincia -- An specific province indicated.
+    """
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
-    Grupo_Etario = 0
-    for i in range(0, (len(Personas))):
-        if Personas[i][2] == provincia and Personas[i][13] < Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:
-            Grupo_Etario += 1
+    Grupo_Etario = 0                     #Quantity of persons from the province and age group, previously stablished
+    for i in range(0, (len(Personas))):  #The list of persons is toured, looking for those persons
+        if Personas[i][2] == provincia and Personas[i][13] < Rango_edades[comando] and Personas[i][13] > Rango_edades[comando -1]:
+            Grupo_Etario += 1            #If someone is found, the quantity increases
     if Grupo_Etario < 10 :
         print("\n _______________________")
-        print("|",Grupos_Etarios[contador], "|", str(Grupo_Etario)+"  ","|")
+        print("|",Grupos_Etarios[comando], "|", str(Grupo_Etario)+"  ","|") #The quantity of persons from that age group is printed
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     elif Grupo_Etario < 100 :
         print("\n _______________________")
-        print("|",Grupos_Etarios[contador], "|", str(Grupo_Etario)+" ","|")
+        print("|",Grupos_Etarios[comando], "|", str(Grupo_Etario)+" ","|")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")        
     else: 
         print("\n _______________________")
-        print("|",Grupos_Etarios[contador], "|",Grupo_Etario,"|")
+        print("|",Grupos_Etarios[comando], "|",Grupo_Etario,"|")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")       
     return
 
@@ -629,7 +647,7 @@ def validar_contraseña(contraseña,comando,Personas):
             if contraseña == "0" :
                 return
         print("\nIngresó como Administrador")
-        Personas = Administrador(0,Personas)
+        Personas = Administrador(Personas)
         
     elif comando == 2 :
         while contraseña != "ana456" :
