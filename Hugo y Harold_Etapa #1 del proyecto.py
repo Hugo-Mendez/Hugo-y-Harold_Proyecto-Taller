@@ -732,7 +732,7 @@ def login():
     """Is the main function, allows select as which user login."""
     comando = 0
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas(Crea_cedulas(100), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Personas = Crea_Personas(Crea_cedulas(1580), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 4 :
         print("\n*******************************************************")
         print("*                                                     *")  #There is a menu for select as which user login
