@@ -53,6 +53,22 @@ class Color_de_piel:
     def get_Nombre(self):
         return self.Nombre
 
+class Forma_rostro:
+    def __init__(self):
+        self.ID = 0
+        self.Nombre = ""
+        return
+    def set_ID(self, identificador):
+        self.ID = identificador
+        return
+    def set_Nombre(self, nombre):
+        self.Nombre = nombre
+        return
+    def get_ID(self):
+        return self.ID 
+    def get_Nombre(self):
+        return self.Nombre 
+
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
     After, returns the dictionary.
@@ -110,7 +126,14 @@ def Crea_color_piel():
 def Crea_rostro():
     """Function that creates a dictionary which stores diferent face shapes (just six, in this case), then returns the dictionary."""
     rostro = {1: "Redondo    ", 2: "Alargado   ", 3: "Corazón    ", 4: "Cuadrado   ", 5: "Ovalado    ", 6: "Rectangular"}
-    return rostro
+    Obj_rostro = {}
+    for i in range(1,len(rostro)):
+        Obj_rostro[i] = rostro[i]
+    for e in range(1,len(Obj_rostro)):
+        Obj_rostro[e] = Forma_rostro()
+        Obj_rostro[e].set_ID(e)
+        Obj_rostro[e].set_Nombre(rostro[e])
+    return Obj_rostro
 
 def Crea_emociones():
     """Function that creates a dictionary which stores diferent expressions (just eight, in this case), then returns the dictionary."""
@@ -478,7 +501,7 @@ def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
     Grupo_Etario = 0                     #Quantity of persons from the province and age group, previously stablished
     for i in range(0, (len(Personas))):  #The list of persons is toured, looking for those persons
-        if Personas[i][2].get_Nombre() == provincia and Personas[i][13] < Rango_edades[comando] and Personas[i][13] > Rango_edades[comando -1]:
+        if Personas[i][2].get_Nombre() == provincia and Personas[i][13] <= Rango_edades[comando] and Personas[i][13] > Rango_edades[comando -1]:
             Grupo_Etario += 1            #If someone is found, the quantity increases
     if Grupo_Etario < 10 :
         print("\n _______________________")
@@ -502,7 +525,7 @@ def Informes_Provincias(Personas):
     Personas -- The list with persons.
     """
     Provincias = Crea_provincias()
-    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}        #Dictionary that contains the limits for belong to an specific age group.
+    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 100}        #Dictionary that contains the limits for belong to an specific age group.
     print("\n _________________________________________________")
     print("|     Estadística por provincia en Costa Rica     |")
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
@@ -516,7 +539,7 @@ def Informes_Provincias(Personas):
             Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e].get_Nombre())
             for i in range(0, (len(Personas))):         #The list of persons is toured.
                 if Personas[i][2].get_Nombre() == Provincias[e].get_Nombre():     #If someone from that province and that age group is found, his imformation is printed. 
-                    if Personas[i][13] < Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:       
+                    if Personas[i][13] <= Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:       
                         print(" ___________________________________________________________________________ ")
                         print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
                         if Personas[i][13] < 10:
@@ -526,7 +549,7 @@ def Informes_Provincias(Personas):
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
                         print("|___________________________________________________________________________|")
                         print("| Color de piel   | Forma del rostro   | Forma de ojos   | Color de ojos    |")
-                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6],"       |",Personas[i][11],"    |",Personas[i][12],"        |")
+                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6].get_Nombre(),"       |",Personas[i][11],"    |",Personas[i][12],"        |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
                         print("|___________________________________________________________________________|")
                         print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio  |")
@@ -546,14 +569,14 @@ def Informes_Grupos_Etarios(Personas):
     Personas -- The list with persons.
     """
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
-    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 99}       #Dictionary that contains the limits for belong to an specific age group.
+    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 100}       #Dictionary that contains the limits for belong to an specific age group.
     print("\n ____________________________________________________")
     print("|     Estadística por grupo etario en Costa Rica     |")
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
     for i in range(1, len(Rango_edades)):    #For each age group the list of persons will be toured.
         Total_etarios = 0                    #Quantity of persons per age group.
         for j in range(0, len(Personas)):    #The list of persons is toured.
-            if Personas[j][13] < Rango_edades[i] and Personas[j][13] > Rango_edades[i-1]: 
+            if Personas[j][13] <= Rango_edades[i] and Personas[j][13] > Rango_edades[i-1]: 
                 Total_etarios += 1           #If someone from that age group is found his quantity of persons increases.
         print("\n ____________________________________________________________")    #For each age group: his quantity of persons and his percentage are printed.
         print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ")  
