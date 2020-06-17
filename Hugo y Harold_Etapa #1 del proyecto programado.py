@@ -1,6 +1,6 @@
 
 #Authors: Hugo Méndez and Harold Ramírez
-#Date: May 24th 2020
+#Date: June 14th 2020
 
 import random
 from datetime import date
@@ -85,34 +85,6 @@ class Emocion:
     def get_Nombre(self):
         return self.Nombre
 
-class Cabello:
-    def __Init__(self):
-        self.ID = {}
-        self.Color = ""
-        self.Densidad = ""
-        self.Textura = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
-        return
-    def set_Color(self):
-        self.Color = self.ID[1]
-        return
-    def set_Densidad(self):
-        self.Densidad = self.ID[2]
-        return
-    def set_Textura(self):
-        self.set_Textura = self.ID[3]
-        return
-    def get_ID(self):
-        return self.ID 
-    def get_Color(self):
-        return self.Color
-    def get_Densidad(self):
-        return self.Densidad
-    def get_Textura(self):
-        return self.Textura 
-
 class Color_cabello:
     def __Init__(self):
         self.ID = 0
@@ -161,6 +133,34 @@ class Textura_cabello:
     def get_Textura(self):
         return self.Textura 
 
+class Cabello:
+    def __Init__(self):
+        self.ID = {}
+        self.Color = Color_cabello()
+        self.Densidad = Densidad_cabello()
+        self.Textura = Textura_cabello()
+        return
+    def set_ID(self, identificador):
+        self.ID = identificador
+        return
+    def set_Color(self):
+        self.Color = self.ID[1].get_Color()
+        return
+    def set_Densidad(self):
+        self.Densidad = self.ID[2].get_Densidad()
+        return
+    def set_Textura(self):
+        self.Textura = self.ID[3].get_Textura()
+        return
+    def get_ID(self):
+        return self.ID
+    def get_Color(self):
+        return self.Color
+    def get_Densidad(self):
+        return self.Densidad
+    def get_Textura(self):
+        return self.Textura
+
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
     After, returns the dictionary.
@@ -181,7 +181,7 @@ def Crea_provincias():
     for j in range(1, len(provincias)+1):
         Obj_provincia[j] = Provincia()
         Obj_provincia[j].set_ID(j)
-        Obj_provincia[j].set_Nombre(provincias[j])
+        Obj_provincia[j].set_Nombre(provincias[j])  
     return Obj_provincia
 
 def Crea_accesorios():
@@ -234,10 +234,12 @@ def Crea_Atributos_Cabello():
     These dictionaries stores diferent hair attributes (such as: color, density or texture), then returns the dictionary.
     """
     Atr_cabello = {1: {1:"Negro    ", 2:"Rubio    ", 3:"Café     ", 4:"Castaño  ", 5:"Gris     ", 6:"Invisible"},
-                   2: {1:"Escaso   ", 2:"Moderado ", 3:"Abundante"}, 3: {1:"Lacio   ", 2:"Ondulado", 3:"Rizado  "}}             
-    Obj_cabello = Atr_cabello.copy()
-    for i in range(1, len(Obj_cabello)+1):
-        for j in range(1, len(Obj_cabello[i])+1):
+                   2: {1:"Escaso   ", 2:"Moderado ", 3:"Abundante"}, 3: {1:"Lacio   ", 2:"Ondulado", 3:"Rizado  "}}    
+
+    Obj_cabello = {1: {1:"Negro    ", 2:"Rubio    ", 3:"Café     ", 4:"Castaño  ", 5:"Gris     ", 6:"Invisible"},
+                   2: {1:"Escaso   ", 2:"Moderado ", 3:"Abundante"}, 3: {1:"Lacio   ", 2:"Ondulado", 3:"Rizado  "}}
+    for i in range(1, len(Atr_cabello)+1):
+        for j in range(1, len(Atr_cabello[i])+1):
             if i == 1:
                 Obj_cabello[i][j] = Color_cabello()
                 Obj_cabello[i][j].set_ID(j)
@@ -303,12 +305,17 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
     for i in range(1,len(cedulas)+1):       #The dictionary that contains ID cards, is toured
         Fecha_na = Crea_Fecha_Nac()         #The function "Crea_Fecha_Nac" is called to generate a random date of birth
         Edad_Años = Calcula_Edad(Fecha_na)  #The function "Calcula_Edad" is called to calculate the person's age
+        cabello = {1: atri_cabello[1][random.randint(1,6)], 2: atri_cabello[2][random.randint(1,3)], 3: atri_cabello[3][random.randint(1,3)]}
+        Obj_Cabello = Cabello()
+        Obj_Cabello.set_ID({1: cabello[1], 2: cabello[2], 3: cabello[3]})
+        Obj_Cabello.set_Color()
+        Obj_Cabello.set_Densidad()
+        Obj_Cabello.set_Textura()
         dic_persona = {1: cedulas[random.randint(1,len(cedulas))], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
                        4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
                        6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
-                       8: atri_cabello[1][random.randint(1,6)], 9: atri_cabello[2][random.randint(1,3)],
-                       10: atri_cabello[3][random.randint(1,3)], 11: atri_ojos[1][random.randint(1,8)], 
-                       12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años} #The attributes are randomly selected and saved in a dictionary
+                       8: Obj_Cabello, 9: atri_ojos[1][random.randint(1,8)], 
+                       10: atri_ojos[2][random.randint(1,7)], 11: Edad_Años} #The attributes are randomly selected and saved in a dictionary
         Lista_Personas.append(dic_persona) #It is appended each dictionary to the person's list
     return Lista_Personas
 
@@ -333,18 +340,23 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colore
             nueva_cedula = Crea_cedulas(1)
     Fecha_na = Crea_Fecha_Nac()                   #The function "Crea_Fecha_Nac" is called to generate a random date of birth
     Edad_Años = Calcula_Edad(Fecha_na)            #The function "Calcula_Edad" is called to calculate the person's age
+    cabello = {1: atri_cabello[1][random.randint(1,6)], 2: atri_cabello[2][random.randint(1,3)], 3: atri_cabello[3][random.randint(1,3)]}
+    Obj_Cabello = Cabello()
+    Obj_Cabello.set_ID({1: cabello[1], 2: cabello[2], 3: cabello[3]})
+    Obj_Cabello.set_Color()
+    Obj_Cabello.set_Densidad()
+    Obj_Cabello.set_Textura()
     dic_persona = {1: nueva_cedula[1], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
                    4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
                    6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
-                   8: atri_cabello[1][random.randint(1,6)], 9: atri_cabello[2][random.randint(1,3)],
-                   10: atri_cabello[3][random.randint(1,3)], 11: atri_ojos[1][random.randint(1,8)], 
-                   12: atri_ojos[2][random.randint(1,7)], 13: Edad_Años}  #The attributes are randomly selected and saved in a dictionary
+                   8: Obj_Cabello, 9: atri_ojos[1][random.randint(1,8)], 
+                   10: atri_ojos[2][random.randint(1,7)], 11: Edad_Años}  #The attributes are randomly selected and saved in a dictionary
     Personas.append(dic_persona)                                          #The dictionary is appended to the person's list
     print("\nPersona creada y agregada a la lista satisfactoriamente")
     return Personas
-
+"""
 def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    """    Function that creates a person and add him to the list of persons, after that, returns the list. 
+        Function that creates a person and add him to the list of persons, after that, returns the list. 
     The attributes of this person are selected by the administrator user.
 
     Keyword arguments:
@@ -358,7 +370,7 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
     emociones -- Dictionary that contains all the possible expressions.
     atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain all the possible hair attributes.
     atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain all the possible eye attributes.
-    """
+    
     for i in range(1, (len(Personas)+1)):  #The list of persons is toured to comprove that the new ID card isn't repeat
         while nueva_cedula[1] == Personas[i-1][1]: #If the new ID card already exist, another one is created
             nueva_cedula = Crea_cedulas(1)
@@ -565,7 +577,7 @@ def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colo
                    12: atri_ojos[2][Color_ojos], 13: Edad_Años}  #It is created a dictionary with each attribute, previously selected by the administrator                                       
     Personas.append(dic_persona)                                 #The dictionary is appended to the person's list
     return Personas
-
+"""
 def Administrador(Personas):
     """    Is the "Administrador" user's function, it allows him to create a new person either manually or automatically.
     Then, the new person is added to the persons's list and returns the list.
@@ -605,7 +617,7 @@ def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, ID_provincia):
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
     Grupo_Etario = 0                     #Quantity of persons from the province and age group, previously stablished
     for i in range(0, (len(Personas))):  #The list of persons is toured, looking for those persons
-        if Personas[i][2].get_ID() == ID_provincia and Personas[i][13] <= Rango_edades[comando] and Personas[i][13] > Rango_edades[comando -1]:
+        if Personas[i][2].get_ID() == ID_provincia and Personas[i][11] <= Rango_edades[comando] and Personas[i][11] > Rango_edades[comando -1]:
             Grupo_Etario += 1            #If someone is found, the quantity increases
     if Grupo_Etario < 10 :
         print("\n _______________________")
@@ -643,21 +655,21 @@ def Informes_Provincias(Personas):
             Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e].get_ID())
             for i in range(0, (len(Personas))):         #The list of persons is toured.
                 if Personas[i][2].get_ID() == Provincias[e].get_ID():     #If someone from that province and that age group is found, his imformation is printed. 
-                    if Personas[i][13] <= Rango_edades[contador] and Personas[i][13] > Rango_edades[contador -1]:       
+                    if Personas[i][11] <= Rango_edades[contador] and Personas[i][11] > Rango_edades[contador -1]:       
                         print(" ___________________________________________________________________________ ")
                         print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
-                        if Personas[i][13] < 10:
-                            print("|", Personas[i][1],"    |",str(Personas[i][13])+" ","      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
+                        if Personas[i][11] < 10:
+                            print("|", Personas[i][1],"    |",str(Personas[i][11])+" ","      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
                         else:
-                            print("|", Personas[i][1],"    |",Personas[i][13],"      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
+                            print("|", Personas[i][1],"    |",Personas[i][11],"      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
                         print("|___________________________________________________________________________|")
                         print("| Color de piel   | Forma del rostro   | Forma de ojos   | Color de ojos    |")
-                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6].get_Nombre(),"       |",Personas[i][11],"    |",Personas[i][12],"        |")
+                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6].get_Nombre(),"       |",Personas[i][9],"    |",Personas[i][10],"        |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
                         print("|___________________________________________________________________________|")
                         print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio  |")
-                        print("|", Personas[i][8], "        |", Personas[i][9], "          |", Personas[i][10], "          |", Personas[i][3],"  |")
+                        print("|", Personas[i][8].get_Color(), "        |", Personas[i][8].get_Densidad(), "          |", Personas[i][8].get_Textura(), "          |", Personas[i][3],"  |")
                         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
                         print("---------------------------------------------------------------------------------")
                         PersonasProvi += 1                                     #The quantity of persons from that province increases.
@@ -680,7 +692,7 @@ def Informes_Grupos_Etarios(Personas):
     for i in range(1, len(Rango_edades)):    #For each age group the list of persons will be toured.
         Total_etarios = 0                    #Quantity of persons per age group.
         for j in range(0, len(Personas)):    #The list of persons is toured.
-            if Personas[j][13] <= Rango_edades[i] and Personas[j][13] > Rango_edades[i-1]: 
+            if Personas[j][11] <= Rango_edades[i] and Personas[j][11] > Rango_edades[i-1]: 
                 Total_etarios += 1           #If someone from that age group is found his quantity of persons increases.
         print("\n ____________________________________________________________")    #For each age group: his quantity of persons and his percentage are printed.
         print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ")  
