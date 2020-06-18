@@ -7,159 +7,151 @@ from datetime import date
 
 class Provincia:
     def __init__(self):
-        self.ID = 0
         self.Nombre = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Nombre(self, nombre):
         self.Nombre = nombre
         return
-    def get_ID(self):
-        return self.ID 
     def get_Nombre(self):
         return self.Nombre 
 
 class Genero:
     def __init__(self):
-        self.ID = 0
         self.Nombre = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Nombre(self, nombre):
         self.Nombre = nombre
         return
-    def get_ID(self):
-        return self.ID 
     def get_Nombre(self):
         return self.Nombre
 
 class Color_de_piel:
     def __init__(self):
-        self.ID = 0
         self.Nombre = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Nombre(self, nombre):
         self.Nombre = nombre
         return
-    def get_ID(self):
-        return self.ID 
     def get_Nombre(self):
         return self.Nombre
 
 class Forma_rostro:
     def __init__(self):
-        self.ID = 0
         self.Nombre = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Nombre(self, nombre):
         self.Nombre = nombre
         return
-    def get_ID(self):
-        return self.ID 
     def get_Nombre(self):
         return self.Nombre 
 
 class Emocion:
     def __Init__(self):
-        self.ID = 0
         self.Nombre = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Nombre(self, nombre):
         self.Nombre = nombre
         return
-    def get_ID(self):
-        return self.ID 
     def get_Nombre(self):
         return self.Nombre
 
 class Color_cabello:
     def __Init__(self):
-        self.ID = 0
         self.Color = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Color(self, color):
         self.Color = color
         return
-    def get_ID(self):
-        return self.ID 
     def get_Color(self):
         return self.Color 
 
 class Densidad_cabello:
     def __Init__(self):
-        self.ID = 0
         self.Densidad = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Densidad(self, densidad):
         self.Densidad = densidad
         return
-    def get_ID(self):
-        return self.ID
     def get_Densidad(self):
         return self.Densidad 
 
 class Textura_cabello:
     def __Init__(self):
-        self.ID = 0
         self.Textura = ""
-        return
-    def set_ID(self, identificador):
-        self.ID = identificador
         return
     def set_Textura(self, textura):
         self.Textura = textura
         return
-    def get_ID(self):
-        return self.ID
     def get_Textura(self):
         return self.Textura 
 
 class Cabello:
     def __Init__(self):
-        self.ID = {}
+        self.Atributos_cabello = {}
         self.Color = Color_cabello()
         self.Densidad = Densidad_cabello()
         self.Textura = Textura_cabello()
         return
-    def set_ID(self, identificador):
-        self.ID = identificador
+    def set_Atributos_cabello(self, objetos):
+        self.Atributos_cabello = objetos 
         return
     def set_Color(self):
-        self.Color = self.ID[1].get_Color()
+        self.Color = self.Atributos_cabello[1].get_Color()
         return
     def set_Densidad(self):
-        self.Densidad = self.ID[2].get_Densidad()
+        self.Densidad = self.Atributos_cabello[2].get_Densidad()
         return
     def set_Textura(self):
-        self.Textura = self.ID[3].get_Textura()
+        self.Textura = self.Atributos_cabello[3].get_Textura()
         return
-    def get_ID(self):
-        return self.ID
+    def get_Atributos_cabello(self):
+        return self.Atributos_cabello
     def get_Color(self):
         return self.Color
     def get_Densidad(self):
         return self.Densidad
     def get_Textura(self):
         return self.Textura
+
+class Color_ojos:
+    def ___init__(self):
+        self.Color = ""
+        return
+    def set_Color(self, color):
+        self.Color = color
+        return
+    def get_Color(self):
+        return self.Color
+
+class Forma_ojos:
+    def ___init__(self):
+        self.Forma = ""
+        return
+    def set_Forma(self, forma):
+        self.Forma = forma
+        return
+    def get_Forma(self):
+        return self.Forma 
+
+class Ojos:
+    def __init__(self):
+        self.Atributos_ojos = {}
+        self.Forma = Forma_ojos()
+        self.Color = Color_ojos()
+        return
+    def set_Atributos_ojos(self, objetos):
+        self.Atributos_ojos = objetos
+        return
+    def set_Forma(self):
+        self.Forma = self.Atributos_ojos[1].get_Forma()
+        return
+    def set_Color(self):
+        self.Color = self.Atributos_ojos[2].get_Color()
+        return
+    def get_Forma(self):
+        return self.Forma 
+    def get_Color(self):
+        return self.Color
 
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
@@ -180,7 +172,6 @@ def Crea_provincias():
     Obj_provincia = provincias.copy()
     for j in range(1, len(provincias)+1):
         Obj_provincia[j] = Provincia()
-        Obj_provincia[j].set_ID(j)
         Obj_provincia[j].set_Nombre(provincias[j])  
     return Obj_provincia
 
@@ -195,7 +186,6 @@ def Crea_genero():
     Obj_genero = genero.copy()
     for j in range(1, len(genero)+1):
         Obj_genero[j] = Genero()
-        Obj_genero[j].set_ID(j)
         Obj_genero[j].set_Nombre(genero[j])
     return Obj_genero
 
@@ -205,7 +195,6 @@ def Crea_color_piel():
     Obj_color_de_piel = colorpiel.copy()
     for j in range(1, len(colorpiel)+1):
         Obj_color_de_piel[j] = Color_de_piel()
-        Obj_color_de_piel[j].set_ID(j)
         Obj_color_de_piel[j].set_Nombre(colorpiel[j])
     return Obj_color_de_piel
 
@@ -215,7 +204,6 @@ def Crea_rostro():
     Obj_rostro = rostro.copy()
     for e in range(1,len(Obj_rostro)+1):
         Obj_rostro[e] = Forma_rostro()
-        Obj_rostro[e].set_ID(e)
         Obj_rostro[e].set_Nombre(rostro[e])
     return Obj_rostro
 
@@ -225,7 +213,6 @@ def Crea_emociones():
     Obj_emocion = emociones.copy()
     for e in range(1, len(emociones)+1):
         Obj_emocion[e] = Emocion()
-        Obj_emocion[e].set_ID(e)
         Obj_emocion[e].set_Nombre(emociones[e])
     return Obj_emocion
 
@@ -242,15 +229,12 @@ def Crea_Atributos_Cabello():
         for j in range(1, len(Atr_cabello[i])+1):
             if i == 1:
                 Obj_cabello[i][j] = Color_cabello()
-                Obj_cabello[i][j].set_ID(j)
                 Obj_cabello[i][j].set_Color(Atr_cabello[i][j])
             elif i == 2:
                 Obj_cabello[i][j] = Densidad_cabello()
-                Obj_cabello[i][j].set_ID(j)
                 Obj_cabello[i][j].set_Densidad(Atr_cabello[i][j])
             else:
                 Obj_cabello[i][j] = Textura_cabello()
-                Obj_cabello[i][j].set_ID(j)
                 Obj_cabello[i][j].set_Textura(Atr_cabello[i][j])
     return Obj_cabello 
 
@@ -260,8 +244,18 @@ def Crea_Atributos_Ojos():
     After, returns the dictionary.
     """
     Atr_ojos = {1: {1: "Almendrados", 2: "Separados  ", 3: "Redondos   ", 4: "Caídos     ", 5: "Saltones   ", 6: "Juntos     ", 7: "Profundos  ", 8: "Asiáticos  "},
-                2: {1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "}}       
-    return Atr_ojos
+                2: {1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "}}
+    Obj_ojos = {1: {1: "Almendrados", 2: "Separados  ", 3: "Redondos   ", 4: "Caídos     ", 5: "Saltones   ", 6: "Juntos     ", 7: "Profundos  ", 8: "Asiáticos  "},
+                2: {1: "Negro   ", 2: "Castaño ", 3: "Ámbar   ", 4: "Avellana", 5: "Verde   ", 6: "Azul    ", 7: "Gris    "}}  
+    for i in range(1, len(Obj_ojos)+1):
+        for j in range(1, len(Obj_ojos[i])+1):
+            if i == 1:
+                Obj_ojos[i][j] = Forma_ojos()
+                Obj_ojos[i][j].set_Forma(Atr_ojos[i][j])
+            else:
+                Obj_ojos[i][j] = Color_ojos()
+                Obj_ojos[i][j].set_Color(Atr_ojos[i][j])
+    return Obj_ojos 
 
 def Crea_Fecha_Nac(): 
     """    Function that generates a random date of birth: a random day since 1 to 30, month since 1 to 12 and year since 1920 to 2018).
@@ -307,15 +301,19 @@ def Crea_Personas(cedulas,provincias,accesorios,genero,colores_de_piel,rostro,em
         Edad_Años = Calcula_Edad(Fecha_na)  #The function "Calcula_Edad" is called to calculate the person's age
         cabello = {1: atri_cabello[1][random.randint(1,6)], 2: atri_cabello[2][random.randint(1,3)], 3: atri_cabello[3][random.randint(1,3)]}
         Obj_Cabello = Cabello()
-        Obj_Cabello.set_ID({1: cabello[1], 2: cabello[2], 3: cabello[3]})
+        Obj_Cabello.set_Atributos_cabello({1: cabello[1], 2: cabello[2], 3: cabello[3]})
         Obj_Cabello.set_Color()
         Obj_Cabello.set_Densidad()
         Obj_Cabello.set_Textura()
+        ojos = {1: atri_ojos[1][random.randint(1,8)], 2: atri_ojos[2][random.randint(1,7)]}
+        Obj_Ojos = Ojos()
+        Obj_Ojos.set_Atributos_ojos({1: ojos[1], 2: ojos[2]})
+        Obj_Ojos.set_Color()
+        Obj_Ojos.set_Forma()
         dic_persona = {1: cedulas[random.randint(1,len(cedulas))], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
                        4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
                        6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
-                       8: Obj_Cabello, 9: atri_ojos[1][random.randint(1,8)], 
-                       10: atri_ojos[2][random.randint(1,7)], 11: Edad_Años} #The attributes are randomly selected and saved in a dictionary
+                       8: Obj_Cabello, 9: Obj_Ojos, 10: Edad_Años} #The attributes are randomly selected and saved in a dictionary
         Lista_Personas.append(dic_persona) #It is appended each dictionary to the person's list
     return Lista_Personas
 
@@ -342,242 +340,23 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,accesorios,genero,colore
     Edad_Años = Calcula_Edad(Fecha_na)            #The function "Calcula_Edad" is called to calculate the person's age
     cabello = {1: atri_cabello[1][random.randint(1,6)], 2: atri_cabello[2][random.randint(1,3)], 3: atri_cabello[3][random.randint(1,3)]}
     Obj_Cabello = Cabello()
-    Obj_Cabello.set_ID({1: cabello[1], 2: cabello[2], 3: cabello[3]})
+    Obj_Cabello.set_Atributos_cabello({1: cabello[1], 2: cabello[2], 3: cabello[3]})
     Obj_Cabello.set_Color()
     Obj_Cabello.set_Densidad()
     Obj_Cabello.set_Textura()
+    ojos = {1: atri_ojos[1][random.randint(1,8)], 2: atri_ojos[2][random.randint(1,7)]}
+    Obj_Ojos = Ojos()
+    Obj_Ojos.set_Atributos_ojos({1: ojos[1], 2: ojos[2]})
+    Obj_Ojos.set_Color()
+    Obj_Ojos.set_Forma()
     dic_persona = {1: nueva_cedula[1], 2: provincias[random.randint(1,len(provincias))], 3: accesorios[random.randint(1,len(accesorios))],
                    4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
                    6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
-                   8: Obj_Cabello, 9: atri_ojos[1][random.randint(1,8)], 
-                   10: atri_ojos[2][random.randint(1,7)], 11: Edad_Años}  #The attributes are randomly selected and saved in a dictionary
+                   8: Obj_Cabello, 9: Obj_Ojos, 10: Edad_Años}  #The attributes are randomly selected and saved in a dictionary
     Personas.append(dic_persona)                                          #The dictionary is appended to the person's list
     print("\nPersona creada y agregada a la lista satisfactoriamente")
     return Personas
-"""
-def Crear_Persona_Manual(Personas,nueva_cedula,provincias,accesorios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-        Function that creates a person and add him to the list of persons, after that, returns the list. 
-    The attributes of this person are selected by the administrator user.
 
-    Keyword arguments:
-    Personas -- The list with persons.
-    nueva_cedula -- An ID card is generated trough the "Crea_cedulas" function.
-    provincias -- Dictionary that contains all the provinces of Costa Rica.
-    accesorios -- Dictionary that contains all the possible attributes.
-    genero -- Dictionary that contains the two possible genres.
-    colores_de_piel -- Dictionary that contains all the possible skin colors.
-    rostro -- Dictionary that contains all the possible face shapes.
-    emociones -- Dictionary that contains all the possible expressions.
-    atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain all the possible hair attributes.
-    atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain all the possible eye attributes.
-    
-    for i in range(1, (len(Personas)+1)):  #The list of persons is toured to comprove that the new ID card isn't repeat
-        while nueva_cedula[1] == Personas[i-1][1]: #If the new ID card already exist, another one is created
-            nueva_cedula = Crea_cedulas(1)
-    print("\nPara crear una persona manualmente por favor indica cada uno de los siguientes atributos:")
-
-    print("\nIngrese su fecha de nacimiento, en formato dd(1-30)/mm(1-12)/aaaa(1920-2019)")
-    dia = 0
-    mes = 0
-    año = 0
-    while dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020):
-        dia = int(input("\nIngrese el día de nacimiento: ")) #The administrator types the new person's date of birth
-        mes = int(input("\nIngrese el mes de nacimiento: "))
-        año = int(input("\nIngrese el año de nacimiento: "))
-        if dia not in range(1, 31) or mes not in range(1,13) or año not in range(1920, 2020): 
-            print("\nError: día, mes o año fuera del rango establecido") #If the date isn't in range, the administrator should type it again
-    fecha_naci = {1: dia, 2: mes, 3: año} #The day, month and year are saved in a dictionary, in that order 
-
-    F_rostro = 0
-    while F_rostro not in range(1,7): #There is a menu for each attribute
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*       Forma del rostro               *")   
-        print("* Digite:  1     para redondo          *")
-        print("* Digite:  2     para alargado         *")
-        print("* Digite:  3     para corazón          *")
-        print("* Digite:  4     para cuadrado         *")
-        print("* Digite:  5     para ovalado          *")
-        print("* Digite:  6     para rectangular      *") 
-        print("*                                      *")  
-        print("****************************************\n") #The administrator selects the option that he wants
-        F_rostro = int(input("Digite un número correspondiente con el menú: ")) 
-        if F_rostro not in range(1,7):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
-    
-    Color_piel = 0
-    while Color_piel not in range(1,6): #The same way for the next menus
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*        Color de piel                 *")   
-        print("* Digite:  1     para negra            *")
-        print("* Digite:  2     para marrón           *")             
-        print("* Digite:  3     para morena           *")
-        print("* Digite:  4     para clara            *")
-        print("* Digite:  5     para blanca           *")
-        print("*                                      *")  
-        print("****************************************\n")
-        Color_piel = int(input("Digite un número correspondiente con el menú: "))
-        if Color_piel not in range(1,6):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    emocion = 0
-    while emocion not in range(1,9):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*           Emoción                    *")   
-        print("* Digite:  1     para enfado           *")
-        print("* Digite:  2     para desprecio        *")
-        print("* Digite:  3     para disgusto         *")
-        print("* Digite:  4     para miedo            *")
-        print("* Digite:  5     para sorpresa         *")
-        print("* Digite:  6     para alegría          *")
-        print("* Digite:  7     para neutral          *") 
-        print("* Digite:  8     para tristeza         *")
-        print("*                                      *")  
-        print("****************************************\n")
-        emocion = int(input("Digite un número correspondiente con el menú: "))
-        if emocion not in range(1,9):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    Genero = 0
-    while Genero not in range(1,3):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*           Género                     *")   
-        print("* Digite:  1     para femenino         *")
-        print("* Digite:  2     para masculino        *")
-        print("*                                      *")  
-        print("****************************************\n")
-        Genero = int(input("Digite un número correspondiente con el menú: "))
-        if Genero not in range(1,3):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    accesorio = 0
-    while accesorio not in range(1,5):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*          Accesorio                   *")   
-        print("* Digite:  1     para lentes           *")
-        print("* Digite:  2     para aretes           *")
-        print("* Digite:  3     para piercing         *")
-        print("* Digite:  4     para ninguno          *")
-        print("*                                      *")  
-        print("****************************************\n")
-        accesorio = int(input("Digite un número correspondiente con el menú: "))
-        if accesorio not in range(1,5):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    color_cabello = 0
-    while color_cabello not in range(1,7):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*      Color del cabello               *")   
-        print("* Digite:  1     para negro            *")
-        print("* Digite:  2     para rubio            *")
-        print("* Digite:  3     para café             *")
-        print("* Digite:  4     para castaño          *")
-        print("* Digite:  5     para gris             *")
-        print("* Digite:  6     para invisible        *")
-        print("*                                      *")  
-        print("****************************************\n")
-        color_cabello = int(input("Digite un número correspondiente con el menú: "))
-        if color_cabello not in range(1,7):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    densidad_cabello = 0
-    while densidad_cabello not in range(1,4):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*      Densidad del cabello            *")   
-        print("* Digite:  1     para escaso           *")
-        print("* Digite:  2     para moderado         *")
-        print("* Digite:  3     para abundante        *")
-        print("*                                      *")  
-        print("****************************************\n")
-        densidad_cabello = int(input("Digite un número correspondiente con el menú: "))
-        if densidad_cabello not in range(1,4):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    textura_cabello = 0
-    while textura_cabello not in range(1,4):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*      Textura del cabello             *")   
-        print("* Digite:  1     para lacio            *")
-        print("* Digite:  2     para ondulado         *")
-        print("* Digite:  3     para rizado           *")
-        print("*                                      *")  
-        print("****************************************\n")
-        textura_cabello = int(input("Digite un número correspondiente con el menú: "))
-        if textura_cabello not in range(1,4):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    Forma_ojos = 0
-    while Forma_ojos not in range(1,9):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*      Forma de los ojos               *")   
-        print("* Digite:  1     para almendrados      *")
-        print("* Digite:  2     para separados        *")
-        print("* Digite:  3     para redondos         *")
-        print("* Digite:  4     para caídos           *")
-        print("* Digite:  5     para saltones         *")
-        print("* Digite:  6     para juntos           *")
-        print("* Digite:  7     para profundos        *")
-        print("* Digite:  8     para asiáticos        *") 
-        print("*                                      *")  
-        print("****************************************\n")
-        Forma_ojos = int(input("Digite un número correspondiente con el menú: "))
-        if Forma_ojos not in range(1,9):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
-
-    Color_ojos = 0
-    while Color_ojos not in range(1,8):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*       Color de los ojos              *")   
-        print("* Digite:  1     para negro            *")
-        print("* Digite:  2     para castaño          *")
-        print("* Digite:  3     para ámbar            *")
-        print("* Digite:  4     para abellana         *")
-        print("* Digite:  5     para verde            *")
-        print("* Digite:  6     para azul             *")
-        print("* Digite:  7     para gris             *") 
-        print("*                                      *")  
-        print("****************************************\n")
-        Color_ojos = int(input("Digite un número correspondiente con el menú: "))
-        if Color_ojos not in range(1,8):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.")
-
-    provincia = 0
-    while provincia not in range(1,8):
-        print("\n****************************************")
-        print("*                                      *") 
-        print("*          Provincias                  *")   
-        print("* Digite:  1     para San José         *")
-        print("* Digite:  2     para Alajuela         *")
-        print("* Digite:  3     para Cartago          *")
-        print("* Digite:  4     para Heredia          *")
-        print("* Digite:  5     para Puntarenas       *")
-        print("* Digite:  6     para Guanacaste       *")
-        print("* Digite:  7     para Limón            *") 
-        print("*                                      *")  
-        print("****************************************\n")
-        provincia = int(input("Digite un número correspondiente con el menú: "))
-        if provincia not in range(1,8):
-            print("\nDigito incorrecto, por favor digite un número correspondiente con el menú.") 
-    
-    Edad_Años = Calcula_Edad(fecha_naci)  #The function "Calcula_Edad" is called to calculate the person's age
-    dic_persona = {1: nueva_cedula[1], 2: provincias[provincia], 3: accesorios[accesorio],
-                   4: genero[Genero], 5: colores_de_piel[Color_piel],
-                   6: rostro[F_rostro], 7: emociones[emocion],
-                   8: atri_cabello[1][color_cabello], 9: atri_cabello[2][densidad_cabello],
-                   10: atri_cabello[3][textura_cabello], 11: atri_ojos[1][Forma_ojos], 
-                   12: atri_ojos[2][Color_ojos], 13: Edad_Años}  #It is created a dictionary with each attribute, previously selected by the administrator                                       
-    Personas.append(dic_persona)                                 #The dictionary is appended to the person's list
-    return Personas
-"""
 def Administrador(Personas):
     """    Is the "Administrador" user's function, it allows him to create a new person either manually or automatically.
     Then, the new person is added to the persons's list and returns the list.
@@ -602,7 +381,7 @@ def Administrador(Personas):
             Personas = Crear_Persona_Manual(Personas,Crea_cedulas(1),Crea_provincias(),Crea_accesorios(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
     return Personas
 
-def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, ID_provincia):
+def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
     """    Function that recieves: the list with persons, an specific province, a dictionary with an ages range and a "comando" (number).
     That number represents an specific age group, such as: babies, kids, teenagers, adults or older adults.
     Depending on the number and the province recieved, the function searchs on the person's list and find out:
@@ -617,7 +396,7 @@ def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, ID_provincia):
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
     Grupo_Etario = 0                     #Quantity of persons from the province and age group, previously stablished
     for i in range(0, (len(Personas))):  #The list of persons is toured, looking for those persons
-        if Personas[i][2].get_ID() == ID_provincia and Personas[i][11] <= Rango_edades[comando] and Personas[i][11] > Rango_edades[comando -1]:
+        if Personas[i][2].get_Nombre() == provincia and Personas[i][10] <= Rango_edades[comando] and Personas[i][10] > Rango_edades[comando -1]:
             Grupo_Etario += 1            #If someone is found, the quantity increases
     if Grupo_Etario < 10 :
         print("\n _______________________")
@@ -652,20 +431,20 @@ def Informes_Provincias(Personas):
         PersonasProvi = 0                      #Quantity of persons per province.
         contador = 1                           #Number that represents an specific age group(since babies to older adults).
         while contador < len(Rango_edades):    #For each age group, the function "Cuenta_Grupos_Etarios" is called.
-            Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e].get_ID())
+            Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e].get_Nombre())
             for i in range(0, (len(Personas))):         #The list of persons is toured.
-                if Personas[i][2].get_ID() == Provincias[e].get_ID():     #If someone from that province and that age group is found, his imformation is printed. 
-                    if Personas[i][11] <= Rango_edades[contador] and Personas[i][11] > Rango_edades[contador -1]:       
+                if Personas[i][2].get_Nombre() == Provincias[e].get_Nombre():     #If someone from that province and that age group is found, his imformation is printed. 
+                    if Personas[i][10] <= Rango_edades[contador] and Personas[i][10] > Rango_edades[contador -1]:       
                         print(" ___________________________________________________________________________ ")
                         print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
-                        if Personas[i][11] < 10:
-                            print("|", Personas[i][1],"    |",str(Personas[i][11])+" ","      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
+                        if Personas[i][10] < 10:
+                            print("|", Personas[i][1],"    |",str(Personas[i][10])+" ","      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
                         else:
-                            print("|", Personas[i][1],"    |",Personas[i][11],"      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
+                            print("|", Personas[i][1],"    |",Personas[i][10],"      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
                         print("|___________________________________________________________________________|")
                         print("| Color de piel   | Forma del rostro   | Forma de ojos   | Color de ojos    |")
-                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6].get_Nombre(),"       |",Personas[i][9],"    |",Personas[i][10],"        |")
+                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6].get_Nombre(),"       |",Personas[i][9].get_Forma(),"    |",Personas[i][9].get_Color(),"        |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
                         print("|___________________________________________________________________________|")
                         print("| Color cabello     | Densidad cabello    | Textura cabello    | Accesorio  |")
@@ -692,7 +471,7 @@ def Informes_Grupos_Etarios(Personas):
     for i in range(1, len(Rango_edades)):    #For each age group the list of persons will be toured.
         Total_etarios = 0                    #Quantity of persons per age group.
         for j in range(0, len(Personas)):    #The list of persons is toured.
-            if Personas[j][11] <= Rango_edades[i] and Personas[j][11] > Rango_edades[i-1]: 
+            if Personas[j][10] <= Rango_edades[i] and Personas[j][10] > Rango_edades[i-1]: 
                 Total_etarios += 1           #If someone from that age group is found his quantity of persons increases.
         print("\n ____________________________________________________________")    #For each age group: his quantity of persons and his percentage are printed.
         print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ")  
@@ -720,7 +499,7 @@ def Informes_Emociones(Personas):
     for i in range(1,len(Emociones)+1):                     #For each emotion the list of persons will be toured.
         Personas_Emocion = 0                                #Quantity of persons with that emotion.
         for j in range(0,len(Personas)):                    #The list of persons is toured.
-            if Personas[j][7].get_ID() == Emociones[i].get_ID():
+            if Personas[j][7].get_Nombre() == Emociones[i].get_Nombre():
                 Personas_Emocion += 1                       #If someone with that emotion is found, the quantity of persons with that emotion increases.    
         Cantidad_Emociones[i] = Personas_Emocion            #The quantity of persons with that emotion is added to the dictionary.
 
@@ -809,7 +588,7 @@ def login():
     """Is the main function, allows select as which user login."""
     comando = 0
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas(Crea_cedulas(110), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Personas = Crea_Personas(Crea_cedulas(170), Crea_provincias(), Crea_accesorios(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 3:
         print("\n*******************************************************")
         print("*                                                     *")  #There is a menu for select as which user login
