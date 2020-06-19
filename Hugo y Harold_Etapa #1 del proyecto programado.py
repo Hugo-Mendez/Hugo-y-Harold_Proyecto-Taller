@@ -258,7 +258,7 @@ class Persona:
         elif identificador == 2:
             return self.Vestuario.get_Calzado()
         else:
-            return self.Vesturaio.get_Ropa()
+            return self.Vestuario.get_Ropa()
     def get_Ojos(self, identificador):
         if identificador == 1:
             return self.Ojos.get_Forma()
@@ -511,7 +511,7 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,vestuarios,genero,colore
     atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain all the possible eye attributes.
     """
     for i in range(1, (len(Personas)+1)):  #The list of persons is toured to comprove that the new ID card isn't repeat
-        while nueva_cedula[1] == Personas[i-1][1]: #If the new ID card already exist, another one is created
+        while nueva_cedula[1] == Personas[i-1].get_Cedula(): #If the new ID card already exist, another one is created
             nueva_cedula = Crea_cedulas(1)
     Fecha_na = Crea_Fecha_Nac()                   #The function "Crea_Fecha_Nac" is called to generate a random date of birth
     Edad_Años = Calcula_Edad(Fecha_na)            #The function "Calcula_Edad" is called to calculate the person's age
@@ -580,15 +580,13 @@ def Administrador(Personas):
         print("\n*********************************************************")
         print("*                                                       *")   
         print("* Digite:  1     para crear persona automáticamente     *")   
-        print("* Digite:  2     para crear persona manualmente         *")
+        print("* Digite:  2     para modificar una persona             *")
         print("* Digite: #>2    para regresar                          *") 
         print("*                                                       *")  
         print("*********************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:                                                       #Option number 1: Create a person automatically
             Personas = Crear_Persona_Auto(Personas,Crea_cedulas(1),Crea_provincias(),Crea_vestuario(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
-        elif comando == 2:                                                     #Option number 2: Create a person manually
-            Personas = Crear_Persona_Manual(Personas,Crea_cedulas(1),Crea_provincias(),Crea_vestuario(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
     return Personas
 
 def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
@@ -660,7 +658,7 @@ def Informes_Provincias(Personas):
                         print("| Color cabello     | Densidad cabello    | Textura cabello    | Calzado    |")
                         print("|", Personas[i].get_Cabello(1), "        |", Personas[i].get_Cabello(2), "          |", Personas[i].get_Cabello(3), "          |", Personas[i].get_Vestuario(2),"  |")
                         print("\n| Accesorios        |")
-                        for x in range(0,len(Personas[i].get_Vestuario(1)):
+                        for x in range(0,len(Personas[i].get_Vestuario(1))):
                             print(Personas[i].get_Vestuario(1)[x].get_Accesorio())
                         print("\n| Vestuario         |")    
                         for y in range(0,len(Personas[i].get_Vestuario(3))):    
