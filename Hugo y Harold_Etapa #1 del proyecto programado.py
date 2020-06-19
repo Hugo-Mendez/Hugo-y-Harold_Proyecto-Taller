@@ -205,6 +205,83 @@ class Vestuario:
     def get_Accesorios(self):
         return self.Accesorios
 
+class Persona:
+    def __Init__(self):
+        self.Cedula = 0
+        self.Edad = 0
+        self.Vestuario = Vestuario()
+        self.Ojos = Ojos()
+        self.Cabello = Cabello()
+        self.Color_piel = Color_de_piel()
+        self.Genero = Genero()
+        self.Forma_rostro = Forma_rostro()
+        self.Emocion = Emocion()
+        self.Provincia = Provincia()
+        return
+    def set_Cedula(self, cedula):
+        self.Cedula = cedula
+        return
+    def set_Edad(self, edad):
+        self.Edad = edad
+        return
+    def set_Vestuario(self, vestuario):
+        self.Vestuario = vestuario
+        return
+    def set_Ojos(self, ojos):
+        self.Ojos = ojos
+        return
+    def set_Cabello(self, cabello):
+        self.Cabello = cabello
+        return
+    def set_Color_piel(self, color_piel):
+        self.Color_piel = color_piel
+        return
+    def set_Genero(self, genero):
+        self.Genero = genero
+        return
+    def set_Forma_rostro(self, forma_rostro):
+        self.Forma_rostro = forma_rostro
+        return
+    def set_Emocion(self, emocion):
+        self.Emocion = emocion
+        return
+    def set_Provincia(self, provincia):
+        self.Provincia = provincia 
+        return
+    def get_Cedula(self):
+        return self.Cedula
+    def get_Edad(self):
+        return self.Edad 
+    def get_Vestuario(self, identificador):
+        if identificador == 1:
+            return self.Vestuario.get_Accesorios()
+        elif identificador == 2:
+            return self.Vestuario.get_Calzado()
+        else:
+            return self.Vesturaio.get_Ropa()
+    def get_Ojos(self, identificador):
+        if identificador == 1:
+            return self.Ojos.get_Forma()
+        else:
+            return self.Ojos.get_Color()
+    def get_Cabello(self, identificador):
+        if identificador == 1:
+            return self.Cabello.get_Color()
+        elif identificador == 2:
+            return self.Cabello.get_Densidad()
+        else:
+            return self.Cabello.get_Textura()
+    def get_Color_piel(self):
+        return self.Color_piel.get_Nombre()
+    def get_Genero(self):
+        return self.Genero.get_Nombre()
+    def get_Forma_rostro(self):
+        return self.Forma_rostro.get_Nombre()
+    def get_Emocion(self):
+        return self.Emocion.get_Nombre()
+    def get_Provincia(self):
+        return self.Provincia.get_Nombre()
+
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
     After, returns the dictionary.
@@ -403,11 +480,18 @@ def Crea_Personas(cedulas,provincias,vestuarios,genero,colores_de_piel,rostro,em
         Obj_Vestuario.set_Calzado(calzado)
         Obj_Vestuario.set_Ropa(prendas)
 
-        dic_persona = {1: cedulas[random.randint(1,len(cedulas))], 2: provincias[random.randint(1,len(provincias))], 3: Obj_Vestuario,
-                       4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
-                       6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
-                       8: Obj_Cabello, 9: Obj_Ojos, 10: Edad_Años} #The attributes are randomly selected and saved in a dictionary
-        Lista_Personas.append(dic_persona) #It is appended each dictionary to the person's list
+        Obj_Persona = Persona()
+        Obj_Persona.set_Cedula(cedulas[random.randint(1,len(cedulas))])
+        Obj_Persona.set_Edad(Edad_Años)
+        Obj_Persona.set_Vestuario(Obj_Vestuario)
+        Obj_Persona.set_Ojos(Obj_Ojos)
+        Obj_Persona.set_Cabello(Obj_Cabello)
+        Obj_Persona.set_Color_piel(colores_de_piel[random.randint(1,len(colores_de_piel))])
+        Obj_Persona.set_Genero(genero[random.randint(1,len(genero))])
+        Obj_Persona.set_Forma_rostro(rostro[random.randint(1,len(rostro))])
+        Obj_Persona.set_Emocion(emociones[random.randint(1,len(emociones))])
+        Obj_Persona.set_Provincia(provincias[random.randint(1,len(provincias))])
+        Lista_Personas.append(Obj_Persona) #It is appended each dictionary to the person's list
     return Lista_Personas
 
 def Crear_Persona_Auto(Personas,nueva_cedula,provincias,vestuarios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
@@ -468,11 +552,18 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,vestuarios,genero,colore
     Obj_Vestuario.set_Calzado(calzado)
     Obj_Vestuario.set_Ropa(prendas)
 
-    dic_persona = {1: nueva_cedula[1], 2: provincias[random.randint(1,len(provincias))], 3: Obj_Vestuario,
-                   4: genero[random.randint(1,len(genero))], 5: colores_de_piel[random.randint(1,len(colores_de_piel))],
-                   6: rostro[random.randint(1,len(rostro))], 7: emociones[random.randint(1,len(emociones))],
-                   8: Obj_Cabello, 9: Obj_Ojos, 10: Edad_Años}  #The attributes are randomly selected and saved in a dictionary
-    Personas.append(dic_persona)                                          #The dictionary is appended to the person's list
+    Obj_Persona = Persona()
+    Obj_Persona.set_Cedula(nueva_cedula[1])
+    Obj_Persona.set_Edad(Edad_Años)
+    Obj_Persona.set_Vestuario(Obj_Vestuario)
+    Obj_Persona.set_Ojos(Obj_Ojos)
+    Obj_Persona.set_Cabello(Obj_Cabello)
+    Obj_Persona.set_Color_piel(colores_de_piel[random.randint(1,len(colores_de_piel))])
+    Obj_Persona.set_Genero(genero[random.randint(1,len(genero))])
+    Obj_Persona.set_Forma_rostro(rostro[random.randint(1,len(rostro))])
+    Obj_Persona.set_Emocion(emociones[random.randint(1,len(emociones))])
+    Obj_Persona.set_Provincia(provincias[random.randint(1,len(provincias))])
+    Personas.append(Obj_Persona)                                          #The dictionary is appended to the person's list
     print("\nPersona creada y agregada a la lista satisfactoriamente")
     return Personas
 
@@ -515,7 +606,7 @@ def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
     Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
     Grupo_Etario = 0                     #Quantity of persons from the province and age group, previously stablished
     for i in range(0, (len(Personas))):  #The list of persons is toured, looking for those persons
-        if Personas[i][2].get_Nombre() == provincia and Personas[i][10] <= Rango_edades[comando] and Personas[i][10] > Rango_edades[comando -1]:
+        if Personas[i].get_Provincia() == provincia and Personas[i].get_Edad() <= Rango_edades[comando] and Personas[i].get_Edad() > Rango_edades[comando -1]:
             Grupo_Etario += 1            #If someone is found, the quantity increases
     if Grupo_Etario < 10 :
         print("\n _______________________")
@@ -552,28 +643,28 @@ def Informes_Provincias(Personas):
         while contador < len(Rango_edades):    #For each age group, the function "Cuenta_Grupos_Etarios" is called.
             Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e].get_Nombre())
             for i in range(0, (len(Personas))):         #The list of persons is toured.
-                if Personas[i][2].get_Nombre() == Provincias[e].get_Nombre():     #If someone from that province and that age group is found, his imformation is printed. 
-                    if Personas[i][10] <= Rango_edades[contador] and Personas[i][10] > Rango_edades[contador -1]:       
+                if Personas[i].get_Provincia() == Provincias[e].get_Nombre():     #If someone from that province and that age group is found, his imformation is printed. 
+                    if Personas[i].get_Edad() <= Rango_edades[contador] and  Personas[i].get_Edad() > Rango_edades[contador -1]:       
                         print(" ___________________________________________________________________________ ")
                         print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
-                        if Personas[i][10] < 10:
-                            print("|", Personas[i][1],"    |",str(Personas[i][10])+" ","      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
+                        if  Personas[i].get_Edad() < 10:
+                            print("|", Personas[i].get_Cedula(),"    |",str(Personas[i].get_Edad())+" ","      |",Personas[i].get_Provincia(),"    |", Personas[i].get_Genero(),"    |",Personas[i].get_Emocion(),"    |")
                         else:
-                            print("|", Personas[i][1],"    |",Personas[i][10],"      |",Personas[i][2].get_Nombre(),"    |", Personas[i][4].get_Nombre(),"    |",Personas[i][7].get_Nombre(),"    |")
+                            print("|", Personas[i].get_Cedula(),"    |",Personas[i].get_Edad(),"      |",Personas[i].get_Provincia(),"    |", Personas[i].get_Genero(),"    |",Personas[i].get_Emocion(),"    |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
                         print("|___________________________________________________________________________|")
                         print("| Color de piel   | Forma del rostro   | Forma de ojos   | Color de ojos    |")
-                        print("|", Personas[i][5].get_Nombre(),"         |",Personas[i][6].get_Nombre(),"       |",Personas[i][9].get_Forma(),"    |",Personas[i][9].get_Color(),"        |")
+                        print("|", Personas[i].get_Color_piel(),"         |",Personas[i].get_Forma_rostro(),"       |",Personas[i].get_Ojos(1),"    |",Personas[i].get_Ojos(2),"        |")
                         print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
                         print("|___________________________________________________________________________|")
                         print("| Color cabello     | Densidad cabello    | Textura cabello    | Calzado    |")
-                        print("|", Personas[i][8].get_Color(), "        |", Personas[i][8].get_Densidad(), "          |", Personas[i][8].get_Textura(), "          |", Personas[i][3].get_Calzado(),"  |")
+                        print("|", Personas[i].get_Cabello(1), "        |", Personas[i].get_Cabello(2), "          |", Personas[i].get_Cabello(3), "          |", Personas[i].get_Vestuario(2),"  |")
                         print("\n| Accesorios        |")
-                        for x in range(0,len(Personas[i][3].get_Accesorios())):
-                            print(Personas[i][3].get_Accesorios()[x].get_Accesorio())
+                        for x in range(0,len(Personas[i].get_Vestuario(1)):
+                            print(Personas[i].get_Vestuario(1)[x].get_Accesorio())
                         print("\n| Vestuario         |")    
-                        for y in range(0,len(Personas[i][3].get_Ropa())):    
-                            print(Personas[i][3].get_Ropa()[y].get_Ropa())
+                        for y in range(0,len(Personas[i].get_Vestuario(3))):    
+                            print(Personas[i].get_Vestuario(3)[y].get_Ropa())
                         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
                         print("---------------------------------------------------------------------------------")
                         PersonasProvi += 1                                     #The quantity of persons from that province increases.
@@ -596,7 +687,7 @@ def Informes_Grupos_Etarios(Personas):
     for i in range(1, len(Rango_edades)):    #For each age group the list of persons will be toured.
         Total_etarios = 0                    #Quantity of persons per age group.
         for j in range(0, len(Personas)):    #The list of persons is toured.
-            if Personas[j][10] <= Rango_edades[i] and Personas[j][10] > Rango_edades[i-1]: 
+            if Personas[j].get_Edad() <= Rango_edades[i] and Personas[j].get_Edad() > Rango_edades[i-1]: 
                 Total_etarios += 1           #If someone from that age group is found his quantity of persons increases.
         print("\n ____________________________________________________________")    #For each age group: his quantity of persons and his percentage are printed.
         print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ")  
@@ -608,57 +699,7 @@ def Informes_Grupos_Etarios(Personas):
              print(" ", Total_etarios, "                      | ", round(Total_etarios*100/len(Personas), 1), "%")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
         print("-----------------------------------------------------------------------")
-    return
-
-def Informes_Emociones(Personas):
-    """    Function that shows the statistics per emotion in Costa Rica.
-
-    Keyword arguments:
-    Personas -- The list with persons.
-    """
-    Cantidad_Emociones = {}    #Dictionary that will contain the quantity of persons for each emotion.
-    Emociones = Crea_emociones()
-    print("\n                        ________________________________________________________________")
-    print("                       |     Estadística de emociones en las personas de Costa Rica     |")
-    print("                        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    for i in range(1,len(Emociones)+1):                     #For each emotion the list of persons will be toured.
-        Personas_Emocion = 0                                #Quantity of persons with that emotion.
-        for j in range(0,len(Personas)):                    #The list of persons is toured.
-            if Personas[j][7].get_Nombre() == Emociones[i].get_Nombre():
-                Personas_Emocion += 1                       #If someone with that emotion is found, the quantity of persons with that emotion increases.    
-        Cantidad_Emociones[i] = Personas_Emocion            #The quantity of persons with that emotion is added to the dictionary.
-
-    Lista_Clave_Valor = []                                  #List that will contain the key and value, for each element contained in the dictionary(Cantidad_Emociones).
-    for x in range(1, len(Cantidad_Emociones)+1):           #The dictionary "Cantidad_Emociones" is toured.
-        Lista_Clave_Valor.append(x)                         #The key is appended to the list.
-        Lista_Clave_Valor.append(Cantidad_Emociones[x])     #The value is appended to the list.
-
-    Cantidad_Emociones_Ordenadas = {}                       #Dictionary that will contain the same that "Cantidad_Emociones", but ordered from the highest value to the lowest.
-    for y in range(1, len(Cantidad_Emociones)+1):           #The dictionary "Cantidad_Emociones" is toured.
-        Mayor = max(Lista_Clave_Valor)                      #The max value is obtained.
-        Cantidad_Emociones_Ordenadas[Lista_Clave_Valor[(Lista_Clave_Valor.index(Mayor))-1]] = Mayor  #The key that contained the max value is added to the dictionary with his value.
-        Lista_Clave_Valor.remove(Mayor)                                                              #The max value is removed.
-    Lista_Claves_Ordenadas = list(Cantidad_Emociones_Ordenadas.keys())   #List that contains the keys of "Cantidad_Emociones_Ordenadas". 
-    print("              _______________________________________________________________________________________________")    #The statistics per emotion are printed.
-    print("             |",Emociones[Lista_Claves_Ordenadas[0]].get_Nombre(),"|",Emociones[Lista_Claves_Ordenadas[1]].get_Nombre(),"|",Emociones[Lista_Claves_Ordenadas[2]].get_Nombre(),"|",
-          Emociones[Lista_Claves_Ordenadas[3]].get_Nombre(),"|",Emociones[Lista_Claves_Ordenadas[4]].get_Nombre(),"|",Emociones[Lista_Claves_Ordenadas[5]].get_Nombre(),"|",
-          Emociones[Lista_Claves_Ordenadas[6]].get_Nombre(),"|",Emociones[Lista_Claves_Ordenadas[7]].get_Nombre(),"|")
-    print(" ____________|___________|___________|___________|___________|___________|___________|___________|___________|")
-    print("| Total     ","|",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[0]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[1]],"      |",
-          Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[2]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[3]],"      |",
-          Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[4]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[5]],"      |",
-          Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[6]],"      |",Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[7]],"      |")
-    print("|------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|")    
-    print("| Porcentaje","|",round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[0]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[1]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[2]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[3]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[4]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[5]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[6]]*100/len(Personas), 1),"%    |",
-          round(Cantidad_Emociones_Ordenadas[Lista_Claves_Ordenadas[7]]*100/len(Personas), 1),"%    |")
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    return        
+    return     
 
 def Analista(Personas):
     """    Is the "Analista" user's function, it allows him to apply for statatistics of the country.
@@ -668,7 +709,7 @@ def Analista(Personas):
     Personas -- The list with persons.
     """
     comando = 0
-    while comando < 3:    #There is a menu, where the "Analista" can select the option that he wants.
+    while comando < 2:    #There is a menu, where the "Analista" can select the option that he wants.
         print("\n************************************************************************************")
         print("*                                                                                  *") 
         print("* Digite:  1     para ver estadísticas por provincia y por grupo etario            *")  
@@ -680,8 +721,6 @@ def Analista(Personas):
         if comando == 1:                      #Option number 1: Show the statistics per province and age group in Costa Rica.
             Informes_Provincias(Personas)
             Informes_Grupos_Etarios(Personas)
-        elif comando == 2:                    #Option number 2: Show the statistics per emotion in Costa Rica.
-            Informes_Emociones(Personas)
     return
 
 def validar_contraseña(contraseña,comando,Personas):
