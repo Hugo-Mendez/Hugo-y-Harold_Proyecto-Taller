@@ -182,7 +182,7 @@ class Calzado:
         return
     def get_Calzado(self):
         return self.Nombre
-       
+
 class Vestuario:
     def __init__(self):
         self.Ropa = []
@@ -306,12 +306,12 @@ def Crea_provincias():
 
 def Crea_vestuario():
     """Function that creates a dictionary which stores the accessories, then returns the dictionary."""
-    vestuarios = {1: {1: "Lentes  ", 2: "Aretes  ", 3: "Piercing", 4: "Collar", 5: "Anillo", 6: "Reloj", 
+    vestuarios = {1: {1: "Lentes  ", 2: "Aretes  ", 3: "Piercing", 4: "Collar", 5: "Anillo", 6: "Reloj ", 
                   7: "Brazalete", 8: "Diadema", 9: "Vincha", 10: "Monóculo"}, 
-                  2: {1: "Camiseta", 2: "Camisa", 3: "Blusa", 4: "Pantalón", 5: "Falda", 6: "Abrigo", 7: "Vestido",
-                  8: "Calcetines", 9: "Pantaloneta", 10: "Pantalones cortos", 11: "Saco", 12: "Corbata", 13: "Sombrero",
-                  14: "Bufanda" }, 3: {1: "Oxford", 2: "Sandalias", 3: "Tenis", 4: "Mocasines", 5: "Botas",
-                  6: "Botines de vestir", 7: "Brogue", 8: "Monk", 9: "Derby", 10: "Tacones"}}
+                  2: {1: "Camiseta", 2: "Camisa", 3: "Blusa ", 4: "Pantalón", 5: "Falda ", 6: "Abrigo", 7: "Vestido",
+                  8: "Calcetines", 9: "Pantaloneta", 10: "Shorts", 11: "Saco  ", 12: "Corbata", 13: "Sombrero",
+                  14: "Bufanda" }, 3: {1: "Oxford", 2: "Sandalias", 3: "Tenis ", 4: "Mocasines", 5: "Botas ",
+                  6: "Botines", 7: "Brogue", 8: "Monk  ", 9: "Derby ", 10: "Tacones"}}
     Obj_vestuarios = copy.deepcopy(vestuarios)
     for i in range(1, len(vestuarios)+1):
         for e in range(1, len(vestuarios[i])+1):
@@ -567,6 +567,108 @@ def Crear_Persona_Auto(Personas,nueva_cedula,provincias,vestuarios,genero,colore
     print("\nPersona creada y agregada a la lista satisfactoriamente")
     return Personas
 
+def Muestra_InfoP(Persona_seleccionada,mensaje):
+    print(" ___________________________________ ")
+    print("|",mensaje,"|")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+    print("\t _______________ ")
+    print("\t| Calzado       |")
+    print("\t|---------------|")
+    print("\t|",Persona_seleccionada.get_Vestuario(2),"\t|")
+    print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+    print("\t _______________ ")
+    print("\t| Accesorios    |")
+    print("\t|---------------|")
+    for x in range(0,len(Persona_seleccionada.get_Vestuario(1))):
+        print("\t|",Persona_seleccionada.get_Vestuario(1)[x].get_Accesorio(),"\t|")
+    print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+    print("\t _______________ ")        
+    print("\t| Vestuario     |")  
+    print("\t|---------------|")  
+    for y in range(0,len(Persona_seleccionada.get_Vestuario(3))):    
+        print("\t|",Persona_seleccionada.get_Vestuario(3)[y].get_Ropa(),"\t|")
+    print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+    return
+
+def Modificar_Persona(Persona_seleccionada,vestuarios):
+    Muestra_InfoP(Persona_seleccionada,"  Esta es su vestimenta actual   ")
+    comando = 0
+    while comando < 4:
+        print("\n*********************************************************")
+        print("*                                                       *")   
+        print("* Digite:  1     para agregar una prenda                *")  
+        print("* Digite:  2     para agregar un accesorio              *") 
+        print("* Digite:  3     para cambiar su calzado                *")
+        print("* Digite: #>3    para regresar                          *") 
+        print("*                                                       *")  
+        print("*********************************************************\n")
+        comando = int(input("Digite un número correspondiente con el menú: "))
+        if comando <4:
+
+            if comando == 1:
+                print("Prendas disponibles")
+                print(" _______________________________ ")
+                for j in range(1,len(vestuarios[2])+1):
+                    print("|","Prenda #",j,"\t",vestuarios[2][j].get_Ropa(),"\t|")
+                print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")     
+                prenda_agregar = int(input("Digite un número correspondiente con la prenda que desea agregar: "))
+                while prenda_agregar not in range(1,15):
+                    print("Digito incorrecto")
+                    prenda_agregar = int(input("Por favor digite un número correspondiente con la prenda que desea agregar: "))
+                Persona_seleccionada.get_Vestuario(3).append(vestuarios[2][prenda_agregar])
+
+            elif comando == 2:
+                print("Accesorios disponibles")
+                print(" _______________________________________ ")
+                for j in range(1,len(vestuarios[1])+1):
+                    print("|","Accesorio #",j,"\t",vestuarios[1][j].get_Accesorio(),"\t|")
+                print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
+                accesorio_agregar = int(input("Digite un número correspondiente con el accesorio que desea agregar: "))
+                while accesorio_agregar not in range(1,11):
+                    print("Digito incorrecto")
+                    accesorio_agregar = int(input("Por favor digite un número correspondiente con el accesorio que desea agregar: "))
+                Persona_seleccionada.get_Vestuario(1).append(vestuarios[1][accesorio_agregar])
+                
+            else:
+                print("Calzados disponibles")
+                print(" _______________________________ ")
+                for j in range(1,len(vestuarios[3])+1):
+                    print("|","Calzado #",j,"\t",vestuarios[3][j].get_Calzado(),"\t|")
+                print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")     
+                calzado_cambiar = int(input("Digite un número correspondiente con el calzado que desea: "))
+                while calzado_cambiar not in range(1,11):
+                    print("Digito incorrecto")
+                    calzado_cambiar = int(input("Por favor digite un número correspondiente con el calzado que desea : "))
+                Nuevo_vestuario = Vestuario()
+                Nuevo_vestuario.set_Accesorios(Persona_seleccionada.get_Vestuario(1))
+                Nuevo_vestuario.set_Ropa(Persona_seleccionada.get_Vestuario(3))
+                Nuevo_vestuario.set_Calzado(vestuarios[3][calzado_cambiar])
+                Persona_seleccionada.set_Vestuario(Nuevo_vestuario)
+            Muestra_InfoP(Persona_seleccionada,"Ahora esta es su nueva vestimenta")
+        else:
+            return
+    return Persona_seleccionada
+
+def Seleccionar_PersonaM(Personas):
+    Muestra_de_personas = []
+    for i in range(1,6):
+        Muestra_de_personas.append(random.choice(Personas))
+    print("Seleccione la cedula de la persona que desea modificar")
+    print("\n***************************************")
+    print("*                                     *")
+    for e in range(0,len(Muestra_de_personas)):
+        print("*   Digite:  ",e+1,"    para:",Muestra_de_personas[e].get_Cedula(),"  *")
+    print("*   Digite:  #>5    para: regresar    *")
+    print("*                                     *")
+    print("***************************************\n")
+    comando = int(input("Digite un número correspondiente con el menú: "))
+    if comando < 6 :
+        Persona_seleccionada = Muestra_de_personas[comando-1]
+        Persona_seleccionada = Modificar_Persona(Persona_seleccionada, Crea_vestuario())
+    else:
+        return Personas
+    return Personas
+
 def Administrador(Personas):
     """    Is the "Administrador" user's function, it allows him to create a new person either manually or automatically.
     Then, the new person is added to the persons's list and returns the list.
@@ -587,6 +689,8 @@ def Administrador(Personas):
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:                                                       #Option number 1: Create a person automatically
             Personas = Crear_Persona_Auto(Personas,Crea_cedulas(1),Crea_provincias(),Crea_vestuario(),Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
+        elif comando == 2:
+            Personas = Seleccionar_PersonaM(Personas)
     return Personas
 
 def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
