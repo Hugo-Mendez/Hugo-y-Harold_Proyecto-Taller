@@ -693,115 +693,36 @@ def Administrador(Personas):
             Personas = Seleccionar_PersonaM(Personas)
     return Personas
 
-def Cuenta_Grupos_Etarios(Rango_edades,comando,Personas, provincia):
-    """    Function that recieves: the list with persons, an specific province, a dictionary with an ages range and a "comando" (number).
-    That number represents an specific age group, such as: babies, kids, teenagers, adults or older adults.
-    Depending on the number and the province recieved, the function searchs on the person's list and find out:
-    How many persons from that province and that age group there are on the list, then prints that quantity.
+def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
+    Personas_provincia = 0
+    Personas_accesorio = 0
+    for i in Personas:
+        if i.get_Genero() == genero.get_Nombre() and i.get_Provincia() == provincia.get_Nombre():
+            Personas_provincia += 1
+            if accesorio in i.get_Vestuario(1):
+                Personas_accesorio += 1
+    return [Personas_accesorio, Personas_provincia]
 
-    Keyword arguments:
-    Rango_edades -- Dictionary that contains the limits for belong to an specific age group.
-    comando -- Number that represents an specific age group, such as: babies, kids, among others.
-    Personas -- The list with persons.
-    ID_provincia -- An specific province indicated.
-    """
-    Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
-    Grupo_Etario = 0                     #Quantity of persons from the province and age group, previously stablished
-    for i in range(0, (len(Personas))):  #The list of persons is toured, looking for those persons
-        if Personas[i].get_Provincia() == provincia and Personas[i].get_Edad() <= Rango_edades[comando] and Personas[i].get_Edad() > Rango_edades[comando -1]:
-            Grupo_Etario += 1            #If someone is found, the quantity increases
-    if Grupo_Etario < 10 :
-        print("\n _______________________")
-        print("|",Grupos_Etarios[comando], "|", str(Grupo_Etario)+"  ","|") #The quantity of persons from that age group is printed
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    elif Grupo_Etario < 100 :
-        print("\n _______________________")
-        print("|",Grupos_Etarios[comando], "|", str(Grupo_Etario)+" ","|")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")        
-    else: 
-        print("\n _______________________")
-        print("|",Grupos_Etarios[comando], "|",Grupo_Etario,"|")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")       
+def Consultar_accesorio(Personas, vestuario, provincias, genero):
+    print("Accesorios disponibles")
+    print(" _______________________________________ ")
+    for j in range(1,len(vestuario[1])+1):
+        print("|","Accesorio #",j,"\t",vestuario[1][j].get_Accesorio(),"\t|")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
+    accesorio_buscar = int(input("Digite un número correspondiente con el accesorio que desea consultar: "))
+    while accesorio_buscar not in range(1,11):
+        print("Digito incorrecto")
+        accesorio_buscar = int(input("Por favor digite un número correspondiente con el accesorio que desea consultar: "))
+    
+    for i in range(1, len(genero)+1):
+        print(genero[i].get_Nombre())
+        for e in range(1, len(provincias)+1):
+            cantidad_personas = Cuenta_P_Accesorios(Personas, genero[i], provincias[e], vestuario[1][accesorio_buscar])
+            print(provincias[e].get_Nombre(), "\t", cantidad_personas[0], "\t" , round((cantidad_personas[0] * 100) / cantidad_personas[1], 2))   
+    return 
+
+def Consultar_personas(Personas, vestuario, ojos, cabello, color_piel, genero, forma_rostro, emocion, provincia):
     return
-
-def Informes_Provincias(Personas):
-    """    Function that shows the statistics per province(population density) in Costa Rica.  
-    For each person shows his personal information, such as: ID card, age, genre, among others. 
-
-    Keyword arguments:
-    Personas -- The list with persons.
-    """
-    Provincias = Crea_provincias()
-    Rango_edades = {0: 0, 1: 4, 2: 11, 3: 17, 4: 64, 5: 100}        #Dictionary that contains the limits for belong to an specific age group.
-    print("\n _________________________________________________")
-    print("|     Estadística por provincia en Costa Rica     |")
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    for e in range(1,(len(Provincias)+1)):     #For each province the list of persons will be toured.
-        print("\n ___________")
-        print("|",Provincias[e].get_Nombre())
-        print(" ¯¯¯¯¯¯¯¯¯¯¯")
-        PersonasProvi = 0                      #Quantity of persons per province.
-        contador = 1                           #Number that represents an specific age group(since babies to older adults).
-        while contador < len(Rango_edades):    #For each age group, the function "Cuenta_Grupos_Etarios" is called.
-            Cuenta_Grupos_Etarios(Rango_edades, contador, Personas, Provincias[e].get_Nombre())
-            for i in range(0, (len(Personas))):         #The list of persons is toured.
-                if Personas[i].get_Provincia() == Provincias[e].get_Nombre():     #If someone from that province and that age group is found, his imformation is printed. 
-                    if Personas[i].get_Edad() <= Rango_edades[contador] and  Personas[i].get_Edad() > Rango_edades[contador -1]:       
-                        print(" ___________________________________________________________________________ ")
-                        print("| Cédula        | Edad     | Provincia      | Género        | Emoción       |")
-                        if  Personas[i].get_Edad() < 10:
-                            print("|", Personas[i].get_Cedula(),"    |",str(Personas[i].get_Edad())+" ","      |",Personas[i].get_Provincia(),"    |", Personas[i].get_Genero(),"    |",Personas[i].get_Emocion(),"    |")
-                        else:
-                            print("|", Personas[i].get_Cedula(),"    |",Personas[i].get_Edad(),"      |",Personas[i].get_Provincia(),"    |", Personas[i].get_Genero(),"    |",Personas[i].get_Emocion(),"    |")
-                        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")    
-                        print("|___________________________________________________________________________|")
-                        print("| Color de piel   | Forma del rostro   | Forma de ojos   | Color de ojos    |")
-                        print("|", Personas[i].get_Color_piel(),"         |",Personas[i].get_Forma_rostro(),"       |",Personas[i].get_Ojos(1),"    |",Personas[i].get_Ojos(2),"        |")
-                        print("|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|")
-                        print("|___________________________________________________________________________|")
-                        print("| Color cabello     | Densidad cabello    | Textura cabello    | Calzado    |")
-                        print("|", Personas[i].get_Cabello(1), "        |", Personas[i].get_Cabello(2), "          |", Personas[i].get_Cabello(3), "          |", Personas[i].get_Vestuario(2),"  |")
-                        print("\n| Accesorios        |")
-                        for x in range(0,len(Personas[i].get_Vestuario(1))):
-                            print(Personas[i].get_Vestuario(1)[x].get_Accesorio())
-                        print("\n| Vestuario         |")    
-                        for y in range(0,len(Personas[i].get_Vestuario(3))):    
-                            print(Personas[i].get_Vestuario(3)[y].get_Ropa())
-                        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-                        print("---------------------------------------------------------------------------------")
-                        PersonasProvi += 1                                     #The quantity of persons from that province increases.
-            contador += 1                                                      #The "contador" increases, looking for the next age group.
-        print("\nTotal de personas en ",Provincias[e].get_Nombre(),":",PersonasProvi,"\n")  #The quantity of persons for each province is printed.
-        print("---------------------------------------------------------------------------------")
-    return
-
-def Informes_Grupos_Etarios(Personas):
-    """    Function that shows the statistics per age group in Costa Rica.
-
-    Keyword arguments:
-    Personas -- The list with persons.
-    """
-    Grupos_Etarios = {1: "Bebés          " , 2: "Niños          ", 3: "Adolescentes   ", 4: "Adultos        ", 5: "Adultos mayores"}
-    Rango_edades = {0: 0, 1: 4, 2: 12, 3: 18, 4: 60, 5: 100}       #Dictionary that contains the limits for belong to an specific age group.
-    print("\n ____________________________________________________")
-    print("|     Estadística por grupo etario en Costa Rica     |")
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-    for i in range(1, len(Rango_edades)):    #For each age group the list of persons will be toured.
-        Total_etarios = 0                    #Quantity of persons per age group.
-        for j in range(0, len(Personas)):    #The list of persons is toured.
-            if Personas[j].get_Edad() <= Rango_edades[i] and Personas[j].get_Edad() > Rango_edades[i-1]: 
-                Total_etarios += 1           #If someone from that age group is found his quantity of persons increases.
-        print("\n ____________________________________________________________")    #For each age group: his quantity of persons and his percentage are printed.
-        print("  Total de", Grupos_Etarios[i]," |  Porcentaje de", Grupos_Etarios[i], " ")  
-        if Total_etarios < 10: 
-            print(" ", str(Total_etarios)+"                         | ", round(Total_etarios*100/len(Personas), 1), "%")
-        elif Total_etarios < 100 :
-            print(" ", str(Total_etarios)+"                        | ", round(Total_etarios*100/len(Personas), 1), "%")
-        else:
-             print(" ", Total_etarios, "                      | ", round(Total_etarios*100/len(Personas), 1), "%")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-        print("-----------------------------------------------------------------------")
-    return     
 
 def Analista(Personas):
     """    Is the "Analista" user's function, it allows him to apply for statatistics of the country.
@@ -811,18 +732,20 @@ def Analista(Personas):
     Personas -- The list with persons.
     """
     comando = 0
-    while comando < 2:    #There is a menu, where the "Analista" can select the option that he wants.
+    while comando < 3:    #There is a menu, where the "Analista" can select the option that he wants.
         print("\n************************************************************************************")
         print("*                                                                                  *") 
-        print("* Digite:  1     para ver estadísticas por provincia y por grupo etario            *")  
-        print("* Digite:  2     para ver estadísticas de emoción en las personas de Costa Rica    *")
+        print("* Digite:  1     para ver estadísticas por accesorio en Costa Rica                 *")  
+        print("* Digite:  2     para ver información de personas con caracteristicas deseadas     *")
         print("* Digite: #>2    para regresar                                                     *") 
         print("*                                                                                  *")  
         print("************************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:                      #Option number 1: Show the statistics per province and age group in Costa Rica.
-            Informes_Provincias(Personas)
-            Informes_Grupos_Etarios(Personas)
+            Consultar_accesorio(Personas, Crea_vestuario(), Crea_provincias(), Crea_genero())
+        elif comando == 2:
+            Consultar_personas(Personas, Crea_vestuario(), Crea_Atributos_Ojos(), Crea_Atributos_Cabello(), Crea_color_piel(), Crea_genero(),
+            Crea_rostro(), Crea_emociones(), Crea_provincias())
     return
 
 def validar_contraseña(contraseña,comando,Personas):
