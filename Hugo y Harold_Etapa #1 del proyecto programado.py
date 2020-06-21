@@ -699,8 +699,13 @@ def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
     for i in Personas:
         if i.get_Genero() == genero.get_Nombre() and i.get_Provincia() == provincia.get_Nombre():
             Personas_provincia += 1
-            if accesorio in i.get_Vestuario(1):
-                Personas_accesorio += 1
+            bandera = True
+            while bandera == True:
+                for j in i.get_Vestuario(1):
+                    if j.get_Accesorio() == accesorio.get_Accesorio():
+                        Personas_accesorio += 1
+                        bandera = False
+                bandera = False
     return [Personas_accesorio, Personas_provincia]
 
 def Consultar_accesorio(Personas, vestuario, provincias, genero):
@@ -708,17 +713,35 @@ def Consultar_accesorio(Personas, vestuario, provincias, genero):
     print(" _______________________________________ ")
     for j in range(1,len(vestuario[1])+1):
         print("|","Accesorio #",j,"\t",vestuario[1][j].get_Accesorio(),"\t|")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     accesorio_buscar = int(input("Digite un número correspondiente con el accesorio que desea consultar: "))
     while accesorio_buscar not in range(1,11):
         print("Digito incorrecto")
         accesorio_buscar = int(input("Por favor digite un número correspondiente con el accesorio que desea consultar: "))
-    
+    TOTAL = 0
     for i in range(1, len(genero)+1):
-        print(genero[i].get_Nombre())
+        Total_personas = 0
+        Total_accesorios = 0
+        print("\n\t\t       ___________ ")
+        print("\t\t     ","|",genero[i].get_Nombre(),"|")
+        print("\t\t       ¯¯¯¯¯¯¯¯¯¯¯ ")
+        print(" ____________________________________________________ ")
+        print("| Provincia","\t|","Personas que lo usan","\t|","Porcentaje |")
+        print("|---------------|-----------------------|------------|")
         for e in range(1, len(provincias)+1):
             cantidad_personas = Cuenta_P_Accesorios(Personas, genero[i], provincias[e], vestuario[1][accesorio_buscar])
-            print(provincias[e].get_Nombre(), "\t", cantidad_personas[0], "\t" , round((cantidad_personas[0] * 100) / cantidad_personas[1], 2))   
+
+            print("|",provincias[e].get_Nombre(), "\t|\t", cantidad_personas[0], "\t\t|",round((cantidad_personas[0] * 100) / cantidad_personas[1], 1),"%","    |")
+            print("|---------------|-----------------------|------------|")
+            Total_personas = Total_personas + cantidad_personas[1]
+            Total_accesorios = Total_accesorios + cantidad_personas[0]
+        print("|Total", genero[i].get_Nombre()+"|","Personas que lo usan ","|","Porcentaje |")    
+        print("|    ",Total_personas , "\t|\t", Total_accesorios, "\t\t|", round((Total_accesorios * 100) / Total_personas, 1),"%","    |")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+        TOTAL = TOTAL + Total_accesorios
+    print(" _____________________________________________________________ ")
+    print("| Total de personas que usan el accesorio en Costa Rica :",TOTAL,"|")   
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     return 
 
 def Consultar_personas(Personas, vestuario, ojos, cabello, color_piel, genero, forma_rostro, emocion, provincia):
