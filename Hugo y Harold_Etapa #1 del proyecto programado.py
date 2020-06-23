@@ -699,13 +699,8 @@ def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
     for i in Personas:
         if i.get_Genero() == genero.get_Nombre() and i.get_Provincia() == provincia.get_Nombre():
             Personas_provincia += 1
-            bandera = True
-            while bandera == True:
-                for j in i.get_Vestuario(1):
-                    if j.get_Accesorio() == accesorio.get_Accesorio():
-                        Personas_accesorio += 1
-                        bandera = False
-                bandera = False
+            if accesorio in i.get_Vestuario(1):
+                Personas_accesorio += 1
     return [Personas_accesorio, Personas_provincia]
 
 def Consultar_accesorio(Personas, vestuario, provincias, genero):
@@ -720,7 +715,7 @@ def Consultar_accesorio(Personas, vestuario, provincias, genero):
         accesorio_buscar = int(input("Por favor digite un número correspondiente con el accesorio que desea consultar: "))
     TOTAL = 0
     for i in range(1, len(genero)+1):
-        Total_personas = 0
+        Total_personas_genero = 0
         Total_accesorios = 0
         print("\n\t\t       ___________ ")
         print("\t\t     ","|",genero[i].get_Nombre(),"|")
@@ -733,10 +728,10 @@ def Consultar_accesorio(Personas, vestuario, provincias, genero):
 
             print("|",provincias[e].get_Nombre(), "\t|\t", cantidad_personas[0], "\t\t|",round((cantidad_personas[0] * 100) / cantidad_personas[1], 1),"%","    |")
             print("|---------------|-----------------------|------------|")
-            Total_personas = Total_personas + cantidad_personas[1]
+            Total_personas_genero = Total_personas_genero + cantidad_personas[1]
             Total_accesorios = Total_accesorios + cantidad_personas[0]
         print("|Total", genero[i].get_Nombre()+"|","Personas que lo usan ","|","Porcentaje |")    
-        print("|    ",Total_personas , "\t|\t", Total_accesorios, "\t\t|", round((Total_accesorios * 100) / Total_personas, 1),"%","    |")
+        print("|    ",Total_personas_genero , "\t|\t", Total_accesorios, "\t\t|", round((Total_accesorios * 100) / Total_personas_genero, 1),"%","    |")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
         TOTAL = TOTAL + Total_accesorios
     print(" _____________________________________________________________ ")
@@ -744,10 +739,38 @@ def Consultar_accesorio(Personas, vestuario, provincias, genero):
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     return 
 
-def Consultar_personas(Personas, vestuario, ojos, cabello, color_piel, genero, forma_rostro, emocion, provincia):
-    return
+def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador, lista_indices):
+    atributos_consultar = ["Colores de piel  ", "Género           ", "Formas del rostro", "Emociones        ", "Provincias       "]
+    if indicador > 4:
+        print("\n********************************************")
+        print("*                                          *") 
+        print("* Digite:  1     para bebés                *")  
+        print("* Digite:  2     para niños                *")
+        print("* Digite:  3     para adolescentes         *") 
+        print("* Digite:  4     para adultos              *") 
+        print("* Digite:  5     para adultos mayores      *") 
+        print("*                                          *")  
+        print("********************************************\n")
+        comando = int(input("Digite un número correspondiente con el grupo etario: "))
+        while comando not in range(1, 6):
+            print("Digito incorrecto")
+            comando = int(input("Por favor digite un número correspondiente con el menú: ")
+        lista_indices.append(comando)
 
-def Analista(Personas):
+        return
+    else:
+        print("\n",atributos_consultar[indicador])
+        print("_______________________________________")
+        for i in range(1, len(lista_caracteristicas[indicador])+1):
+            print("Digite", i, "para", lista_caracteristicas[indicador][i].get_Nombre())
+        caracteristica_deseada = int(input("Digite un número correspondiente con la caracteristica que desea consultar: "))
+        while caracteristica_deseada not in range(1, len(lista_caracteristicas[indicador])+1):
+            print("Digito incorrecto")
+            caracteristica_deseada = int(input("Por favor digite un número correspondiente con la caracteristica que desea consultar: "))
+        lista_indices.append(caracteristica_deseada)
+        Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador+1, lista_indices) 
+
+def Analista(Personas, vestuarios):
     """    Is the "Analista" user's function, it allows him to apply for statatistics of the country.
     The "Analista" user can do this process as many times as he wants.
 
@@ -765,13 +788,13 @@ def Analista(Personas):
         print("************************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:                      #Option number 1: Show the statistics per province and age group in Costa Rica.
-            Consultar_accesorio(Personas, Crea_vestuario(), Crea_provincias(), Crea_genero())
+            Consultar_accesorio(Personas, vestuarios, Crea_provincias(), Crea_genero())
         elif comando == 2:
-            Consultar_personas(Personas, Crea_vestuario(), Crea_Atributos_Ojos(), Crea_Atributos_Cabello(), Crea_color_piel(), Crea_genero(),
-            Crea_rostro(), Crea_emociones(), Crea_provincias())
+            Consultar_personas(Personas, vestuarios, Crea_Atributos_Ojos(), Crea_Atributos_Cabello(), [Crea_color_piel(), Crea_genero(),
+            Crea_rostro(), Crea_emociones(), Crea_provincias()], 0, [])
     return
 
-def validar_contraseña(contraseña,comando,Personas):
+def validar_contraseña(contraseña,comando,Personas, vestuarios):
     """    Function that verify the user password, independently of which user was chosen ("Usuario", "Analista", or "Administrador").
 
     Keyword arguments:
@@ -793,14 +816,15 @@ def validar_contraseña(contraseña,comando,Personas):
             if contraseña == "0" :
                 return
         print("\nIngresó como Analista")
-        Analista(Personas)              #If the typed password was correct, the "Analista" function is called
+        Analista(Personas, vestuarios)              #If the typed password was correct, the "Analista" function is called
     return 
 
 def login():
     """Is the main function, allows select as which user login."""
     comando = 0
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas(Crea_cedulas(1111), Crea_provincias(), Crea_vestuario(),Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    vestuarios = Crea_vestuario()
+    Personas = Crea_Personas(Crea_cedulas(900), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 3:
         print("\n*******************************************************")
         print("*                                                     *")  #There is a menu for select as which user login
@@ -812,7 +836,7 @@ def login():
         comando=int(input("Digite un número correspondiente con el menú: "))
         if comando < 3 :
             contraseña = input("\nDigite su contraseña: ")    #The password is typed, even if it's incorrect
-            validar_contraseña(contraseña,comando,Personas)   #The "validar_contraseña" function is called
+            validar_contraseña(contraseña,comando,Personas,vestuarios)   #The "validar_contraseña" function is called
         else :
             print("\n********************\n*   Hasta luego!   *\n********************")
             return
