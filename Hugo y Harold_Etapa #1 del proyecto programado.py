@@ -337,7 +337,7 @@ def Crea_genero():
 
 def Crea_color_piel():
     """Function that creates a dictionary which stores diferent skin colors (just five, in this case), then returns the dictionary."""
-    colorpiel = {1: "Negra ", 2: "Marrón", 3: "Morena", 4: "Clara ", 5: "Blanca"}
+    colorpiel = {1: "Negra       ", 2: "Marrón      ", 3: "Morena      ", 4: "Clara       ", 5: "Blanca      "}
     Obj_color_de_piel = colorpiel.copy()
     for j in range(1, len(colorpiel)+1):
         Obj_color_de_piel[j] = Color_de_piel()
@@ -734,35 +734,87 @@ def Consultar_accesorio(Personas, vestuario, provincias, genero):
         print("|    ",Total_personas_genero , "\t|\t", Total_accesorios, "\t\t|", round((Total_accesorios * 100) / Total_personas_genero, 1),"%","    |")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
         TOTAL = TOTAL + Total_accesorios
-    print(" _____________________________________________________________ ")
+    print(" ______________________________________________________________ ")
     print("| Total de personas que usan el accesorio en Costa Rica :",TOTAL,"|")   
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     return 
+
+def Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices):
+    Rango_edades = {0: 0, 1: 4, 2: 11, 3: 17, 4: 64, 5: 100}
+    bandera = False
+    for i in Personas:
+        if i.get_Edad() <= Rango_edades[lista_indices[5]] and i.get_Edad() > Rango_edades[(lista_indices[5])-1] and i.get_Color_piel() == lista_caracteristicas[0][lista_indices[0]].get_Nombre() and i.get_Genero() == lista_caracteristicas[1][lista_indices[1]].get_Nombre() and i.get_Forma_rostro() == lista_caracteristicas[2][lista_indices[2]].get_Nombre() and i.get_Emocion() == lista_caracteristicas[3][lista_indices[3]].get_Nombre() and i.get_Provincia() == lista_caracteristicas[4][lista_indices[4]].get_Nombre():
+            print("\n ___________________________________ ")
+            print("| Cédula:", i.get_Cedula(),"                |")
+            print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            Muestra_InfoP(i, "            Vestuario            ")
+            print(" ___________________________________ ")
+            print("|               Ojos                |")
+            print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print("\t _______________ ")
+            print("\t| Forma         |")
+            print("\t|---------------|")
+            print("\t|",i.get_Ojos(1),"\t|")
+            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print("\t _______________ ")
+            print("\t| Color         |")
+            print("\t|---------------|")
+            print("\t|",i.get_Ojos(2),"\t|")
+            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print(" ___________________________________ ")
+            print("|             Cabello               |")
+            print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print("\t _______________ ")
+            print("\t| Color         |")
+            print("\t|---------------|")
+            print("\t|",i.get_Cabello(1),"\t|")
+            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print("\t _______________ ")
+            print("\t| Densidad      |")
+            print("\t|---------------|")
+            print("\t|",i.get_Cabello(2),"\t|")
+            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print("\t _______________ ")
+            print("\t| Textura       |")
+            print("\t|---------------|")
+            print("\t|",i.get_Cabello(3),"\t|")
+            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+            print("---------------------------------------------------------")
+            bandera = True
+    if bandera == False:
+        print("\n __________________________________________ ")
+        print("| No hay personas con esas caracteristicas |")    
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
+    return
 
 def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador, lista_indices):
     atributos_consultar = ["Colores de piel  ", "Género           ", "Formas del rostro", "Emociones        ", "Provincias       "]
     if indicador > 4:
-        print("\n********************************************")
-        print("*                                          *") 
-        print("* Digite:  1     para bebés                *")  
-        print("* Digite:  2     para niños                *")
-        print("* Digite:  3     para adolescentes         *") 
-        print("* Digite:  4     para adultos              *") 
-        print("* Digite:  5     para adultos mayores      *") 
-        print("*                                          *")  
-        print("********************************************\n")
+        print("\n ___________________ ")
+        print("| Grupos Etarios    |")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+        print(" ________________________________ ")
+        print("| Digite: 1 para bebés           |")  
+        print("| Digite: 2 para niños           |")
+        print("| Digite: 3 para adolescentes    |") 
+        print("| Digite: 4 para adultos         |") 
+        print("| Digite: 5 para adultos mayores |") 
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
         comando = int(input("Digite un número correspondiente con el grupo etario: "))
         while comando not in range(1, 6):
             print("Digito incorrecto")
-            comando = int(input("Por favor digite un número correspondiente con el menú: ")
+            comando = int(input("Por favor digite un número correspondiente con el menú: "))
         lista_indices.append(comando)
-
+        Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices)
         return
     else:
-        print("\n",atributos_consultar[indicador])
-        print("_______________________________________")
+        print("\n ___________________ ")
+        print("|",atributos_consultar[indicador],"|")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+        print(" _______________________________ ")
         for i in range(1, len(lista_caracteristicas[indicador])+1):
-            print("Digite", i, "para", lista_caracteristicas[indicador][i].get_Nombre())
+            print("| Digite:", i, "para", lista_caracteristicas[indicador][i].get_Nombre(),"\t|")
+        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
         caracteristica_deseada = int(input("Digite un número correspondiente con la caracteristica que desea consultar: "))
         while caracteristica_deseada not in range(1, len(lista_caracteristicas[indicador])+1):
             print("Digito incorrecto")
@@ -824,7 +876,7 @@ def login():
     comando = 0
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
     vestuarios = Crea_vestuario()
-    Personas = Crea_Personas(Crea_cedulas(900), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Personas = Crea_Personas(Crea_cedulas(15000), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 3:
         print("\n*******************************************************")
         print("*                                                     *")  #There is a menu for select as which user login
