@@ -592,36 +592,49 @@ def Crear_Persona_Auto(Personas,cedulas,provincias,vestuarios,genero,colores_de_
     return Personas
 
 def Muestra_InfoP(Persona_seleccionada,mensaje):
+    """    Function that shows the clothing of the person selected.
+
+    Keyword arguments:
+    Persona_seleccionada -- The "Persona" object selected
+    mensaje -- A simple message to distinguish between the current clothing of the person and the previous clothing
+    """
     print(" ___________________________________ ")
     print("|",mensaje,"|")
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     print("\t _______________ ")
     print("\t| Calzado       |")
     print("\t|---------------|")
-    print("\t|",Persona_seleccionada.get_Vestuario(2),"\t|")
-    print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
+    print("\t|",Persona_seleccionada.get_Vestuario(2),"\t|")     #The person's kind of shoes is printed
+    print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")                                 #For do that, the "get_Vestuario(2)" method is applied
     print("\t _______________ ")
     print("\t| Accesorios    |")
     print("\t|---------------|")
-    for x in range(0,len(Persona_seleccionada.get_Vestuario(1))):
-        print("\t|",Persona_seleccionada.get_Vestuario(1)[x].get_Accesorio(),"\t|")
+    for x in range(0,len(Persona_seleccionada.get_Vestuario(1))):                   #The person's accessories are printed
+        print("\t|",Persona_seleccionada.get_Vestuario(1)[x].get_Accesorio(),"\t|") #For do that, the "get_Vestuario(1)" method is applied
     print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     print("\t _______________ ")        
     print("\t| Vestuario     |")  
     print("\t|---------------|")  
-    for y in range(0,len(Persona_seleccionada.get_Vestuario(3))):    
-        print("\t|",Persona_seleccionada.get_Vestuario(3)[y].get_Ropa(),"\t|")
+    for y in range(0,len(Persona_seleccionada.get_Vestuario(3))):               #The person's clothing is printed  
+        print("\t|",Persona_seleccionada.get_Vestuario(3)[y].get_Ropa(),"\t|")  #For do that, the "get_Vestuario(2)" method is applied
     print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     return
 
 def Modificar_Persona(Persona_seleccionada,vestuarios):
-    Muestra_InfoP(Persona_seleccionada,"  Esta es su vestimenta actual   ")
+    """    Function that allows the Administrator user to modify the clothing of the selected person.
+    Finally, returns the person.
+
+    Keyword arguments:
+    Persona_seleccionada -- The "Persona" object selected by the administrator
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    """
+    Muestra_InfoP(Persona_seleccionada,"  Esta es su vestimenta actual   ") #The "Muestra_InfoP" function is called
     comando = 0
     while comando < 4:
         print("\n*********************************************************")
         print("*                                                       *")   
         print("* Digite:  1     para agregar una prenda                *")  
-        print("* Digite:  2     para agregar un accesorio              *") 
+        print("* Digite:  2     para agregar un accesorio              *") #There is a menu to select the option to perform
         print("* Digite:  3     para cambiar su calzado                *")
         print("* Digite: #>3    para regresar                          *") 
         print("*                                                       *")  
@@ -631,75 +644,82 @@ def Modificar_Persona(Persona_seleccionada,vestuarios):
 
             if comando == 1:
                 print("Prendas disponibles")
-                print(" _______________________________ ")
-                for j in range(1,len(vestuarios[2])+1):
-                    print("|","Prenda #",j,"\t",vestuarios[2][j].get_Ropa(),"\t|")
+                print(" _______________________________ ")                         #All the clothes are printed, to select one to add 
+                for j in range(1,len(vestuarios[2])+1):    
+                    print("|","Prenda #",j,"\t",vestuarios[2][j].get_Ropa(),"\t|") #For do that, the "get_Ropa" method is applied
                 print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")     
                 prenda_agregar = int(input("Digite un número correspondiente con la prenda que desea agregar: "))
                 while prenda_agregar not in range(1,15):
                     print("Digito incorrecto")
                     prenda_agregar = int(input("Por favor digite un número correspondiente con la prenda que desea agregar: "))
-                Persona_seleccionada.get_Vestuario(3).append(vestuarios[2][prenda_agregar])
-
+                Persona_seleccionada.get_Vestuario(3).append(vestuarios[2][prenda_agregar]) #The kind of clothing selected
+                                                                                            #Is appended to the person's clothing list
             elif comando == 2:
                 print("Accesorios disponibles")
-                print(" _______________________________________ ")
+                print(" _______________________________________ ")                   #All the accessories are printed, to select one to add 
                 for j in range(1,len(vestuarios[1])+1):
-                    print("|","Accesorio #",j,"\t",vestuarios[1][j].get_Accesorio(),"\t|")
+                    print("|","Accesorio #",j,"\t",vestuarios[1][j].get_Accesorio(),"\t|") #For do that, the "get_Accesorio" method is applied
                 print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
                 accesorio_agregar = int(input("Digite un número correspondiente con el accesorio que desea agregar: "))
                 while accesorio_agregar not in range(1,11):
-                    print("Digito incorrecto")
+                    print("Digito incorrecto")                                      
                     accesorio_agregar = int(input("Por favor digite un número correspondiente con el accesorio que desea agregar: "))
-                Persona_seleccionada.get_Vestuario(1).append(vestuarios[1][accesorio_agregar])
-                
+                Persona_seleccionada.get_Vestuario(1).append(vestuarios[1][accesorio_agregar]) #The accessorie selected
+                                                                                               #Is appended to the person's accessories list
             else:
                 print("Calzados disponibles")
-                print(" _______________________________ ")
+                print(" _______________________________ ")   #All the kind of shoes are printed, to select the wanted kind of shoe
                 for j in range(1,len(vestuarios[3])+1):
-                    print("|","Calzado #",j,"\t",vestuarios[3][j].get_Calzado(),"\t|")
+                    print("|","Calzado #",j,"\t",vestuarios[3][j].get_Calzado(),"\t|") #For do that, the "get_Calzado" method is applied
                 print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")     
                 calzado_cambiar = int(input("Digite un número correspondiente con el calzado que desea: "))
                 while calzado_cambiar not in range(1,11):
                     print("Digito incorrecto")
                     calzado_cambiar = int(input("Por favor digite un número correspondiente con el calzado que desea : "))
-                Nuevo_vestuario = Vestuario()
-                Nuevo_vestuario.set_Accesorios(Persona_seleccionada.get_Vestuario(1))
+                Nuevo_vestuario = Vestuario()          #A new "Vestuario" object is created to set the new information             
+                Nuevo_vestuario.set_Accesorios(Persona_seleccionada.get_Vestuario(1)) 
                 Nuevo_vestuario.set_Ropa(Persona_seleccionada.get_Vestuario(3))
-                Nuevo_vestuario.set_Calzado(vestuarios[3][calzado_cambiar])
-                Persona_seleccionada.set_Vestuario(Nuevo_vestuario)
-            Muestra_InfoP(Persona_seleccionada,"Ahora esta es su nueva vestimenta")
+                Nuevo_vestuario.set_Calzado(vestuarios[3][calzado_cambiar]) 
+                Persona_seleccionada.set_Vestuario(Nuevo_vestuario) #The "set_Vestuario" method is applied to the person, with the new "Vestuario" object 
+            Muestra_InfoP(Persona_seleccionada,"Ahora esta es su nueva vestimenta") #The "Muestra_InfoP" function is called to see the new information
         else:
             return
     return Persona_seleccionada
 
 def Seleccionar_PersonaM(Personas):
+    """    Function that shows five ID cards to the administrator user, with the purpose of he selects one of them to modify that person.
+    After he modified the person, the list with is returned.
+
+    Keyword arguments:
+    Personas -- List with the "Persona" objects
+    """
     Muestra_de_personas = []
-    for i in range(1,6):
+    for i in range(1,6):                      #A list is created to store the five "Persona" objects, which are randomly selected
         Muestra_de_personas.append(random.choice(Personas))
     print("Seleccione la cedula de la persona que desea modificar")
     print("\n***************************************")
     print("*                                     *")
-    for e in range(0,len(Muestra_de_personas)):
+    for e in range(0,len(Muestra_de_personas)):     #The ID cards of that persons are showed, to select one
         print("*   Digite:  ",e+1,"    para:",Muestra_de_personas[e].get_Cedula(),"  *")
     print("*   Digite:  #>5    para: regresar    *")
     print("*                                     *")
     print("***************************************\n")
     comando = int(input("Digite un número correspondiente con el menú: "))
     if comando < 6 :
-        Persona_seleccionada = Muestra_de_personas[comando-1]
-        Persona_seleccionada = Modificar_Persona(Persona_seleccionada, Crea_vestuario())
+        Persona_seleccionada = Muestra_de_personas[comando-1]  #It's stored the "Persona" object selected
+        Persona_seleccionada = Modificar_Persona(Persona_seleccionada, Crea_vestuario()) #The "Modificar_Persona" function is called
     else:
         return Personas
     return Personas
 
 def Administrador(Personas,vestuarios):
-    """    Is the "Administrador" user's function, it allows him to create a new person either manually or automatically.
-    Then, the new person is added to the persons's list and returns the list.
+    """    Is the "Administrador" user's function, it allows him to create new persons automatically.
+    Then, the new persons are added to the persons's list and returns the list.
     The "Administrador" user can do this process as many times as he wants.
 
     Keyword arguments:
-    Personas -- The list with persons.
+    Personas -- The list with "Persona" objects.
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     comando = 0
     while comando < 3:   #There is a menu, where the "Administrador" can select the option that he wants.
@@ -711,12 +731,11 @@ def Administrador(Personas,vestuarios):
         print("*                                                       *")  
         print("*********************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-        if comando == 1:                                                       #Option number 1: Create a person automatically
-            cantidad = int(input("\nIngrese la cantidad de personas que desea crear: "))
+        if comando == 1:                              #Option number 1: Create persons automatically
+            cantidad = int(input("\nIngrese la cantidad de personas que desea crear: ")) #This user, selects the quantity that he wants
             Personas = Crear_Persona_Auto(Personas,Crea_cedulas(cantidad),Crea_provincias(),vestuarios,Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
         elif comando == 2:
-            Personas = Seleccionar_PersonaM(Personas)
-    print(len(Personas))        
+            Personas = Seleccionar_PersonaM(Personas) #Option number 2: Modify the clothing of a person    
     return Personas
 
 def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
@@ -846,11 +865,12 @@ def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas
         Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador+1, lista_indices) 
 
 def Analista(Personas, vestuarios):
-    """    Is the "Analista" user's function, it allows him to apply for statatistics of the country.
+    """    Is the "Analista" user's function, it allows him to apply for statatistics and information of the country.
     The "Analista" user can do this process as many times as he wants.
 
     Keyword arguments:
-    Personas -- The list with persons.
+    Personas -- The list with "Persona" objects.
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     print(len(Personas))
     comando = 0
@@ -863,20 +883,21 @@ def Analista(Personas, vestuarios):
         print("*                                                                                  *")  
         print("************************************************************************************\n")
         comando = int(input("Digite un número correspondiente con el menú: "))
-        if comando == 1:                      #Option number 1: Show the statistics per province and age group in Costa Rica.
+        if comando == 1:  #Option number 1: Show the statistics of persons who use an specific accessorie, per genre and province
             Consultar_accesorio(Personas, vestuarios, Crea_provincias(), Crea_genero())
-        elif comando == 2:
+        elif comando == 2: #Option number 2: Show the information of persons with characteristics selected by this user
             Consultar_personas(Personas, vestuarios, Crea_Atributos_Ojos(), Crea_Atributos_Cabello(), [Crea_color_piel(), Crea_genero(),
             Crea_rostro(), Crea_emociones(), Crea_provincias()], 0, [])
     return
 
 def validar_contraseña(contraseña,comando,Personas, vestuarios):
-    """    Function that verify the user password, independently of which user was chosen ("Usuario", "Analista", or "Administrador").
+    """    Function that verify the user password, independently of which user was chosen ("Analista", or "Administrador").
 
     Keyword arguments:
     contraseña -- The typed password.
     comando -- Number that indicates which user was chosen ("Usuario", "Analista", or "Administrador").
-    Personas -- The list with persons.
+    Personas -- The list with "Persona" objects.
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     if comando == 1 :        
         while contraseña != "admi123" : #If the typed password was incorrect, the user has to type it again or return to the menu
@@ -898,8 +919,8 @@ def validar_contraseña(contraseña,comando,Personas, vestuarios):
 def login():
     """Is the main function, allows select as which user login."""
     comando = 0
+    vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    vestuarios = Crea_vestuario()
     Personas = Crea_Personas(Crea_cedulas(15000), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     while comando < 3:
         print("\n*******************************************************")
