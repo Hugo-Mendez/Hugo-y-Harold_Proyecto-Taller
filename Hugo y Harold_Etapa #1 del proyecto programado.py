@@ -625,7 +625,7 @@ def Modificar_Persona(Persona_seleccionada,vestuarios):
     Finally, returns the person.
 
     Keyword arguments:
-    Persona_seleccionada -- The "Persona" object selected by the administrator
+    Persona_seleccionada -- The "Persona" object selected by the administrator.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Muestra_InfoP(Persona_seleccionada,"  Esta es su vestimenta actual   ") #The "Muestra_InfoP" function is called
@@ -739,52 +739,79 @@ def Administrador(Personas,vestuarios):
     return Personas
 
 def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
+    """   Function that founds out the quantity of persons who use a specific accessorie, depending on the province and genre given.
+    Then, returns that quantity.
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    genero -- A "Genero" object.    
+    provincia -- A "Provincia" object or a number.
+    accesorio -- A "Accesorio" object.
+    """
     Personas_accesorio = 0
-    if provincia == 0:
+    if provincia == 0:       #If "provincia" is '0' the function will find the persons of the genre given
         for i in Personas:
             if i.get_Genero() == genero.get_Nombre() and accesorio in i.get_Vestuario(1):
                 Personas_accesorio += 1
-    else:
+    else:                    #If "provincia" is an object the function will find the persons of the genre and province given
         for i in Personas:
             if i.get_Genero() == genero.get_Nombre() and i.get_Provincia() == provincia.get_Nombre() and accesorio in i.get_Vestuario(1):
                 Personas_accesorio += 1
     return Personas_accesorio
 
 def Consultar_accesorio(Personas, vestuario, provincias, genero):
+    """    Function that shows the quantity and percentage of persons who use a specific accessorie in all provinces, for each genre.
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    vestuario -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    provincias -- Dictionary that contains the "Provincia" objects.
+    genero -- Dictionary that contains the "Genero" objects.
+    """
     print("Accesorios disponibles")
     print(" _______________________________________ ")
-    for j in range(1,len(vestuario[1])+1):
-        print("|","Accesorio #",j,"\t",vestuario[1][j].get_Accesorio(),"\t|")
+    for j in range(1,len(vestuario[1])+1):                                      #All the accessories are printed, to select one 
+        print("|","Accesorio #",j,"\t",vestuario[1][j].get_Accesorio(),"\t|")   #For do that, the "get_Accesorio" method is applied
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-    accesorio_buscar = int(input("Digite un número correspondiente con el accesorio que desea consultar: "))
+    accesorio_buscar = int(input("Digite un número correspondiente con el accesorio que desea consultar: "))  #The user selects the accessorie that he wants
     while accesorio_buscar not in range(1,11):
         print("Digito incorrecto")
         accesorio_buscar = int(input("Por favor digite un número correspondiente con el accesorio que desea consultar: "))
     TOTAL = 0
-    for i in range(1, len(genero)+1):
+    for i in range(1, len(genero)+1):       #For each genre the function "Cuenta_P_Accesorios" is called to get the quantity of persons who use the selected accessorie 
         Total_accesorios = Cuenta_P_Accesorios(Personas, genero[i], 0, vestuario[1][accesorio_buscar])
         print("\n\t\t       ___________ ")
         print("\t\t     ","|",genero[i].get_Nombre(),"|")
         print("\t\t       ¯¯¯¯¯¯¯¯¯¯¯ ")
         print(" ____________________________________________________ ")
-        print("| Provincia","\t|","Personas que lo usan","\t|","Porcentaje |")
+        print("| Provincia","\t|","Personas que lo usan","\t|","Porcentaje |") #The statistics per province are printed
         print("|---------------|-----------------------|------------|")
-        for e in range(1, len(provincias)+1):
+        for e in range(1, len(provincias)+1):       #For each province the function "Cuenta_P_Accesorios" is called to get the quantity of persons who use the selected accessorie
             cantidad_personas = Cuenta_P_Accesorios(Personas, genero[i], provincias[e], vestuario[1][accesorio_buscar])
             print("|",provincias[e].get_Nombre(), "\t|\t", cantidad_personas, "\t\t|",round((cantidad_personas * 100) / Total_accesorios, 1),"%","    |")
             print("|---------------|-----------------------|------------|")
         print("|Total", genero[i].get_Nombre()+"|\t",Total_accesorios,"\t\t|","100 %","     |")    
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-        TOTAL = TOTAL + Total_accesorios
+        TOTAL = TOTAL + Total_accesorios            #The total of persons in Costa Rica that use the accessorie is got it
     print(" ______________________________________________________________ ")
-    print("| Total de personas que usan el accesorio en Costa Rica :",TOTAL,"|")   
+    print("| Total de personas que usan el accesorio en Costa Rica :",TOTAL,"|")
     print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     return 
 
 def Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices):
-    Rango_edades = {0: 0, 1: 4, 2: 11, 3: 17, 4: 64, 5: 100}
-    bandera = False
-    for i in Personas:
+    """    Function that shows the information of the persons that have the characteristics selected by the user.
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    vestuario -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    ojos -- Dictionary that contains the "Ojos" objects.
+    cabello -- Dictionary that contains the "Cabello" objects.
+    lista_caracteristicas -- List that contains the characteristics to select, each characteristic is a dictionary which contain objects.
+    lista_indices -- List that contain the options that the user selects.
+    """
+    Rango_edades = {0: 0, 1: 4, 2: 11, 3: 17, 4: 64, 5: 100}   #Dictionary that contains the limits for belong to an specific age group
+    bandera = False      #There is a "flag variable" for comproving if there are or there aren't persons with that characteristics
+    for i in Personas:   #Searches the persons that complies with that characteristics and prints his information
         if i.get_Edad() <= Rango_edades[lista_indices[5]] and i.get_Edad() > Rango_edades[(lista_indices[5])-1] and i.get_Color_piel() == lista_caracteristicas[0][lista_indices[0]].get_Nombre() and i.get_Genero() == lista_caracteristicas[1][lista_indices[1]].get_Nombre() and i.get_Forma_rostro() == lista_caracteristicas[2][lista_indices[2]].get_Nombre() and i.get_Emocion() == lista_caracteristicas[3][lista_indices[3]].get_Nombre() and i.get_Provincia() == lista_caracteristicas[4][lista_indices[4]].get_Nombre():
             print("\n ___________________________________ ")
             print("| Cédula:", i.get_Cedula(),"                |")
@@ -830,26 +857,37 @@ def Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_car
     return
 
 def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador, lista_indices):
+    """    Recursive function that allows the "Analista" user to ask for persons with some characteristics that he selects.
+    
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    vestuario -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    ojos -- Dictionary that contains the "Ojos" objects.
+    cabello -- Dictionary that contains the "Cabello" objects.
+    lista_caracteristicas -- List that contains the characteristics to select, each characteristic is a dictionary which contain objects.
+    indicador -- A number that represent the base case for the recursion.
+    lista_indices -- List (empty at the beginning) that will contain the options that the user selects.
+    """
     atributos_consultar = ["Colores de piel  ", "Género           ", "Formas del rostro", "Emociones        ", "Provincias       "]
-    if indicador > 4:
-        print("\n ___________________ ")
-        print("| Grupos Etarios    |")
+    if indicador > 4:                       #When the base case is reached, the last menu is printed to select the only characteristic that isn't an object
+        print("\n ___________________ ") 
+        print("| Grupos Etarios    |")      #Which is the age group
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
         print(" ________________________________ ")
-        print("| Digite: 1 para bebés           |")  
+        print("| Digite: 1 para bebés           |")
         print("| Digite: 2 para niños           |")
-        print("| Digite: 3 para adolescentes    |") 
-        print("| Digite: 4 para adultos         |") 
-        print("| Digite: 5 para adultos mayores |") 
+        print("| Digite: 3 para adolescentes    |")
+        print("| Digite: 4 para adultos         |")
+        print("| Digite: 5 para adultos mayores |")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
         comando = int(input("Digite un número correspondiente con el grupo etario: "))
         while comando not in range(1, 6):
             print("Digito incorrecto")
             comando = int(input("Por favor digite un número correspondiente con el menú: "))
-        lista_indices.append(comando)
-        Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices)
+        lista_indices.append(comando)  #After the user selects the option, an identifier that represents the characteristic is appended to "lista_indices"
+        Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices) #The function "Impresion_personas_consultadas" is called
         return
-    else:
+    else:                              #While the base case isn't reached, print a menu for each characteristic where the user selects the option that he wants
         print("\n ___________________ ")
         print("|",atributos_consultar[indicador],"|")
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
@@ -861,8 +899,8 @@ def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas
         while caracteristica_deseada not in range(1, len(lista_caracteristicas[indicador])+1):
             print("Digito incorrecto")
             caracteristica_deseada = int(input("Por favor digite un número correspondiente con la caracteristica que desea consultar: "))
-        lista_indices.append(caracteristica_deseada)
-        Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador+1, lista_indices) 
+        lista_indices.append(caracteristica_deseada)     #After the user selects the option, an identifier that represents the characteristic is appended to "lista_indices"
+        Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador+1, lista_indices) #Recursion is applied in order to continue with the next characteristic 
 
 def Analista(Personas, vestuarios):
     """    Is the "Analista" user's function, it allows him to apply for statatistics and information of the country.
