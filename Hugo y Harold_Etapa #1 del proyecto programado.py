@@ -1,6 +1,7 @@
 
 #Authors: Hugo Méndez and Harold Ramírez
 #Date: June 14th 2020
+
 import copy
 import random
 from datetime import date
@@ -173,6 +174,7 @@ class Cabello:
     Color -- a "Color_cabello" object.
     Densidad -- a "Densidad_cabello" object.
     Textura --- a "Textura_cabello" object.
+
     Methods:
     __init__ -- The constructor method.  
     set_Atributos_cabello -- Sets the dictionary with the objects.
@@ -209,6 +211,16 @@ class Cabello:
         return self.Textura
 
 class Color_ojos:
+    """    Class for the "Color_ojos" objects.
+
+    Attributes:
+    Color -- The eyes's color (there are seven colors).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Color -- Sets the eyes's color.
+    get_Color -- Returns the eyes's color.
+    """
     def ___init__(self):
         self.Color = ""
         return
@@ -219,6 +231,16 @@ class Color_ojos:
         return self.Color
 
 class Forma_ojos:
+    """    Class for the "Forma_ojos" objects.
+
+    Attributes:
+    Forma -- The eyes's shape (there are eight shapes).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Forma -- Sets the eyes's shape.
+    get_Forma -- Returns the eyes's shape.
+    """
     def ___init__(self):
         self.Forma = ""
         return
@@ -229,6 +251,21 @@ class Forma_ojos:
         return self.Forma 
 
 class Ojos:
+    """    Class for the "Ojos" objects.
+
+    Attributes:
+    Atributos_ojos -- Dictionary that is empty (at the beginning) and then it'll contain a "Color_ojos" and "Forma_ojos" objects.
+    Forma -- a "Forma_ojos" object.
+    Color -- a "Color_ojos" object.
+
+    Methods:
+    __init__ -- The constructor method.  
+    set_Atributos_ojos -- Sets the dictionary with the objects.
+    set_Forma -- Takes the element in the dictionary that is a "Forma_ojos" object and applies it the "get_Forma" method to obtain the eyes's shape.
+    set_Color -- Takes the element in the dictionary that is a "Color_ojos" object and applies it the "get_Color" method to obtain the eyes's color.
+    get_Forma -- Returns the eyes's shape.
+    get_Color -- Returns the eyes's color.
+    """
     def __init__(self):
         self.Atributos_ojos = {}
         self.Forma = Forma_ojos()
@@ -249,6 +286,16 @@ class Ojos:
         return self.Color
 
 class Accesorios:
+    """    Class for the "Accesorios" objects.
+
+    Attributes:
+    Nombre -- The accessorie's name (there are ten accessories).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Accesorio -- Sets the accessorie's name.
+    get_Accesorio -- Returns the accessorie's name.
+    """
     def ___init__(self):
         self.Nombre = ""
         return
@@ -259,6 +306,16 @@ class Accesorios:
         return self.Nombre
 
 class Ropa:
+    """    Class for the "Ropa" objects.
+
+    Attributes:
+    Nombre -- The clothing's name (there are fourteen kind of clothing).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Ropa -- Sets the clothing's name.
+    get_Ropa -- Returns the clothing's name.
+    """
     def ___init__(self):
         self.Nombre = ""
         return
@@ -269,6 +326,16 @@ class Ropa:
         return self.Nombre
 
 class Calzado:
+    """    Class for the "Calzado" objects.
+
+    Attributes:
+    Nombre -- The shoes's name (there are ten kind of shoes).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Calzado -- Sets the shoes's name.
+    get_Calzado -- Returns the shoes's name.
+    """
     def ___init__(self):
         self.Nombre = ""
         return
@@ -279,6 +346,22 @@ class Calzado:
         return self.Nombre
 
 class Vestuario:
+    """    Class for the "Vestuario" objects.
+
+    Attributes:
+    Ropa -- a list with "Ropa" objects.
+    Calzado -- a "Calzado" object.
+    Accesorios --- a list with "Accesorios" objects.
+
+    Methods:
+    __init__ -- The constructor method.  
+    set_Ropa -- Sets the list with clothing.
+    set_Calzado -- Receives the "Calzado" object and applies it the "get_Calzado" method to obtain the kind of shoes.
+    set_Accesorios -- Sets the list with accessories.
+    get_Ropa -- Returns the list with clothing.
+    get_Calzado -- Returns the kind of shoes.
+    get_Accesorios -- Returns the list with accessories.
+    """
     def __init__(self):
         self.Ropa = []
         self.Calzado = Calzado()
@@ -301,6 +384,43 @@ class Vestuario:
         return self.Accesorios
 
 class Persona:
+    """    Class for the "Persona" objects.
+
+    Attributes:
+    Cedula -- An unique ID card.
+    Edad -- An integer number that represent the age of a person.
+    Vestuario -- A "Vestuario" object.
+    Ojos -- A "Ojos" object.
+    Cabello -- A "Cabello" object. 
+    Color_piel -- A "Color_de_piel" object.
+    Genero -- A "Genero" object.
+    Forma_rostro -- A "Forma_rostro" object.
+    Emocion -- A "Emocion" object.
+    Provincia -- A "Provincia" object.
+
+    Methods:
+    __init__ -- The constructor method.  
+    set_Cedula -- Sets an ID card.
+    set_Edad -- Sets the age.
+    set_Vestuario -- Sets a "Vestuario" object.
+    set_Ojos -- Sets a "Ojos" object.
+    set_Cabello -- Sets a "Cabello" object.
+    set_Color_piel -- Sets a "Color_de_piel" object.
+    set_Genero -- Sets a "Genero" object.
+    set_Forma_rostro -- Sets a "Forma_Rostro" object.
+    set_Emocion -- Sets a "Emocion" object.
+    set_Provincia -- Sets a "Provincia" object.
+    get_Cedula -- Returns the ID card.
+    get_Edad --  Returns the age.
+    get_Vestuario -- Receives a numeric identifier and depending on it, returns : the list with clothing, the list with accessories or the kind of shoes.
+    get_Ojos -- Receives a numeric identifier and depending on it, returns : the eyes's shape or the eyes's color.
+    get_Cabello -- Receives a numeric identifier and depending on it, returns : the hair's color, the hair's density or the hair's texture.
+    get_Color_piel -- Takes the "Color_de_piel" object and applies it the "get_Nombre" method to obtain the skin color.
+    get_Genero -- Takes the "Genero" object and applies it the "get_Nombre" method to obtain the genre.
+    get_Forma_rostro -- Takes the "Forma_rostro" object and applies it the "get_Nombre" method to obtain the face shape.
+    get_Emocion -- Takes the "Emocion" object and applies it the "get_Nombre" method to obtain the emotion.
+    get_Provincia -- Takes the "Provincia" object and applies it the "get_Nombre" method to obtain the province.
+    """
     def __Init__(self):
         self.Cedula = 0
         self.Edad = 0
@@ -1005,7 +1125,6 @@ def Analista(Personas, vestuarios):
     Personas -- The list with "Persona" objects.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
-    print(len(Personas))
     comando = 0
     while comando < 3:    #There is a menu, where the "Analista" can select the option that he wants.
         print("\n************************************************************************************")
