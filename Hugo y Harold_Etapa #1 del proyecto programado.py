@@ -6,6 +6,16 @@ import random
 from datetime import date
 
 class Provincia:
+    """    Class for the "Provincia" objects.
+
+    Attributes:
+    Nombre -- The province's name (there are seven provinces).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Nombre -- Sets the province's name.
+    get_Nombre -- Returns the provincia's name.
+    """
     def __init__(self):
         self.Nombre = ""
         return
@@ -16,6 +26,16 @@ class Provincia:
         return self.Nombre 
 
 class Genero:
+    """    Class for the "Genero" objects.
+
+    Attributes:
+    Nombre -- The kind of genre (male or female).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Nombre -- Sets the genre.
+    get_Nombre -- Returns the genre.
+    """
     def __init__(self):
         self.Nombre = ""
         return
@@ -26,6 +46,16 @@ class Genero:
         return self.Nombre
 
 class Color_de_piel:
+    """    Class for the "Color_de_piel" objects.
+
+    Attributes:
+    Nombre -- The skin color(There are five colors).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Nombre -- Sets the skin color.
+    get_Nombre -- Returns the skin color.
+    """
     def __init__(self):
         self.Nombre = ""
         return
@@ -36,6 +66,16 @@ class Color_de_piel:
         return self.Nombre
 
 class Forma_rostro:
+    """    Class for the "Forma_rostro" objects.
+
+    Attributes:
+    Nombre -- The face shape (there are six shapes).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Nombre -- Sets the face shape.
+    get_Nombre -- Returns the face shape.
+    """
     def __init__(self):
         self.Nombre = ""
         return
@@ -46,6 +86,16 @@ class Forma_rostro:
         return self.Nombre 
 
 class Emocion:
+    """    Class for the "Emocion" objects.
+
+    Attributes:
+    Nombre -- The emotion (there are eight options).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Nombre -- Sets the emotion's name.
+    get_Nombre -- Returns the emotion's name.
+    """
     def __Init__(self):
         self.Nombre = ""
         return
@@ -56,6 +106,16 @@ class Emocion:
         return self.Nombre
 
 class Color_cabello:
+    """    Class for the "Color_cabello" objects.
+
+    Attributes:
+    Color -- The hair's color (there are six colors).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Color -- Sets the hair's color.
+    get_Color -- Returns the hair's color.
+    """
     def __Init__(self):
         self.Color = ""
         return
@@ -66,6 +126,16 @@ class Color_cabello:
         return self.Color 
 
 class Densidad_cabello:
+    """    Class for the "Densidad_cabello" objects.
+
+    Attributes:
+    Densidad -- The hair's density (there are three options).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Densidad -- Sets the hair's density.
+    get_Densidad -- Returns the hair's density.
+    """
     def __Init__(self):
         self.Densidad = ""
         return
@@ -76,6 +146,16 @@ class Densidad_cabello:
         return self.Densidad 
 
 class Textura_cabello:
+    """    Class for the "Textura_cabello" objects.
+
+    Attributes:
+    Textura -- The hair's texture (there are three options).
+
+    Methods:
+    __init__ -- The constructor method.
+    set_Textura -- Sets the hair's texture.
+    get_Textura -- Returns the hair's texture.
+    """
     def __Init__(self):
         self.Textura = ""
         return
@@ -86,6 +166,23 @@ class Textura_cabello:
         return self.Textura 
 
 class Cabello:
+    """    Class for the "Cabello" objects.
+
+    Attributes:
+    Atributos_cabello -- Dictionary that is empty (at the beginning) and then it'll contain a "Color_cabello", "Densidad_cabello" and "Textura_cabello" objects.
+    Color -- a "Color_cabello" object.
+    Densidad -- a "Densidad_cabello" object.
+    Textura --- a "Textura_cabello" object.
+    Methods:
+    __init__ -- The constructor method.  
+    set_Atributos_cabello -- Sets the dictionary with the objects.
+    set_Color -- Takes the element in the dictionary that is a "Color_cabello" object and applies it the "get_Color" method to obtain the hair's color.
+    set_Densidad -- Takes the element in the dictionary that is a "Densidad_cabello" object and applies it the "get_Densidad" method to obtain the hair's density.
+    set_Textura -- Takes the element in the dictionary that is a "Textura_cabello" object and applies it the "get_Textura" method to obtain the hair's texture.
+    get_Color -- Returns the hair's color.
+    get_Densidad -- Returns the hair's density.
+    get_Textura -- Returns the hair's texture.
+    """
     def __Init__(self):
         self.Atributos_cabello = {}
         self.Color = Color_cabello()
@@ -104,8 +201,6 @@ class Cabello:
     def set_Textura(self):
         self.Textura = self.Atributos_cabello[3].get_Textura()
         return
-    def get_Atributos_cabello(self):
-        return self.Atributos_cabello
     def get_Color(self):
         return self.Color
     def get_Densidad(self):
