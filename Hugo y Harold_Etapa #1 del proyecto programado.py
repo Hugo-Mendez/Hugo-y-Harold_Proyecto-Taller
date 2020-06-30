@@ -901,12 +901,13 @@ def Modificar_Persona(Persona_seleccionada,vestuarios):
             return
     return Persona_seleccionada
 
-def Seleccionar_PersonaM(Personas):
+def Seleccionar_PersonaM(Personas, vestuarios):
     """    Function that shows five ID cards to the administrator user, with the purpose of he selects one of them to modify that person.
     After he modified the person, the list with is returned.
 
     Keyword arguments:
     Personas -- List with the "Persona" objects
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Muestra_de_personas = []
     for i in range(1,6):                      #A list is created to store the five "Persona" objects, which are randomly selected
@@ -922,7 +923,7 @@ def Seleccionar_PersonaM(Personas):
     comando = int(input("Digite un número correspondiente con el menú: "))
     if comando < 6 :
         Persona_seleccionada = Muestra_de_personas[comando-1]  #It's stored the "Persona" object selected
-        Persona_seleccionada = Modificar_Persona(Persona_seleccionada, Crea_vestuario()) #The "Modificar_Persona" function is called
+        Persona_seleccionada = Modificar_Persona(Persona_seleccionada, vestuarios) #The "Modificar_Persona" function is called
     else:
         return Personas
     return Personas
@@ -950,7 +951,7 @@ def Administrador(Personas,vestuarios):
             cantidad = int(input("\nIngrese la cantidad de personas que desea crear: ")) #This user, selects the quantity that he wants
             Personas = Crear_Persona_Auto(Personas,Crea_cedulas(cantidad),Crea_provincias(),vestuarios,Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
         elif comando == 2:
-            Personas = Seleccionar_PersonaM(Personas) #Option number 2: Modify the clothing of a person    
+            Personas = Seleccionar_PersonaM(Personas, vestuarios) #Option number 2: Modify the clothing of a person    
     return Personas
 
 def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
