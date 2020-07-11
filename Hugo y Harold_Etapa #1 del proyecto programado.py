@@ -5,6 +5,8 @@
 import copy
 import random
 from datetime import date
+from tkinter import Tk, Text, Button, Label
+from PIL import ImageTk, Image 
 
 class Provincia:
     """    Class for the "Provincia" objects.
@@ -85,26 +87,6 @@ class Forma_rostro:
         return
     def get_Nombre(self):
         return self.Nombre 
-
-class Emocion:
-    """    Class for the "Emocion" objects.
-
-    Attributes:
-    Nombre -- The emotion (there are eight options).
-
-    Methods:
-    __init__ -- The constructor method.
-    set_Nombre -- Sets the emotion's name.
-    get_Nombre -- Returns the emotion's name.
-    """
-    def __Init__(self):
-        self.Nombre = ""
-        return
-    def set_Nombre(self, nombre):
-        self.Nombre = nombre
-        return
-    def get_Nombre(self):
-        return self.Nombre
 
 class Color_cabello:
     """    Class for the "Color_cabello" objects.
@@ -298,12 +280,18 @@ class Accesorios:
     """
     def ___init__(self):
         self.Nombre = ""
+        self.ID = 0
         return
     def set_Accesorio(self, nombre):
         self.Nombre = nombre
         return
+    def set_ID(self, id):
+        self.ID = id
+        return
     def get_Accesorio(self):
         return self.Nombre
+    def get_ID(self):
+        return self.ID 
 
 class Ropa:
     """    Class for the "Ropa" objects.
@@ -318,12 +306,24 @@ class Ropa:
     """
     def ___init__(self):
         self.Nombre = ""
+        self.Tipo = ""
+        self.ID = 0
         return
     def set_Ropa(self, nombre):
         self.Nombre = nombre
         return
+    def set_Tipo(self, tipo):
+        self.Tipo = tipo
+        return 
+    def set_ID(self, id):
+        self.ID = id
+        return
     def get_Ropa(self):
         return self.Nombre
+    def get_Tipo(self):
+        return self.Tipo
+    def get_ID(self):
+        return self.ID 
 
 class Calzado:
     """    Class for the "Calzado" objects.
@@ -338,12 +338,18 @@ class Calzado:
     """
     def ___init__(self):
         self.Nombre = ""
+        self.ID = 0
         return
     def set_Calzado(self, nombre):
         self.Nombre = nombre
         return
+    def set_ID(self, id):
+        self.ID = id
+        return
     def get_Calzado(self):
         return self.Nombre
+    def get_ID(self):
+        return self.ID
 
 class Vestuario:
     """    Class for the "Vestuario" objects.
@@ -371,15 +377,17 @@ class Vestuario:
         self.Ropa = lista_Rop
         return
     def set_Calzado(self, calzado):
-        self.Calzado = calzado.get_Calzado()
+        self.Calzado = calzado
         return
     def set_Accesorios(self, lista_Acc):
         self.Accesorios = lista_Acc
         return
     def get_Ropa(self):
         return self.Ropa
+    def get_ID_Calzado(self):
+        return self.Calzado.get_ID()
     def get_Calzado(self):
-        return self.Calzado
+        return self.Calzado.get_Calzado()
     def get_Accesorios(self):
         return self.Accesorios
 
@@ -387,6 +395,7 @@ class Persona:
     """    Class for the "Persona" objects.
 
     Attributes:
+    Clave -- A person's key.
     Cedula -- An unique ID card.
     Edad -- An integer number that represent the age of a person.
     Vestuario -- A "Vestuario" object.
@@ -395,7 +404,6 @@ class Persona:
     Color_piel -- A "Color_de_piel" object.
     Genero -- A "Genero" object.
     Forma_rostro -- A "Forma_rostro" object.
-    Emocion -- A "Emocion" object.
     Provincia -- A "Provincia" object.
 
     Methods:
@@ -408,7 +416,6 @@ class Persona:
     set_Color_piel -- Sets a "Color_de_piel" object.
     set_Genero -- Sets a "Genero" object.
     set_Forma_rostro -- Sets a "Forma_Rostro" object.
-    set_Emocion -- Sets a "Emocion" object.
     set_Provincia -- Sets a "Provincia" object.
     get_Cedula -- Returns the ID card.
     get_Edad --  Returns the age.
@@ -418,10 +425,10 @@ class Persona:
     get_Color_piel -- Takes the "Color_de_piel" object and applies it the "get_Nombre" method to obtain the skin color.
     get_Genero -- Takes the "Genero" object and applies it the "get_Nombre" method to obtain the genre.
     get_Forma_rostro -- Takes the "Forma_rostro" object and applies it the "get_Nombre" method to obtain the face shape.
-    get_Emocion -- Takes the "Emocion" object and applies it the "get_Nombre" method to obtain the emotion.
     get_Provincia -- Takes the "Provincia" object and applies it the "get_Nombre" method to obtain the province.
     """
     def __Init__(self):
+        self.Clave = ""
         self.Cedula = 0
         self.Edad = 0
         self.Vestuario = Vestuario()
@@ -430,7 +437,6 @@ class Persona:
         self.Color_piel = Color_de_piel()
         self.Genero = Genero()
         self.Forma_rostro = Forma_rostro()
-        self.Emocion = Emocion()
         self.Provincia = Provincia()
         return
     def set_Cedula(self, cedula):
@@ -457,11 +463,11 @@ class Persona:
     def set_Forma_rostro(self, forma_rostro):
         self.Forma_rostro = forma_rostro
         return
-    def set_Emocion(self, emocion):
-        self.Emocion = emocion
-        return
     def set_Provincia(self, provincia):
         self.Provincia = provincia 
+        return
+    def set_Clave(self, clave):
+        self.Clave = clave
         return
     def get_Cedula(self):
         return self.Cedula
@@ -469,10 +475,15 @@ class Persona:
         return self.Edad 
     def get_Vestuario(self, identificador):
         if identificador == 1:
+            for accesorio in self.Vestuario.get_Accesorios():
+                self.Clave += str(accesorio.get_ID())
             return self.Vestuario.get_Accesorios()
         elif identificador == 2:
-            return self.Vestuario.get_Calzado()
+            self.Clave += str(self.Vestuario.get_ID_Calzado())
+            return self.Vestuario.get_Calzado() 
         else:
+            for prenda in self.Vestuario.get_Ropa():
+                self.Clave += str(prenda.get_ID())
             return self.Vestuario.get_Ropa()
     def get_Ojos(self, identificador):
         if identificador == 1:
@@ -492,10 +503,10 @@ class Persona:
         return self.Genero.get_Nombre()
     def get_Forma_rostro(self):
         return self.Forma_rostro.get_Nombre()
-    def get_Emocion(self):
-        return self.Emocion.get_Nombre()
     def get_Provincia(self):
         return self.Provincia.get_Nombre()
+    def get_Clave(self):
+        return self.Clave
 
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
@@ -528,25 +539,28 @@ def Crea_vestuario():
     Then, creates a copy of that dictionary and turns his elements to objects of his respective classess and applies them the "set" method.
     Lastly returns the dictionary with the objects.
     """
-    vestuarios = {1: {1: "Lentes  ", 2: "Aretes  ", 3: "Piercing", 4: "Collar", 5: "Anillo", 6: "Reloj ", 
-                  7: "Brazalete", 8: "Diadema", 9: "Vincha", 10: "Monóculo"}, 
-                  2: {1: "Camiseta", 2: "Camisa", 3: "Blusa ", 4: "Pantalón", 5: "Falda ", 6: "Abrigo", 7: "Vestido",
-                  8: "Calcetines", 9: "Pantaloneta", 10: "Shorts", 11: "Saco  ", 12: "Corbata", 13: "Sombrero",
-                  14: "Bufanda" }, 3: {1: "Oxford", 2: "Sandalias", 3: "Tenis ", 4: "Mocasines", 5: "Botas ",
-                  6: "Botines", 7: "Brogue", 8: "Monk  ", 9: "Derby ", 10: "Tacones"}}
+    vestuarios = {1: {1: "Camiseta", 2: "Camiseta de tirantes", 3: "Suéter"}, 2: {1: "Blusa", 2: "Suéter", 3: "Chaqueta"},
+                  3: {1: "Jeans", 2: "Shorts", 3: "Pantaloneta"},             4: {1: "Enagua", 2: "Short", 3: "Jeans"},
+                  5: {1: "Tenis", 2: "Zapato casual", 3: "Sandalías"},        6: {1: "Tacones", 2: "Tenis", 3: "Botas"},
+                  7: {1: "Lentes", 2: "Sombrero", 3: "Piercing"}} 
     Obj_vestuarios = copy.deepcopy(vestuarios)
-    for i in range(1, len(vestuarios)+1):          #The elements are transformed to objects, through a "for" loop
+    for i in range(1, len(vestuarios)+1):              #The elements are transformed to objects, through a "for" loop
         for e in range(1, len(vestuarios[i])+1):
-            if i == 1:                  #Depending on the kind of element, the element is transformed to an object of his respective class
-                Obj_vestuarios[i][e] = Accesorios()
-                Obj_vestuarios[i][e].set_Accesorio(vestuarios[i][e])
-            elif i == 2:
+            if i in range(1, 5):                       #Depending on the kind of element, the element is transformed to an object of his respective class
                 Obj_vestuarios[i][e] = Ropa()
                 Obj_vestuarios[i][e].set_Ropa(vestuarios[i][e])
-            else:
-                Obj_vestuarios[i][e] = Calzado()
+                if i < 3:
+                    Obj_vestuarios[i][e].set_Tipo("Superior")
+                else:
+                    Obj_vestuarios[i][e].set_Tipo("Inferior")
+            elif i in range(5, 7): 
+                Obj_vestuarios[i][e] = Calzado()  
                 Obj_vestuarios[i][e].set_Calzado(vestuarios[i][e])
-    return Obj_vestuarios
+            else:
+                Obj_vestuarios[i][e] = Accesorios()
+                Obj_vestuarios[i][e].set_Accesorio(vestuarios[i][e])
+            Obj_vestuarios[i][e].set_ID(e)
+    return Obj_vestuarios 
 
 def Crea_genero():
     """    Function that creates a dictionary which stores the two possible genres (female or male).
@@ -583,18 +597,6 @@ def Crea_rostro():
         Obj_rostro[e] = Forma_rostro()     #The elements are transformed to objects, through a "for" loop
         Obj_rostro[e].set_Nombre(rostro[e])
     return Obj_rostro
-
-def Crea_emociones():
-    """    Function that creates a dictionary which stores diferent expressions (just eight, in this case).
-    After, creates a copy of that dictionary and turns his elements to "Emocion" objects and applies them the "set_Nombre" method.
-    Finally, returns the dictionary with the objects.
-    """
-    emociones = {1: "Enfado   ", 2: "Desprecio", 3: "Disgusto ", 4: "Miedo    ", 5: "Sorpresa ", 6: "Alegría  ", 7: "Neutral  ", 8: "Tristeza "}
-    Obj_emocion = emociones.copy()
-    for e in range(1, len(emociones)+1):
-        Obj_emocion[e] = Emocion()            #The elements are transformed to objects, through a "for" loop
-        Obj_emocion[e].set_Nombre(emociones[e])
-    return Obj_emocion
 
 def Crea_Atributos_Cabello():
     """    Function that creates a dictionary (with three dictionaries inside).
@@ -659,7 +661,21 @@ def Calcula_Edad(Fecha_na):
         Años = Años - 1 
     return Años
 
-def Crea_Personas(cedulas,provincias,vestuarios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
+def Grabar_informacion_avatars(Personas):
+    archi = open("Info_avatars.txt", "a")
+    for i in Personas:
+        linea = [str(i.get_Cedula()), str(i.get_Edad()), i.get_Genero(), i.get_Provincia(), i.get_Color_piel(), i.get_Forma_rostro(),
+                 i.get_Cabello(1), i.get_Cabello(2), i.get_Cabello(3), i.get_Ojos(1), i.get_Ojos(2), i.get_Vestuario(2)] 
+        for j in i.get_Vestuario(1):
+            linea.append(j.get_Accesorio())
+        for f in i.get_Vestuario(3):
+            linea.append(f.get_Ropa())
+        Linea = "/".join(linea)
+        archi.write(Linea + "\n") 
+    archi.close()
+    return 
+
+def Crea_Personas(Personas,cedulas,provincias,vestuarios,generos,colores_de_piel,rostro,atri_cabello,atri_ojos):
     """    Function that creates a list to store "Persona" objects. 
     Depending on the quantity of ID cards, the function creates "Persona" objects, through a "for" loop.
     All of the attributes are randomly selected for each person.
@@ -676,10 +692,16 @@ def Crea_Personas(cedulas,provincias,vestuarios,genero,colores_de_piel,rostro,em
     atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain the: "Color_cabello", "Densidad_cabello" and "Textura_cabello" objects.
     atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain the: "Color_ojos" and "Forma_ojos" objects.
     """
-    Lista_Personas = []                     #It is created the list
+    if Personas != []:
+        for y in range(1,len(cedulas)+1):
+            for i in range(1, (len(Personas)+1)):  
+                while cedulas[y] == Personas[i-1].get_Cedula(): 
+                    cedulas[y] = Crea_cedulas(1)[1]
+
     for i in range(1,len(cedulas)+1):       #The dictionary that contains ID cards, is toured
         Fecha_na = Crea_Fecha_Nac()         #The function "Crea_Fecha_Nac" is called to generate a random date of birth
         Edad_Años = Calcula_Edad(Fecha_na)  #The function "Calcula_Edad" is called to calculate the person's age
+        Genero = generos[random.randint(1,len(generos))] 
 
         cabello = {1: atri_cabello[1][random.randint(1,6)], 2: atri_cabello[2][random.randint(1,3)], 3: atri_cabello[3][random.randint(1,3)]}
         Obj_Cabello = Cabello()    #The "Cabello" object is instantiated, for each person 
@@ -694,118 +716,37 @@ def Crea_Personas(cedulas,provincias,vestuarios,genero,colores_de_piel,rostro,em
         Obj_Ojos.set_Color()      #The "set" methods are applied to the "Ojos" object
         Obj_Ojos.set_Forma()
 
-        cant_accesorios = random.randint(0,5) #A person, could only have between zero or five accesoriess, this quantity is randomly selected
-        cant_ropa = random.randint(4,7)       #A person, could only have between four or seven clothing, this quantity is randomly selected    
+        cant_accesorios = random.randint(0,3) #A person, could only have between zero or five accesoriess, this quantity is randomly selected
         accesorios = []              #There is a list to store the person's accesoriess, with the purpose of don't repeat them
-        prendas = []                 #There is a list to store the person's clothing, with the purpose of don't repeat them
-        calzado = vestuarios[3][random.randint(1,len(vestuarios[3]))]
-
-        for j in range(0,cant_accesorios):
-            accesorio = vestuarios[1][random.randint(1,len(vestuarios[1]))]
+        for j in range(0, cant_accesorios): 
+            accesorio = vestuarios[7][random.randint(1,len(vestuarios[7]))]
             while accesorio in accesorios:          #Is checked that the accesoriess aren't repeat
-                accesorio = vestuarios[1][random.randint(1,len(vestuarios[1]))]
-            accesorios.append(accesorio)
-
-        for e in range(0,cant_ropa):
-            ropa = vestuarios[2][random.randint(1,len(vestuarios[2]))]
-            while ropa in prendas:                   #Is checked that the clothing aren't repeat
-                ropa = vestuarios[2][random.randint(1,len(vestuarios[2]))]
-            prendas.append(ropa)
+                accesorio = vestuarios[7][random.randint(1,len(vestuarios[7]))]
+            accesorios.append(accesorio) 
 
         Obj_Vestuario = Vestuario()            #The "Vestuario" object is instantiated, for each person
+        if Genero.get_Nombre() == "Femenino ":
+            claves = [2, 4, 6] 
+        else:
+            claves = [1, 3, 5]
+        Obj_Vestuario.set_Calzado(vestuarios[claves[2]][random.randint(1, len(vestuarios[claves[2]]))])     #The "set" methods are applied to the "Vestuario" object
         Obj_Vestuario.set_Accesorios(accesorios)
-        Obj_Vestuario.set_Calzado(calzado)     #The "set" methods are applied to the "Vestuario" object
-        Obj_Vestuario.set_Ropa(prendas)
+        Obj_Vestuario.set_Ropa([vestuarios[claves[0]][random.randint(1, len(vestuarios[claves[0]]))], vestuarios[claves[1]][random.randint(1, len(vestuarios[claves[1]]))]])
 
         Obj_Persona = Persona()                #The "Persona" object is instantiated, for each person
-        Obj_Persona.set_Cedula(cedulas[random.randint(1,len(cedulas))])
+        Obj_Persona.set_Clave("")
+        Obj_Persona.set_Cedula(cedulas[i])
         Obj_Persona.set_Edad(Edad_Años)
         Obj_Persona.set_Vestuario(Obj_Vestuario)    #All the respective "set" methods are applied to the "Persona" object
         Obj_Persona.set_Ojos(Obj_Ojos)
         Obj_Persona.set_Cabello(Obj_Cabello)
         Obj_Persona.set_Color_piel(colores_de_piel[random.randint(1,len(colores_de_piel))])
-        Obj_Persona.set_Genero(genero[random.randint(1,len(genero))])
+        Obj_Persona.set_Genero(Genero) 
         Obj_Persona.set_Forma_rostro(rostro[random.randint(1,len(rostro))])
-        Obj_Persona.set_Emocion(emociones[random.randint(1,len(emociones))])
         Obj_Persona.set_Provincia(provincias[random.randint(1,len(provincias))])
-        Lista_Personas.append(Obj_Persona) #It is appended each "Persona" object to the list
-    return Lista_Personas
-
-def Crear_Persona_Auto(Personas,cedulas,provincias,vestuarios,genero,colores_de_piel,rostro,emociones,atri_cabello,atri_ojos):
-    """    Function that creates "Persona" objects(depending on a quantity given) and add them to the list of persons, after that, returns the list. 
-    The attributes for each person are randomly selected.
-
-    Keyword arguments:
-    Personas -- List with the "Persona" objects
-    cedulas -- Dictionary that contains the new ID cards, previously created.
-    provincias -- Dictionary that contains the "Provincia" objects.
-    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
-    genero -- Dictionary that contains the "Genero" objects.
-    colores_de_piel -- Dictionary that contains the "Color_de_piel" objects.
-    rostro -- Dictionary that contains the "Forma_rostro" objects.
-    emociones -- Dictionary that contains the "Emocion" objects.
-    atri_cabello -- Dictionary that contains tree dictionaries inside, which ones, contain the: "Color_cabello", "Densidad_cabello" and "Textura_cabello" objects.
-    atri_ojos -- Dictionary that contains two dictionaries inside, which ones, contain the: "Color_ojos" and "Forma_ojos" objects.
-    """
-    for y in range(1,len(cedulas)+1):
-        for i in range(1, (len(Personas)+1)):  #The list of persons is toured to comprove that the new ID card isn't repeat
-            while cedulas[y] == Personas[i-1].get_Cedula(): #If the new ID card already exist, another one is created
-                cedulas[y] = Crea_cedulas(1)[1]
-    for x in range(1,len(cedulas)+1):
-        Fecha_na = Crea_Fecha_Nac()                   #The function "Crea_Fecha_Nac" is called to generate a random date of birth
-        Edad_Años = Calcula_Edad(Fecha_na)            #The function "Calcula_Edad" is called to calculate the person's age
-
-        cabello = {1: atri_cabello[1][random.randint(1,6)], 2: atri_cabello[2][random.randint(1,3)], 3: atri_cabello[3][random.randint(1,3)]}
-        Obj_Cabello = Cabello()               #The "Cabello" object is instantiated, for each person
-        Obj_Cabello.set_Atributos_cabello({1: cabello[1], 2: cabello[2], 3: cabello[3]})
-        Obj_Cabello.set_Color()
-        Obj_Cabello.set_Densidad()            #The "set" methods are applied to the "Cabello" object
-        Obj_Cabello.set_Textura()
-
-        ojos = {1: atri_ojos[1][random.randint(1,8)], 2: atri_ojos[2][random.randint(1,7)]}
-        Obj_Ojos = Ojos()                     #The "Ojos" object is instantiated, for each person
-        Obj_Ojos.set_Atributos_ojos({1: ojos[1], 2: ojos[2]})
-        Obj_Ojos.set_Color()                  #The "set" methods are applied to the "Ojos" object
-        Obj_Ojos.set_Forma()
-
-        cant_accesorios = random.randint(0,5) #A person, could only have between zero or five accesoriess, this quantity is randomly selected
-        cant_ropa = random.randint(4,7)       #A person, could only have between four or seven clothing, this quantity is randomly selected
-        accesorios = []                    #There is a list to store the person's accesoriess, with the purpose of don't repeat them
-        prendas = []                       #There is a list to store the person's clothing, with the purpose of don't repeat them
-        calzado = vestuarios[3][random.randint(1,len(vestuarios[3]))]
-
-        for j in range(0,cant_accesorios):
-            accesorio = vestuarios[1][random.randint(1,len(vestuarios[1]))]
-            while accesorio in accesorios:          #Is checked that the accesoriess aren't repeat
-                accesorio = vestuarios[1][random.randint(1,len(vestuarios[1]))]
-            accesorios.append(accesorio)
-
-        for e in range(0,cant_ropa):
-            ropa = vestuarios[2][random.randint(1,len(vestuarios[2]))]
-            while ropa in prendas:                  #Is checked that the clothing aren't repeat
-                ropa = vestuarios[2][random.randint(1,len(vestuarios[2]))]
-            prendas.append(ropa)
-
-        Obj_Vestuario = Vestuario()                 #The "Vestuario" object is instantiated, for each person
-        Obj_Vestuario.set_Accesorios(accesorios) 
-        Obj_Vestuario.set_Calzado(calzado)          #The "set" methods are applied to the "Vestuario" object
-        Obj_Vestuario.set_Ropa(prendas)
-
-        Obj_Persona = Persona()                     #The "Persona" object is instantiated, for each person
-        Obj_Persona.set_Cedula(cedulas[x])
-        Obj_Persona.set_Edad(Edad_Años)
-        Obj_Persona.set_Vestuario(Obj_Vestuario)    #All the respective "set" methods are applied to the "Persona" object
-        Obj_Persona.set_Ojos(Obj_Ojos)
-        Obj_Persona.set_Cabello(Obj_Cabello)
-        Obj_Persona.set_Color_piel(colores_de_piel[random.randint(1,len(colores_de_piel))])
-        Obj_Persona.set_Genero(genero[random.randint(1,len(genero))])
-        Obj_Persona.set_Forma_rostro(rostro[random.randint(1,len(rostro))])
-        Obj_Persona.set_Emocion(emociones[random.randint(1,len(emociones))])
-        Obj_Persona.set_Provincia(provincias[random.randint(1,len(provincias))])
-        Personas.append(Obj_Persona)                                          #It is appended the "Persona" object to the list
-    print("\nPersonas creadas y agregadas a la lista satisfactoriamente")
-    return Personas
-
+        Personas.append(Obj_Persona) #It is appended each "Persona" object to the list
+    return Personas 
+    
 def Muestra_InfoP(Persona_seleccionada,mensaje):
     """    Function that shows the clothing of the person selected.
 
@@ -910,7 +851,10 @@ def Seleccionar_PersonaM(Personas):
     """
     Muestra_de_personas = []
     for i in range(1,6):                      #A list is created to store the five "Persona" objects, which are randomly selected
-        Muestra_de_personas.append(random.choice(Personas))
+        persona_muestra = random.choice(Personas)
+        while persona_muestra in Muestra_de_personas:
+            persona_muestra = random.choice(Personas)
+        Muestra_de_personas.append(persona_muestra)
     print("Seleccione la cedula de la persona que desea modificar")
     print("\n***************************************")
     print("*                                     *")
@@ -924,7 +868,7 @@ def Seleccionar_PersonaM(Personas):
         Persona_seleccionada = Muestra_de_personas[comando-1]  #It's stored the "Persona" object selected
         Persona_seleccionada = Modificar_Persona(Persona_seleccionada, Crea_vestuario()) #The "Modificar_Persona" function is called
     else:
-        return Personas
+        return Personas 
     return Personas
 
 def Administrador(Personas,vestuarios):
@@ -948,7 +892,7 @@ def Administrador(Personas,vestuarios):
         comando = int(input("Digite un número correspondiente con el menú: "))
         if comando == 1:                              #Option number 1: Create persons automatically
             cantidad = int(input("\nIngrese la cantidad de personas que desea crear: ")) #This user, selects the quantity that he wants
-            Personas = Crear_Persona_Auto(Personas,Crea_cedulas(cantidad),Crea_provincias(),vestuarios,Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_emociones(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
+            Personas = Crea_Personas(Personas,Crea_cedulas(cantidad),Crea_provincias(),vestuarios,Crea_genero(),Crea_color_piel(),Crea_rostro(),Crea_Atributos_Cabello(),Crea_Atributos_Ojos())
         elif comando == 2:
             Personas = Seleccionar_PersonaM(Personas) #Option number 2: Modify the clothing of a person    
     return Personas
@@ -1027,7 +971,7 @@ def Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_car
     Rango_edades = {0: 0, 1: 4, 2: 11, 3: 17, 4: 64, 5: 100}   #Dictionary that contains the limits for belong to an specific age group
     bandera = False      #There is a "flag variable" for comproving if there are or there aren't persons with that characteristics
     for i in Personas:   #Searches the persons that complies with that characteristics and prints his information
-        if i.get_Edad() <= Rango_edades[lista_indices[5]] and i.get_Edad() > Rango_edades[(lista_indices[5])-1] and i.get_Color_piel() == lista_caracteristicas[0][lista_indices[0]].get_Nombre() and i.get_Genero() == lista_caracteristicas[1][lista_indices[1]].get_Nombre() and i.get_Forma_rostro() == lista_caracteristicas[2][lista_indices[2]].get_Nombre() and i.get_Emocion() == lista_caracteristicas[3][lista_indices[3]].get_Nombre() and i.get_Provincia() == lista_caracteristicas[4][lista_indices[4]].get_Nombre():
+        if i.get_Edad() <= Rango_edades[lista_indices[4]] and i.get_Edad() > Rango_edades[(lista_indices[4])-1] and i.get_Color_piel() == lista_caracteristicas[0][lista_indices[0]].get_Nombre() and i.get_Genero() == lista_caracteristicas[1][lista_indices[1]].get_Nombre() and i.get_Forma_rostro() == lista_caracteristicas[2][lista_indices[2]].get_Nombre() and i.get_Provincia() == lista_caracteristicas[3][lista_indices[3]].get_Nombre():
             print("\n ___________________________________ ")
             print("| Cédula:", i.get_Cedula(),"                |")
             print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
@@ -1083,8 +1027,8 @@ def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas
     indicador -- A number that represent the base case for the recursion.
     lista_indices -- List (empty at the beginning) that will contain the options that the user selects.
     """
-    atributos_consultar = ["Colores de piel  ", "Género           ", "Formas del rostro", "Emociones        ", "Provincias       "]
-    if indicador > 4:                       #When the base case is reached, the last menu is printed to select the only characteristic that isn't an object
+    atributos_consultar = ["Colores de piel  ", "Género           ", "Formas del rostro", "Provincias       "]
+    if indicador > 3:                       #When the base case is reached, the last menu is printed to select the only characteristic that isn't an object
         print("\n ___________________ ") 
         print("| Grupos Etarios    |")      #Which is the age group
         print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
@@ -1139,7 +1083,7 @@ def Analista(Personas, vestuarios):
             Consultar_accesorio(Personas, vestuarios, Crea_provincias(), Crea_genero())
         elif comando == 2: #Option number 2: Show the information of persons with characteristics selected by this user
             Consultar_personas(Personas, vestuarios, Crea_Atributos_Ojos(), Crea_Atributos_Cabello(), [Crea_color_piel(), Crea_genero(),
-            Crea_rostro(), Crea_emociones(), Crea_provincias()], 0, [])
+            Crea_rostro(), Crea_provincias()], 0, [])
     return
 
 def validar_contraseña(contraseña,comando,Personas, vestuarios):
@@ -1173,7 +1117,8 @@ def login():
     comando = 0
     vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas(Crea_cedulas(15000), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(), Crea_emociones(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Grabar_informacion_avatars(Personas)
     while comando < 3:
         print("\n*******************************************************")
         print("*                                                     *")  #There is a menu for select as which user login
