@@ -5,7 +5,7 @@
 import copy
 import random
 from datetime import date
-from tkinter import Tk, Text, Button, Label
+from tkinter import Tk, Text, Button, Label, END
 from PIL import ImageTk, Image 
 
 class Provincia:
@@ -507,6 +507,32 @@ class Persona:
         return self.Provincia.get_Nombre()
     def get_Clave(self):
         return self.Clave
+
+class menu:
+    def __init__(self, ventana):
+        self.ventana = ventana
+        self.texto = Text()
+        self.botones = Button()
+        return
+    def set_fondo(self, color_fondo):
+        self.ventana.configure(bg=color_fondo)
+        return    
+    def set_titulo(self, titulo):
+        self.ventana.title(titulo)
+        return
+    def set_texto(self, texto, ancho, alto, fondo, color_letras, fuente):
+        self.texto = Text(self.ventana, width=ancho, height=alto, bg=fondo, foreground=color_letras, font=fuente)
+        self.texto.insert(END, texto)
+        self.texto.configure(state="disabled")
+        return
+    def set_ubicacion(self, fila, columna):
+        self.texto.grid(row=fila, column=columna)
+        return
+    def set_botones(self, boton, ancho, alto, fondo, color_letras, fuente, fila, columna):
+        self.botones = Button(self.ventana, text=boton, width=ancho, height=alto, bg=fondo, foreground=color_letras, font=fuente, command=self.ventana.destroy)
+        self.botones.grid(row=fila, column=columna)
+        return
+
 
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
@@ -1114,24 +1140,21 @@ def validar_contraseña(contraseña,comando,Personas, vestuarios):
 
 def login():
     """Is the main function, allows select as which user login."""
-    comando = 0
     vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
     Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     Grabar_informacion_avatars(Personas)
-    while comando < 3:
-        print("\n*******************************************************")
-        print("*                                                     *")  #There is a menu for select as which user login
-        print("* Digite:  1     para ingresar como Administrador     *")
-        print("* Digite:  2     para ingresar como Analista          *")
-        print("* Digite: #>2    para salir                           *")
-        print("*                                                     *")
-        print("*******************************************************\n")
-        comando=int(input("Digite un número correspondiente con el menú: "))
-        if comando < 3 :
-            contraseña = input("\nDigite su contraseña: ")    #The password is typed, even if it's incorrect
-            validar_contraseña(contraseña,comando,Personas,vestuarios)   #The "validar_contraseña" function is called
-        else :
-            print("\n********************\n*   Hasta luego!   *\n********************")
-            return
+
+    ventana = Tk()
+    menu_login = menu(ventana)
+    menu_login.set_fondo("dark gray")
+    menu_login.set_titulo("LOGIN")
+    menu_login.set_texto("Seleccione el tipo de usuario", 30, 2, "light blue", "black", ["helvetica",15])
+    menu_login.set_ubicacion(0, 0)
+    menu_login.set_botones("Administrador", 12, 1, "black", "cyan", ["helvetica",15], 2, 6)
+    menu_login.set_botones("Analista", 12, 1, "black", "cyan", ["helvetica",15], 5, 6)
+    menu_login.set_botones("Salir", 12, 1, "black", "cyan", ["helvetica",15], 8, 6)
+    contraseña = input("\nDigite su contraseña: ")    #The password is typed, even if it's incorrect
+    validar_contraseña(contraseña,comando,Personas,vestuarios)   #The "validar_contraseña" function is called
+    print("\n********************\n*   Hasta luego!   *\n********************")
 login()
