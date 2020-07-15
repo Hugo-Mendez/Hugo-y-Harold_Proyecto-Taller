@@ -524,7 +524,11 @@ class menu:
         self.texto.insert(tk.END,texto)
         self.texto.configure(state="disabled")
         self.texto.grid(row=fila, column=columna)
-        return        
+        return  
+    def cierra_botones(self, botones): 
+        for boton in botones:
+            boton.destroy() 
+        return       
 
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
@@ -1104,7 +1108,22 @@ def Analista(Personas, vestuarios):
             Crea_rostro(), Crea_provincias()], 0, [])
     return
 
-def validar_contraseña(contraseña,comando,Personas, vestuarios): 
+def Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores):
+    vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
+    #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
+    Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
+    Grabar_informacion_avatars(Personas) 
+
+    Obj_menu.cierra_botones(botones_anteriores)
+    if comando == 1:
+        print("\nIngresó como Administrador")   #If the typed password was correct, the "Administrador" function is called
+        Administrador(Personas, vestuarios) 
+    elif comando == 2:
+        print("\nIngresó como Analista")
+        Analista(Personas, vestuarios)        #If the typed password was correct, the "Analista" function is called
+    return
+
+def validar_contrasena(ventana, Obj_menu, botones_anteriores, contrasena, comando): 
     """    Function that verify the user password, independently of which user was chosen ("Analista", or "Administrador").
 
     Keyword arguments:
@@ -1113,51 +1132,39 @@ def validar_contraseña(contraseña,comando,Personas, vestuarios):
     Personas -- The list with "Persona" objects.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
-    if comando == 1 :        
-        while contraseña != "admi123" : #If the typed password was incorrect, the user has to type it again or return to the menu
-            contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
-            if contraseña == "0" :
-                return
-        print("\nIngresó como Administrador")
-        Administrador(Personas,vestuarios)         #If the typed password was correct, the "Administrador" function is called
-        
-    elif comando == 2 :
-        while contraseña != "ana456" :  #If the typed password was incorrect, the user has to type it again or return to the menu
-            contraseña = input("\nContraseña incorrecta: vuelva a digitar su contraseña o digite: 0 para regresar ")
-            if contraseña == "0" :
-                return
-        print("\nIngresó como Analista")
-        Analista(Personas, vestuarios)              #If the typed password was correct, the "Analista" function is called
 
+    if comando == 1 and contrasena.get()  == "admi123": 
+        Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores)               
+    elif comando == 2 and contrasena == "ana456" :
+        Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores) 
+    else:
+        Recibir_contrasena(False, comando, ventana, Obj_menu, botones_anteriores)  
     return 
-"""
-def cierra_ventana(ventana, comando):
-    ventana.quit()
-    if comando == 1:       # prueba
-        login() 
-    return
-"""
-def Crea_personas_pordefecto(comando, ventana): 
-    vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
-    #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
-    Grabar_informacion_avatars(Personas)
 
-    ventana.withdraw()
-    ventana_contraseña = tk.Toplevel()
-    menu_contraseña = menu(ventana_contraseña)
-    menu_contraseña.set_fondo("dark gray")
-    menu_contraseña.set_titulo("Validar contraseña")
-    menu_contraseña.set_texto("Ingrese su contraseña:", 30, 2, "orange", "white", ["helvetica",15], 0, 0)
-    contraseña = tk.Entry(ventana_contraseña)
+def Recibir_contrasena(estado, comando, ventana, Obj_menu, botones_anteriores): 
+    Obj_menu.cierra_botones(botones_anteriores) 
+    if estado == True:
+        Obj_menu.set_texto("Ingrese su contraseña:", 30, 2, "orange", "white", ["helvetica",15], 0, 0)
+    else:
+        Obj_menu.set_texto("       Contraseña incorrecta,       Vuelva a digitar su contraseña", 30, 2, "orange", "white", ["helvetica",15], 0, 0)
+
+    Obj_menu.set_titulo("Validar contraseña")
+    contraseña = tk.Entry(ventana) 
     contraseña.grid(row= 2, column= 0, padx= 5, pady= 5, ipadx= 5, ipady= 5)
 
-    boton_continuar = tk.Button(ventana_contraseña, text= "Continuar", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : validar_contraseña(contraseña.get(), comando, Personas, vestuarios))
+    boton_continuar = tk.Button(ventana, text= "Continuar", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : validar_contrasena(ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña, comando))
     boton_continuar.grid(row = 5, column = 0)
+    boton_regresar = tk.Button(ventana, text= "Regresar", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : cierra_ventana(ventana, 1)) 
+    boton_regresar.grid(row = 8, column = 0) 
 
-    boton_regresar = tk.Button(ventana_contraseña, text= "Regresar", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : login())
-    boton_regresar.grid(row = 8, column = 0)
-    return
+    ventana.mainloop()
+    return  
+
+def cierra_ventana(ventana, comando):
+    ventana.destroy()
+    if comando == 1:       
+        login() 
+    return 
     
 def login():
     """Is the main function, allows select as which user login."""
@@ -1167,14 +1174,14 @@ def login():
     menu_login.set_titulo("LOGIN")
     menu_login.set_texto("Seleccione el tipo de usuario", 30, 2, "light blue", "black", ["helvetica",15], 0, 0)
 
-    boton_admi = tk.Button(ventana, text= "Administrador", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crea_personas_pordefecto(1, ventana))
+    boton_admi = tk.Button(ventana, text= "Administrador", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Recibir_contrasena(True, 1, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
     boton_admi.grid(row = 2, column = 0)
 
-    boton_ana = tk.Button(ventana, text= "Analista", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crea_personas_pordefecto(2, ventana))
+    boton_ana = tk.Button(ventana, text= "Analista", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Recibir_contrasena(True, 2, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
     boton_ana.grid(row = 5, column = 0)
 
     boton_salir = tk.Button(ventana, text= "Salir", width= 12, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = ventana.destroy)
     boton_salir.grid(row = 8, column = 0)
     
     ventana.mainloop()
-login()
+login() 
