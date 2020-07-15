@@ -6,6 +6,7 @@ import copy
 import random
 from datetime import date
 from tkinter import Tk, Text, Button, Label, END
+#import tkinter as tk
 from PIL import ImageTk, Image 
 
 class Provincia:
@@ -512,7 +513,7 @@ class menu:
     def __init__(self, ventana):
         self.ventana = ventana
         self.texto = Text()
-        self.botones = Button()
+        self.Botones = []
         return
     def set_fondo(self, color_fondo):
         self.ventana.configure(bg=color_fondo)
@@ -528,11 +529,19 @@ class menu:
     def set_ubicacion(self, fila, columna):
         self.texto.grid(row=fila, column=columna)
         return
-    def set_botones(self, boton, ancho, alto, fondo, color_letras, fuente, fila, columna):
-        self.botones = Button(self.ventana, text=boton, width=ancho, height=alto, bg=fondo, foreground=color_letras, font=fuente, command=self.ventana.destroy)
-        self.botones.grid(row=fila, column=columna)
-        return
-
+    def set_Botones(self, Info_botones):
+        self.Botones = Info_botones.copy()
+        for x in range(0, len(Info_botones)): 
+            if x == 0:
+                self.Botones[x] = Button(self.ventana, text= Info_botones[x][0], width= Info_botones[x][1], height= Info_botones[x][2], bg= Info_botones[x][3], fg = Info_botones[x][4], font= ["helvetica", 15], command = lambda: self.click(1))
+            elif x == 1:
+                self.Botones[x] = Button(self.ventana, text= Info_botones[x][0], width= Info_botones[x][1], height= Info_botones[x][2], bg= Info_botones[x][3], fg = Info_botones[x][4], font= ["helvetica", 15], command = lambda: self.click(2))
+            elif x == 2:
+                self.Botones[x] = Button(self.ventana, text= Info_botones[x][0], width= Info_botones[x][1], height= Info_botones[x][2], bg= Info_botones[x][3], fg = Info_botones[x][4], font= ["helvetica", 15], command = lambda: self.click(3))
+            self.Botones[x].grid(row = Info_botones[x][5], column = Info_botones[x][6]) 
+    def click(self, comando): 
+        Crea_personas_pordefecto(comando, self.ventana) 
+        return  
 
 def Crea_cedulas(cantidad):
     """    Function that creates a dictionary, then, through a "for" loop: creates a list of ID cards and adds them to the dictionary.
@@ -1112,7 +1121,7 @@ def Analista(Personas, vestuarios):
             Crea_rostro(), Crea_provincias()], 0, [])
     return
 
-def validar_contraseña(contraseña,comando,Personas, vestuarios):
+def validar_contraseña(contraseña,comando,Personas, vestuarios): 
     """    Function that verify the user password, independently of which user was chosen ("Analista", or "Administrador").
 
     Keyword arguments:
@@ -1138,23 +1147,25 @@ def validar_contraseña(contraseña,comando,Personas, vestuarios):
         Analista(Personas, vestuarios)              #If the typed password was correct, the "Analista" function is called
     return 
 
-def login():
-    """Is the main function, allows select as which user login."""
+def Crea_personas_pordefecto(comando, ventana): 
     vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
     #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
     Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     Grabar_informacion_avatars(Personas)
 
-    ventana = Tk()
+    contraseña = input("\nDigite su contraseña: ")    #The password is typed, even if it's incorrect
+    validar_contraseña(contraseña,comando,Personas,vestuarios)   #The "validar_contraseña" function is called
+
+def login():
+    """Is the main function, allows select as which user login."""
+    Info_botones = [["Administrador", 12, 1, "black", "cyan", 2, 6], ["Analista", 12, 1, "black", "cyan", 5, 6],  
+                    ["Salir", 12, 1, "black", "cyan", 8, 6]] 
+    ventana = Tk() 
     menu_login = menu(ventana)
     menu_login.set_fondo("dark gray")
     menu_login.set_titulo("LOGIN")
     menu_login.set_texto("Seleccione el tipo de usuario", 30, 2, "light blue", "black", ["helvetica",15])
     menu_login.set_ubicacion(0, 0)
-    menu_login.set_botones("Administrador", 12, 1, "black", "cyan", ["helvetica",15], 2, 6)
-    menu_login.set_botones("Analista", 12, 1, "black", "cyan", ["helvetica",15], 5, 6)
-    menu_login.set_botones("Salir", 12, 1, "black", "cyan", ["helvetica",15], 8, 6)
-    contraseña = input("\nDigite su contraseña: ")    #The password is typed, even if it's incorrect
-    validar_contraseña(contraseña,comando,Personas,vestuarios)   #The "validar_contraseña" function is called
-    print("\n********************\n*   Hasta luego!   *\n********************")
+    menu_login.set_Botones(Info_botones) 
+    ventana.mainloop()
 login()
