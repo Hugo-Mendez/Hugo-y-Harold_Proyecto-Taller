@@ -506,7 +506,7 @@ class Persona:
     def get_Provincia(self):
         return self.Provincia.get_Nombre()
     def get_Clave(self):
-        return self.Clave
+        return self.Clave 
 
 class menu:
     def __init__(self, ventana):
@@ -531,7 +531,10 @@ class menu:
         self.texto.insert(tk.END, nuevo_texto)
         self.texto.configure(state= "disabled")
         return
-    def cierra_botones(self, botones): 
+    def cerrar_texto(self):
+        self.texto.destroy()
+        return
+    def cierra_botones(self, botones):  
         for boton in botones:
             boton.destroy() 
         return         
@@ -568,8 +571,8 @@ def Crea_vestuario():
     Lastly returns the dictionary with the objects.
     """
     vestuarios = {1: {1: "Camiseta", 2: "Camiseta de tirantes", 3: "Suéter"}, 2: {1: "Blusa", 2: "Suéter", 3: "Chaqueta"},
-                  3: {1: "Jeans", 2: "Shorts", 3: "Pantaloneta"},             4: {1: "Enagua", 2: "Short", 3: "Jeans"},
-                  5: {1: "Tenis", 2: "Zapato casual", 3: "Sandalías"},        6: {1: "Tacones", 2: "Tenis", 3: "Botas"},
+                  3: {1: "Jeans", 2: "Pantalon militar", 3: "Pantaloneta"},   4: {1: "Enagua", 2: "Short", 3: "Jeans"},
+                  5: {1: "Tenis", 2: "Zapatillas", 3: "Sandalías"},           6: {1: "Tacones", 2: "Tenis", 3: "Botas"},
                   7: {1: "Lentes", 2: "Sombrero", 3: "Piercing"}} 
     Obj_vestuarios = copy.deepcopy(vestuarios)
     for i in range(1, len(vestuarios)+1):              #The elements are transformed to objects, through a "for" loop
@@ -868,7 +871,7 @@ def Modificar_Persona(Persona_seleccionada,vestuarios):
             Muestra_InfoP(Persona_seleccionada,"Ahora esta es su nueva vestimenta") #The "Muestra_InfoP" function is called to see the new information
         else:
             return
-    return Persona_seleccionada
+    return Persona_seleccionada 
 
 def Seleccionar_PersonaM(Personas):
     """    Function that shows five ID cards to the administrator user, with the purpose of he selects one of them to modify that person.
@@ -899,8 +902,22 @@ def Seleccionar_PersonaM(Personas):
         return Personas 
     return Personas
 
-def Administrador(Personas,vestuarios, ventana, Obj_menu):
-    """    Is the "Administrador" user's function, it allows him to create new persons automatically.
+def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
+    Obj_menu.cierra_botones(Botones_anteriores)
+    Obj_menu.set_titulo("Crear Avatar")
+    Obj_menu.cerrar_texto()
+    Obj_menu.set_texto("       Selecccione el género     ", 65, 2, "orange", "black", ["helvetica",15], 0, 0)  
+    ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Users/pc/Documents/GitHub/Hugo-y-Harold_Proyecto-Taller/Imagenes/ETAPA 3/Hombres/BaseH.png").resize((300, 530))) 
+    ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Users/pc/Documents/GitHub/Hugo-y-Harold_Proyecto-Taller/Imagenes/ETAPA 3/Mujeres/BaseM.png").resize((300, 530)))
+
+    BotonM = tk.Button(ventana, image = ImagenM, command = lambda: cierra_ventana(ventana, 1)) 
+    BotonM.grid(row= 2, column= 0)
+    BotonF = tk.Button(ventana, image = ImagenF, command = lambda: cierra_ventana(ventana, 1)) 
+    BotonF.grid(row= 2, column= 4)  
+    ventana.mainloop() 
+
+def Administrador(Personas, vestuarios, ventana, Obj_menu):
+    """    Is the "Administrador" user's function, it allows him to create new persons automatically. 
     Then, the new persons are added to the persons's list and returns the list.
     The "Administrador" user can do this process as many times as he wants.
 
@@ -909,10 +926,10 @@ def Administrador(Personas,vestuarios, ventana, Obj_menu):
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Obj_menu.set_titulo("Administrador")
-    Obj_menu.editar_texto("       Cuál opción desea realizar?")
-    boton_crear_avatar = tk.Button(ventana, text= "Crear avatar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :cierra_ventana(ventana, 1))
+    Obj_menu.editar_texto("       ¿Cuál opción desea realizar?")
+    boton_crear_avatar = tk.Button(ventana, text= "Crear avatar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar]))
     boton_crear_avatar.grid(row= 2, column= 0)
-    boton_vestir_avatar = tk.Button(ventana, text= "Vestir avatar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :cierra_ventana(ventana, 1))
+    boton_vestir_avatar = tk.Button(ventana, text= "Vestir avatar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : cierra_ventana(ventana, 1)) 
     boton_vestir_avatar.grid(row= 5, column= 0)
     boton_regresar = tk.Button(ventana, text= "Regresar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : cierra_ventana(ventana, 1))
     boton_regresar.grid(row = 8, column = 0)
@@ -1091,7 +1108,7 @@ def Analista(Personas, vestuarios, ventana, Obj_menu):
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Obj_menu.set_titulo("Analista")
-    Obj_menu.editar_texto("       Cuál opción desea realizar?")
+    Obj_menu.editar_texto("       ¿Cuál opción desea realizar?")
     boton1 = tk.Button(ventana, text= "Opcion 1", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :cierra_ventana(ventana, 1))
     boton1.grid(row= 2, column= 0)
     boton2 = tk.Button(ventana, text= "Opcion 2", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :cierra_ventana(ventana, 1))
@@ -1124,8 +1141,10 @@ def validar_contrasena(ventana, Obj_menu, botones_anteriores, contrasena, comand
     """
 
     if comando == 1 and contrasena.get()  == "admi123": 
+        contrasena.destroy()
         Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores)               
     elif comando == 2 and contrasena.get() == "ana456" :
+        contrasena.destroy()
         Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores) 
     else:
         contrasena.destroy()
