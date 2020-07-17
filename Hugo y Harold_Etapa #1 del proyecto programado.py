@@ -907,8 +907,8 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
     Obj_menu.set_titulo("Crear Avatar")
     Obj_menu.cerrar_texto()
     Obj_menu.set_texto("       Selecccione el género     ", 65, 2, "orange", "black", ["helvetica",15], 0, 0)  
-    ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Users/pc/Documents/GitHub/Hugo-y-Harold_Proyecto-Taller/Imagenes/ETAPA 3/Hombres/BaseH.png").resize((300, 530))) 
-    ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Users/pc/Documents/GitHub/Hugo-y-Harold_Proyecto-Taller/Imagenes/ETAPA 3/Mujeres/BaseM.png").resize((300, 530)))
+    ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Hombres/BaseH.png").resize((300, 530))) 
+    ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Mujeres/BaseM.png").resize((300, 530)))
 
     BotonM = tk.Button(ventana, image = ImagenM, command = lambda: cierra_ventana(ventana, 1)) 
     BotonM.grid(row= 2, column= 0)
