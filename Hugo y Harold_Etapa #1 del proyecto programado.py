@@ -1,4 +1,3 @@
-
 #Authors: Hugo Méndez and Harold Ramírez
 #Date: June 14th 2020
 
@@ -525,18 +524,12 @@ class menu:
         self.texto.configure(state= "disabled")
         self.texto.grid(row=fila, column=columna)
         return  
-    def editar_texto(self, nuevo_texto):
-        self.texto.configure(state= "normal")
-        self.texto.delete("1.0", tk.END)
-        self.texto.insert(tk.END, nuevo_texto)
-        self.texto.configure(state= "disabled")
-        return
     def cerrar_texto(self):
         self.texto.destroy()
-        return
-    def cierra_botones(self, botones):  
+        return 
+    def cerrar_botones(self, botones):  
         for boton in botones:
-            boton.destroy() 
+            boton.destroy()  
         return         
 
 def Crea_cedulas(cantidad):
@@ -903,18 +896,18 @@ def Seleccionar_PersonaM(Personas):
     return Personas
 
 def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
-    Obj_menu.cierra_botones(Botones_anteriores)
-    Obj_menu.set_titulo("Crear Avatar")
-    Obj_menu.cerrar_texto()
-    Obj_menu.set_texto("       Selecccione el género     ", 65, 2, "orange", "black", ["helvetica",15], 0, 0)  
-    ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Hombres/BaseH.png").resize((300, 530))) 
-    ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Mujeres/BaseM.png").resize((300, 530)))
+    Obj_menu.cerrar_botones(Botones_anteriores)
+    Obj_menu.cerrar_texto() 
+    Obj_menu.set_titulo("Crear Avatar") 
+    Obj_menu.set_texto(" Selecccione el género ", 19, 2, "orange", "white", ["helvetica",15], 0, 1)  
+    ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Hombres/BaseH.png").resize((250, 510))) 
+    ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Mujeres/BaseM.png").resize((250, 510)))
 
-    BotonM = tk.Button(ventana, image = ImagenM, command = lambda: cierra_ventana(ventana, 1)) 
-    BotonM.grid(row= 2, column= 0)
-    BotonF = tk.Button(ventana, image = ImagenF, command = lambda: cierra_ventana(ventana, 1)) 
-    BotonF.grid(row= 2, column= 4)  
-    ventana.mainloop() 
+    BotonM = tk.Button(ventana, image = ImagenM, width= 250, height= 510, command = lambda: cierra_ventana(ventana, 1)) 
+    BotonM.grid(row= 2, column= 0, padx = 3, pady = 4) 
+    BotonF = tk.Button(ventana, image = ImagenF, width= 250, height= 510, command = lambda: cierra_ventana(ventana, 1)) 
+    BotonF.grid(row= 2, column= 2, padx = 3, pady = 4)    
+    ventana.mainloop()  
 
 def Administrador(Personas, vestuarios, ventana, Obj_menu):
     """    Is the "Administrador" user's function, it allows him to create new persons automatically. 
@@ -926,13 +919,14 @@ def Administrador(Personas, vestuarios, ventana, Obj_menu):
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Obj_menu.set_titulo("Administrador")
-    Obj_menu.editar_texto("       ¿Cuál opción desea realizar?")
+    Obj_menu.set_texto("       ¿Cuál opción desea realizar?", 30, 2, "orange", "white", ["helvetica",15], 0, 0) 
     boton_crear_avatar = tk.Button(ventana, text= "Crear avatar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar]))
     boton_crear_avatar.grid(row= 2, column= 0)
     boton_vestir_avatar = tk.Button(ventana, text= "Vestir avatar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : cierra_ventana(ventana, 1)) 
     boton_vestir_avatar.grid(row= 5, column= 0)
     boton_regresar = tk.Button(ventana, text= "Regresar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : cierra_ventana(ventana, 1))
-    boton_regresar.grid(row = 8, column = 0)
+    boton_regresar.grid(row = 8, column = 0) 
+    ventana.mainloop()
     return
 
 def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
@@ -1108,13 +1102,14 @@ def Analista(Personas, vestuarios, ventana, Obj_menu):
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Obj_menu.set_titulo("Analista")
-    Obj_menu.editar_texto("       ¿Cuál opción desea realizar?")
+    Obj_menu.set_texto("       ¿Cuál opción desea realizar?", 30, 2, "orange", "white", ["helvetica",15], 0, 0) 
     boton1 = tk.Button(ventana, text= "Opcion 1", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :cierra_ventana(ventana, 1))
     boton1.grid(row= 2, column= 0)
     boton2 = tk.Button(ventana, text= "Opcion 2", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :cierra_ventana(ventana, 1))
     boton2.grid(row= 5, column= 0) 
     boton_regresar = tk.Button(ventana, text= "Regresar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : cierra_ventana(ventana, 1)) 
     boton_regresar.grid(row = 8, column = 0)
+    ventana.mainloop()
     return
 
 def Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores):
@@ -1123,7 +1118,8 @@ def Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores):
     Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero(), Crea_color_piel(), Crea_rostro(),Crea_Atributos_Cabello(), Crea_Atributos_Ojos())
     Grabar_informacion_avatars(Personas) 
 
-    Obj_menu.cierra_botones(botones_anteriores)
+    Obj_menu.cerrar_botones(botones_anteriores) 
+    Obj_menu.cerrar_texto()
     if comando == 1: 
         Administrador(Personas, vestuarios, ventana, Obj_menu)   #If the typed password was correct, the "Administrador" function is called
     elif comando == 2:
@@ -1139,7 +1135,6 @@ def validar_contrasena(ventana, Obj_menu, botones_anteriores, contrasena, comand
     Personas -- The list with "Persona" objects.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
-
     if comando == 1 and contrasena.get()  == "admi123": 
         contrasena.destroy()
         Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores)               
@@ -1152,11 +1147,12 @@ def validar_contrasena(ventana, Obj_menu, botones_anteriores, contrasena, comand
     return 
 
 def Ingresar_contrasena(estado, comando, ventana, Obj_menu, botones_anteriores): 
-    Obj_menu.cierra_botones(botones_anteriores)
+    Obj_menu.cerrar_botones(botones_anteriores)
+    Obj_menu.cerrar_texto() 
     if estado == True:
-        Obj_menu.set_texto("           Ingrese su contraseña:", 30, 2, "orange", "white", ["helvetica",15], 0, 0)
+        Obj_menu.set_texto("           Ingrese su contraseña:", 30, 2, "orange", "white", ["helvetica",15], 0, 0) 
     else:
-        Obj_menu.editar_texto("          Contraseña incorrecta,                 Vuelva a digitar su contraseña:")
+        Obj_menu.set_texto("          Contraseña incorrecta,                 Vuelva a digitar su contraseña:", 30, 2, "orange", "white", ["helvetica",15], 0, 0)
 
     Obj_menu.set_titulo("Validar contraseña")
     contraseña = tk.Entry(ventana)
@@ -1194,4 +1190,4 @@ def login():
     boton_salir.grid(row = 8, column = 0)
     
     ventana.mainloop()
-login() 
+login()  
