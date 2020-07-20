@@ -299,7 +299,7 @@ def Crea_provincias():
     Later, creates a copy of that dictionary and turns his elements to "Provincia" objects and applies them the "set_Nombre" method.
     Finally, returns the dictionary with the objects.
     """
-    provincias = {1: "San José  ", 2: "Alajuela  ", 3: "Cartago   ", 4: "Heredia   ", 5: "Puntarenas", 6: "Guanacaste", 7: "Limón     "}
+    provincias = {1: "San José  ", 2: "Alajuela  ", 3: "Cartago   ", 4: "Heredia   ", 5: "Guanacaste", 6: "Puntarenas", 7: "Limón     "}
     Obj_provincia = provincias.copy()
     for j in range(1, len(provincias)+1):       
         Obj_provincia[j] = Provincia()      #The elements are transformed to objects, through a "for" loop
@@ -312,9 +312,9 @@ def Crea_vestuario():
     Then, creates a copy of that dictionary and turns his elements to objects of his respective classess and applies them the "set" method.
     Lastly returns the dictionary with the objects.
     """
-    vestuarios = {1: {1: "Camiseta", 2: "Camiseta de tirantes", 3: "Suéter"}, 2: {1: "Blusa", 2: "Suéter", 3: "Chaqueta"},
-                  3: {1: "Jeans", 2: "Pantalon militar", 3: "Pantaloneta"},   4: {1: "Enagua", 2: "Short", 3: "Jeans"},
-                  5: {1: "Tenis", 2: "Zapatillas", 3: "Sandalías"},           6: {1: "Tacones", 2: "Tenis", 3: "Botas"},
+    vestuarios = {1: {1: "Camiseta", 2: "Suéter", 3: "Camiseta de tirantes"}, 2: {1: "Blusa", 2: "Chaqueta", 3: "Abrigo"},
+                  3: {1: "Jeans", 2: "Pantaloneta", 3: "Pantalon militar"},   4: {1: "Jeans", 2: "Shorts", 3: "Enagua"},
+                  5: {1: "Tenis", 2: "Zapatillas", 3: "Sandalías"},           6: {1: "Tenis", 2: "Botas", 3: "Tacones"},
                   7: {1: "Lentes", 2: "Sombrero", 3: "Piercing"}} 
     Obj_vestuarios = copy.deepcopy(vestuarios)
     for i in range(1, len(vestuarios)+1):              #The elements are transformed to objects, through a "for" loop
@@ -435,14 +435,80 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
     Obj_menu.cerrar_botones(Botones_anteriores)
     Obj_menu.cerrar_texto()
     Obj_menu.set_titulo("Crear Avatar")
-    if comando == 10:
+    if comando == 6:
+        provincias = Crea_provincias()
+        Nuevo_Avatar.set_Provincia(provincias[Identificador[3]])
+        Personas.append(Nuevo_Avatar)
+        Grabar_informacion_avatars([Nuevo_Avatar]) 
         Administrador(Personas, vestuarios, ventana, Obj_menu)
+    
+    elif comando == 5:
+        if Nuevo_Avatar.get_Genero() == "Femenino ":
+            claves = [2, 4, 6]
+        else:
+            claves = [1, 3, 5]
+        Obj_Vestuario = Vestuario()
+        Obj_Vestuario.set_Calzado(vestuarios[claves[2]][Identificador[0]]) 
+        Obj_Vestuario.set_Ropa([vestuarios[claves[0]][Identificador[1]], vestuarios[claves[1]][Identificador[2]]])
+        Nuevo_Avatar.set_Vestuario(Obj_Vestuario) 
+
+        Obj_menu.set_texto(" Selecccione la provincia ", 19, 2, "orange", "white", ["helvetica",15], 0, 0)
+        Provi_1 = tk.Button(ventana, text= "San José", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 1], Nuevo_Avatar))
+        Provi_2 = tk.Button(ventana, text= "Alajuela", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 2], Nuevo_Avatar))
+        Provi_3 = tk.Button(ventana, text= "Cartago", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 3], Nuevo_Avatar))
+        Provi_4 = tk.Button(ventana, text= "Heredia", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 4], Nuevo_Avatar))
+        Provi_5 = tk.Button(ventana, text= "Guanacaste", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 5], Nuevo_Avatar))
+        Provi_6 = tk.Button(ventana, text= "Puntarenas", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 6], Nuevo_Avatar))
+        Provi_7 = tk.Button(ventana, text= "Limón", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 6, [Identificador[0], Identificador[1], Identificador[2], 7], Nuevo_Avatar))
+        Provi_1.grid(row= 2, column= 0, padx = 3, pady = 3)
+        lista_botones = [Provi_1, Provi_2, Provi_3, Provi_4, Provi_5, Provi_6, Provi_7]
+        for x in range(0, len(lista_botones)):
+            lista_botones[x].grid(row = x+2, column = 0, padx = 3, pady= 3
+        ventana.mainloop() 
+    
+    elif comando == 3:
+        if Nuevo_Avatar.get_Genero() == "Femenino ":
+            Prendas = ["C:/Avatar App/Imagenes/Mujeres/A1.png", "C:/Avatar App/Imagenes/Mujeres/A2.png", "C:/Avatar App/Imagenes/Mujeres/A3.png"]
+        else:
+            Prendas = ["C:/Avatar App/Imagenes/Hombres/A1.png", "C:/Avatar App/Imagenes/Hombres/A2.png", "C:/Avatar App/Imagenes/Hombres/A3.png"]
+
+        Obj_menu.set_texto(" Selecccione la prenda superior ", 19, 2, "orange", "white", ["helvetica",15], 0, 0)
+        ImagenA1 = ImageTk.PhotoImage(Image.open(Prendas[0],"r").resize((50, 150)))
+        ImagenA2 = ImageTk.PhotoImage(Image.open(Prendas[1],"r").resize((50, 150)))
+        ImagenA3 = ImageTk.PhotoImage(Image.open(Prendas[2],"r").resize((50, 150))) 
+
+        BotonA1 = tk.Button(ventana, image = ImagenA1, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 5, [Identificador[0], Identificador[1], 1], Nuevo_Avatar))
+        BotonA1.grid(row= 1, column= 0, padx = 3, pady = 4)
+        BotonA2 = tk.Button(ventana, image = ImagenA2, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 5, [Identificador[0], Identificador[1], 2], Nuevo_Avatar))
+        BotonA2.grid(row= 2, column= 0, padx = 3, pady = 4)
+        BotonA3 = tk.Button(ventana, image = ImagenA3, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 5, [Identificador[0], Identificador[1], 3], Nuevo_Avatar))
+        BotonA3.grid(row= 3, column= 0, padx = 3, pady = 4)
+        ventana.mainloop()
+
+    elif comando == 2:
+        if Nuevo_Avatar.get_Genero() == "Femenino ":
+            Prendas = ["C:/Avatar App/Imagenes/Mujeres/B1.png", "C:/Avatar App/Imagenes/Mujeres/B2.png", "C:/Avatar App/Imagenes/Mujeres/B3.png"]
+        else:
+            Prendas = ["C:/Avatar App/Imagenes/Hombres/B1.png", "C:/Avatar App/Imagenes/Hombres/B2.png", "C:/Avatar App/Imagenes/Hombres/B3.png"]
+
+        Obj_menu.set_texto(" Selecccione la prenda inferior ", 19, 2, "orange", "white", ["helvetica",15], 0, 0)
+        ImagenB1 = ImageTk.PhotoImage(Image.open(Prendas[0],"r").resize((50, 150)))
+        ImagenB2 = ImageTk.PhotoImage(Image.open(Prendas[1],"r").resize((100, 100)))
+        ImagenB3 = ImageTk.PhotoImage(Image.open(Prendas[2],"r").resize((50, 150)))
+
+        BotonB1 = tk.Button(ventana, image = ImagenB1, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 3, [Identificador, 1], Nuevo_Avatar))
+        BotonB1.grid(row= 1, column= 0, padx = 3, pady = 4)
+        BotonB2 = tk.Button(ventana, image = ImagenB2, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 3, [Identificador, 2], Nuevo_Avatar))
+        BotonB2.grid(row= 2, column= 0, padx = 3, pady = 4)
+        BotonB3 = tk.Button(ventana, image = ImagenB3, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [BotonB1, BotonB2, BotonB3], 3, [Identificador, 3], Nuevo_Avatar))
+        BotonB3.grid(row= 3, column= 0, padx = 3, pady = 4)
+        ventana.mainloop()
 
     elif comando == 1:
         generos = Crea_genero()
         Nuevo_Avatar.set_Genero(generos[Identificador])
         if Nuevo_Avatar.get_Genero() == "Femenino ":
-            Calzados = [] 
+            Calzados = ["C:/Avatar App/Imagenes/Mujeres/C1.png", "C:/Avatar App/Imagenes/Mujeres/C2.png", "C:/Avatar App/Imagenes/Mujeres/C3.png"] 
         else:
             Calzados = ["C:/Avatar App/Imagenes/Hombres/C1.png", "C:/Avatar App/Imagenes/Hombres/C2.png", "C:/Avatar App/Imagenes/Hombres/C3.png"]
 
@@ -751,4 +817,4 @@ def login():
     boton_salir.grid(row = 8, column = 0)
     
     ventana.mainloop()
-login()
+login() 
