@@ -720,19 +720,71 @@ def Administrador(Personas, vestuarios, ventana, Obj_menu):
     boton_crear_avatar.grid(row= 2, column= 0)
     boton_vestir_avatar = tk.Button(ventana, text= "Vestir avatar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Seleccionar_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar]))
     boton_vestir_avatar.grid(row= 5, column= 0)
-    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana))
+    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar], 0 ,3))
     boton_regresar.grid(row = 8, column = 0) 
     ventana.mainloop()
     return 
+
+def vestuarios_mas_utilizados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, Id):
+    Obj_menu.cerrar_botones(Botones_anteriores)
+    Obj_menu.cerrar_texto()
+
+    claves = []
+    for persona in Personas:
+        if persona.get_Genero() == Id:
+            claves.append(persona.get_Clave())
+
+    cantidad = []
+    for i in claves:
+        veces = claves.count(i)
+        cantidad.append(veces)
+
+    mayor = max(cantidad)
+    posicion_mayor = cantidad.index(mayor)
+    porcentaje = round((mayor*100)/len(cantidad),2)
+
+    if Id == "Masculino": 
+        direccion = "C:/Avatar App/Imagenes/Hombres/" 
+    else:
+        direccion = "C:/Avatar App/Imagenes/Mujeres/"
+
+    Imagen_Av = ImageTk.PhotoImage(Image.open(direccion + claves[posicion_mayor] +".png","r").resize((250, 510))) 
+    Label = tk.Label(image= Imagen_Av)
+    Label.grid(row=4, column=0, padx = 3, pady= 3)
+
+    Obj_menu.set_texto(" Este es el vestuario más utilizado por dicho genero.                         Con un porcentaje de : "+str(porcentaje)+"%", 44, 4, "deep sky blue", "black", ["helvetica",15], 0, 0)
+
+    boton_regresar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 44 , height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_regresar], Label, 2))
+    boton_regresar.grid(row= 5, column= 0, padx=2, pady=2)
+    ventana.mainloop()
+    
+    return
+
+def Consultar_vestuario(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
+    Obj_menu.cerrar_botones(Botones_anteriores)
+    Obj_menu.cerrar_texto()
+
+    Obj_menu.set_titulo("Consultar vestuarios más utilizados")
+
+    Obj_menu.set_texto(" Seleccione el género ", 19, 2, "deep sky blue", "black", ["helvetica",15], 0, 1)
+    ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Hombres/BaseH.png").resize((250, 510)))
+    ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Mujeres/BaseM.png").resize((250, 510)))
+
+    BotonM = tk.Button(ventana, image = ImagenM, cursor= "hand2", command = lambda: vestuarios_mas_utilizados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, "Masculino",))
+    BotonF = tk.Button(ventana, image = ImagenF, cursor= "hand2", command = lambda: vestuarios_mas_utilizados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, "Femenino ",)) 
+    Botones_anteriores = [BotonM, BotonF]
+    BotonM.grid(row= 2, column= 0, padx = 3, pady = 4)
+    BotonF.grid(row= 2, column= 2, padx = 3, pady = 4)
+    ventana.mainloop()
+    return
 
 def muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, id, posicion):
     if posicion == len(Personas): 
         Obj_menu.cerrar_texto() 
         Obj_menu.set_texto(" No existen más avatars que utilizan dicho accesorio", 42, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
-        label = tk.Label() 
-        boton_regresar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 41 , height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_regresar], label, 2)) 
+        boton_regresar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 41 , height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_regresar], 0, 2)) 
         boton_regresar.grid(row= 3, column= 0, padx=2, pady=2) 
-        ventana.mainloop() 
+        ventana.mainloop()
 
     elif Botones_anteriores == []: 
         indice_AC = int((Personas[posicion].get_Clave())) // 1000 
@@ -745,7 +797,7 @@ def muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Boto
             Label = tk.Label(image= Imagen_Av)
             Label.grid(row=3, column=0, padx = 3, pady= 3)
 
-            boton_continuar = tk.Button(ventana, text= "Continuar con el siguiente avatar", cursor= "hand2", width= 26, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : (regresar_usuario(0, 0, 0, Obj_menu, [boton_continuar], Label, 3) , muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, [], id, posicion+1))) 
+            boton_continuar = tk.Button(ventana, text= "Continuar con el siguiente avatar", cursor= "hand2", width= 26, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : (regresar_usuario(0, 0, 0, Obj_menu, [boton_continuar], Label, 4) , muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, [], id, posicion+1))) 
             boton_continuar.grid(row = 4, column = 0)
             ventana.mainloop() 
         else:
@@ -784,14 +836,14 @@ def Analista(Personas, vestuarios, ventana, Obj_menu):
     """
     Obj_menu.set_titulo("Analista")
     Obj_menu.set_texto("       ¿Cuál opción desea realizar?", 30, 2, "deep sky blue", "black", ["helvetica",15], 0, 0)  
-    Boton_Consulta_acc = tk.Button(ventana, text= "Consultar accesorio", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : Consultar_accesorio(Personas, vestuarios, ventana, Obj_menu, [Boton_Consulta_acc, boton2, boton_regresar]))
+    Boton_Consulta_acc = tk.Button(ventana, text= "Consultar accesorio", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : Consultar_accesorio(Personas, vestuarios, ventana, Obj_menu, [Boton_Consulta_acc, Boton_Consulta_Ves, boton_regresar]))
     Boton_Consulta_acc.grid(row= 2, column= 0) 
-    boton2 = tk.Button(ventana, text= "Opcion 2", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana)) 
-    boton2.grid(row= 5, column= 0) 
-    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana)) 
+    Boton_Consulta_Ves = tk.Button(ventana, text= "Consultar vestuario más utilizado", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : Consultar_vestuario(Personas, vestuarios, ventana, Obj_menu, [Boton_Consulta_acc, Boton_Consulta_Ves, boton_regresar] )) 
+    Boton_Consulta_Ves.grid(row= 5, column= 0)
+    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [Boton_Consulta_acc, Boton_Consulta_Ves, boton_regresar], 0 ,3)) 
     boton_regresar.grid(row = 8, column = 0)
     ventana.mainloop() 
-    return 
+    return
 
 def validar_contrasena(Personas, vestuarios, ventana, Obj_menu, botones_anteriores, contrasena, comando): 
     """    Function that verify the user password, independently of which user was chosen ("Analista", or "Administrador").
@@ -830,7 +882,7 @@ def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu
 
     boton_continuar = tk.Button(ventana, text= "Continuar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : validar_contrasena(Personas, vestuarios, ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña, comando))
     boton_continuar.grid(row = 5, column = 0)
-    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2",width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana))
+    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2",width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña ,3))
     boton_regresar.grid(row = 8, column = 0) 
 
     ventana.mainloop()
@@ -838,34 +890,30 @@ def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu
 
 def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores, label, comando):
     Obj_menu.cerrar_botones(botones_anteriores)
-    Obj_menu.cerrar_label(label) 
-    if comando in range(1, 3):
-        Obj_menu.cerrar_texto()  
+    if comando < 4:
+        Obj_menu.cerrar_texto()
         if comando == 1:
+            Obj_menu.cerrar_label(label)
             Administrador(Personas, vestuarios, ventana, Obj_menu)
         elif comando == 2:
-            Analista(Personas, vestuarios, ventana, Obj_menu) 
+            Analista(Personas, vestuarios, ventana, Obj_menu)
+        else:
+            if type(label) != int :
+                label.destroy()
+            login(Personas, vestuarios, ventana, Obj_menu)
     else:
-        return 
+        Obj_menu.cerrar_label(label)
+        return
 
-def regresar_a_login(Personas, vestuarios, ventana):
-    ventana.destroy()
-    login(Personas, vestuarios) 
-    return 
-
-def login(Personas, vestuarios):
+def login(Personas, vestuarios, ventana, Obj_menu):
     """Is the main function, allows select as which user login."""
-    ventana = tk.Tk()
-    ventana.iconbitmap("C:/Avatar App/Imagenes/Icono.ico")
-    menu_login = menu(ventana)
-    menu_login.set_fondo("grey30")
-    menu_login.set_titulo("LOGIN")
-    menu_login.set_texto("       Seleccione el tipo de usuario", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0)
+    Obj_menu.set_titulo("LOGIN")
+    Obj_menu.set_texto("       Seleccione el tipo de usuario", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0)
 
-    boton_admi = tk.Button(ventana, text= "Administrador", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 1, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
+    boton_admi = tk.Button(ventana, text= "Administrador", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 1, ventana, Obj_menu, [boton_admi, boton_ana, boton_salir]))
     boton_admi.grid(row = 2, column = 0)
 
-    boton_ana = tk.Button(ventana, text= "Analista", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 2, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
+    boton_ana = tk.Button(ventana, text= "Analista", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 2, ventana, Obj_menu, [boton_admi, boton_ana, boton_salir]))
     boton_ana.grid(row = 5, column = 0)
 
     boton_salir = tk.Button(ventana, text= "Salir", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = ventana.destroy) 
@@ -874,10 +922,13 @@ def login(Personas, vestuarios):
     return
 
 def Crea_personas_pordefecto():
-    vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
-    #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero())
-    Grabar_informacion_avatars(Personas, False) 
-    login(Personas, vestuarios) 
+    vestuarios = Crea_vestuario()                                                                #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
+    Personas = Crea_Personas([], Crea_cedulas(100), Crea_provincias(), vestuarios ,Crea_genero())  #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
+    Grabar_informacion_avatars(Personas, False)
+    ventana = tk.Tk()
+    ventana.iconbitmap("C:/Avatar App/Imagenes/Icono.ico")
+    Obj_menu = menu(ventana)
+    Obj_menu.set_fondo("grey30")
+    login(Personas, vestuarios, ventana, Obj_menu)
     return 
-Crea_personas_pordefecto() 
+Crea_personas_pordefecto()
