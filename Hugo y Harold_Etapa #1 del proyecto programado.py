@@ -5,7 +5,7 @@ import copy
 import random
 from datetime import date
 import tkinter as tk
-from PIL import ImageTk, Image 
+from PIL import ImageTk, Image
 
 class Provincia:
     """    Class for the "Provincia" objects.
@@ -271,7 +271,7 @@ class menu:
         self.texto = tk.Text(self.ventana, width=ancho, height=alto, bg=fondo, foreground=color_letras, font=fuente)
         self.texto.insert(tk.END,texto)
         self.texto.configure(state= "disabled")
-        self.texto.grid(row=fila, column=columna)
+        self.texto.grid(row=fila, column=columna, padx= 2, pady= 2)
         return  
     def cerrar_texto(self):
         self.texto.destroy()
@@ -379,7 +379,7 @@ def Grabar_informacion_avatars(Personas, bandera):
             i.set_Clave("")
         archi = open("C:/Avatar App/Info_avatars.txt", "w")  
     for i in Personas:
-        linea = [str(i.get_Cedula()), str(i.get_Edad()), i.get_Genero(), i.get_Provincia(),i.get_Vestuario(1)[0].get_Accesorio(), i.get_Vestuario(2)] 
+        linea = [str(i.get_Cedula()), str(i.get_Edad()), i.get_Genero(), i.get_Provincia(), i.get_Vestuario(1)[0].get_Accesorio(), i.get_Vestuario(2)] 
         for f in i.get_Vestuario(3):
             linea.append(f.get_Ropa())
         Linea = "/".join(linea)
@@ -447,27 +447,26 @@ def Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, c
         nuevo_vestuario.set_Accesorios([vestuarios[7][Id[3]]])
         nuevo_vestuario.set_Calzado(vestuarios[claves[2]][Id[0]])
         nuevo_vestuario.set_Ropa([vestuarios[claves[0]][Id[2]], vestuarios[claves[1]][Id[1]]])
-        avatar.set_Vestuario(nuevo_vestuario)
-        avatar.set_Clave(str(Id[3])+str(Id[0])+str(Id[2])+str(Id[1]))
+        avatar.set_Vestuario(nuevo_vestuario) 
         Grabar_informacion_avatars(Personas, True)
 
         Imagen_Av = ImageTk.PhotoImage(Image.open(direccion+avatar.get_Clave()+".png","r").resize((250, 510))) 
         Label = tk.Label(image= Imagen_Av)
         Label.grid(row=3, column=0, padx = 3, pady= 3)
 
-        boton_continuar = tk.Button(ventana, text= "Regresar a menú de opciones", width= 26, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_continuar], Label, 1)) 
+        boton_continuar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 26, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_continuar], Label, 1)) 
         boton_continuar.grid(row = 4, column = 0)
         ventana.mainloop()
 
     elif comando == 3:
-        Obj_menu.set_texto(" Selecccione el nuevo accesorio ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)      
+        Obj_menu.set_texto(" Seleccione el nuevo accesorio ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)      
         indiceAC = int(avatar.get_Clave()) // 1000
         if indiceAC != 4:    
             indices.remove(indiceAC)
             ImagenAC1 = ImageTk.PhotoImage(Image.open("C:/Avatar App/Imagenes/Accesorios/A" + str(indices[0]) + ".png","r").resize((110, 150)))  
             ImagenAC2 = ImageTk.PhotoImage(Image.open("C:/Avatar App/Imagenes/Accesorios/A" + str(indices[1]) + ".png","r").resize((110, 150))) 
-            BotonAC1 = tk.Button(ventana, image = ImagenAC1, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],indices[0]], direccion, avatar))
-            BotonAC2 = tk.Button(ventana, image = ImagenAC2, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],indices[1]], direccion, avatar)) 
+            BotonAC1 = tk.Button(ventana, image = ImagenAC1, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],indices[0]], direccion, avatar))
+            BotonAC2 = tk.Button(ventana, image = ImagenAC2, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],indices[1]], direccion, avatar)) 
             Botones_anteriores = [BotonAC1, BotonAC2]  
             for i in range(0, len(Botones_anteriores)):
                 Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4)
@@ -476,37 +475,37 @@ def Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, c
             ImagenAC1 = ImageTk.PhotoImage(Image.open("C:/Avatar App/Imagenes/Accesorios/A1.png","r").resize((110, 150)))  
             ImagenAC2 = ImageTk.PhotoImage(Image.open("C:/Avatar App/Imagenes/Accesorios/A2.png","r").resize((110, 150))) 
             ImagenAC3 = ImageTk.PhotoImage(Image.open("C:/Avatar App/Imagenes/Accesorios/A3.png","r").resize((110, 150))) 
-            BotonAC1 = tk.Button(ventana, image = ImagenAC1, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],1], direccion, avatar))
-            BotonAC2 = tk.Button(ventana, image = ImagenAC2, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],2], direccion, avatar)) 
-            BotonAC3 = tk.Button(ventana, image = ImagenAC3, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],3], direccion, avatar)) 
+            BotonAC1 = tk.Button(ventana, image = ImagenAC1, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],1], direccion, avatar))
+            BotonAC2 = tk.Button(ventana, image = ImagenAC2, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],2], direccion, avatar)) 
+            BotonAC3 = tk.Button(ventana, image = ImagenAC3, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Id[0], Id[1], Id[2],3], direccion, avatar)) 
             Botones_anteriores = [BotonAC1, BotonAC2, BotonAC3]
             for i in range(0, len(Botones_anteriores)):
                 Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4)
             ventana.mainloop()
 
     elif comando == 2:
-        Obj_menu.set_texto(" Selecccione la nueva prenda superior ", 31, 2, "springgreen2", "black", ["helvetica",15], 0, 0)  
+        Obj_menu.set_texto(" Seleccione la nueva prenda superior ", 31, 2, "springgreen2", "black", ["helvetica",15], 0, 0)  
         indiceA = (int(avatar.get_Clave()) // 10 )% 10 
         indices.remove(indiceA)
 
         ImagenA1 = ImageTk.PhotoImage(Image.open(direccion + "A" + str(indices[0]) + ".png","r").resize((110, 150)))  
         ImagenA2 = ImageTk.PhotoImage(Image.open(direccion + "A" + str(indices[1]) + ".png","r").resize((110, 150))) 
-        BotonA1 = tk.Button(ventana, image = ImagenA1, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Id[0], Id[1], indices[0]], direccion, avatar))
-        BotonA2 = tk.Button(ventana, image = ImagenA2, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Id[0], Id[1], indices[1]], direccion, avatar)) 
+        BotonA1 = tk.Button(ventana, image = ImagenA1, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Id[0], Id[1], indices[0]], direccion, avatar))
+        BotonA2 = tk.Button(ventana, image = ImagenA2, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Id[0], Id[1], indices[1]], direccion, avatar)) 
         Botones_anteriores = [BotonA1, BotonA2]  
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
         ventana.mainloop()   
 
     elif comando == 1:
-        Obj_menu.set_texto(" Selecccione la nueva prenda inferior ", 30, 2, "springgreen2", "black", ["helvetica",15], 0, 0) 
+        Obj_menu.set_texto(" Seleccione la nueva prenda inferior ", 30, 2, "springgreen2", "black", ["helvetica",15], 0, 0) 
         indiceB = int(avatar.get_Clave()) % 10  
         indices.remove(indiceB)
     
         ImagenB1 = ImageTk.PhotoImage(Image.open(direccion + "B" + str(indices[0]) + ".png","r").resize((100, 140))) 
         ImagenB2 = ImageTk.PhotoImage(Image.open(direccion + "B" + str(indices[1]) + ".png","r").resize((100, 140))) 
-        BotonB1 = tk.Button(ventana, image = ImagenB1, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Id[0], indices[0]], direccion, avatar))
-        BotonB2 = tk.Button(ventana, image = ImagenB2, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Id[0], indices[1]], direccion, avatar))
+        BotonB1 = tk.Button(ventana, image = ImagenB1, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Id[0], indices[0]], direccion, avatar))
+        BotonB2 = tk.Button(ventana, image = ImagenB2, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Id[0], indices[1]], direccion, avatar))
         Botones_anteriores = [BotonB1, BotonB2]
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
@@ -514,7 +513,7 @@ def Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, c
 
     elif comando == 0:
         Obj_menu.set_titulo("Vestir avatar")
-        Obj_menu.set_texto(" Selecccione el nuevo calzado ", 25, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
+        Obj_menu.set_texto(" Seleccione el nuevo calzado ", 25, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
 
         indiceC = (int(avatar.get_Clave()) // 100) % 10
 
@@ -525,8 +524,8 @@ def Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, c
             direccion = "C:/Avatar App/Imagenes/Mujeres/"
         ImagenC1 = ImageTk.PhotoImage(Image.open(direccion + "C" + str(indices[0]) + ".png","r").resize((100, 100))) 
         ImagenC2 = ImageTk.PhotoImage(Image.open(direccion + "C" + str(indices[1]) + ".png","r").resize((100, 100))) 
-        BotonC1 = tk.Button(ventana, image = ImagenC1, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [indices[0]], direccion, avatar))
-        BotonC2 = tk.Button(ventana, image = ImagenC2, command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [indices[1]], direccion, avatar))
+        BotonC1 = tk.Button(ventana, image = ImagenC1, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [indices[0]], direccion, avatar))
+        BotonC2 = tk.Button(ventana, image = ImagenC2, cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [indices[1]], direccion, avatar))
         Botones_anteriores = [BotonC1, BotonC2]
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
@@ -539,7 +538,7 @@ def Seleccionar_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anterior
     Obj_menu.set_titulo("Seleccionar avatar a modificar")
     Obj_menu.set_texto("Seleccione el avatar que desea modificar", 33, 2, "springgreen2", "black", ["helvetica",15], 0, 2)
     Avatars_seleccionados = random.sample(Personas, 5)
-    imagenes = []
+    imagenes = [] 
     for i in range(0, 5):
         if Avatars_seleccionados[i].get_Genero() == "Masculino": 
             direccion = "C:/Avatar App/Imagenes/Hombres/" 
@@ -548,11 +547,11 @@ def Seleccionar_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anterior
         Imagen_Av = ImageTk.PhotoImage(Image.open(direccion+Avatars_seleccionados[i].get_Clave()+".png","r").resize((200, 450))) 
         imagenes.append(Imagen_Av)  
     
-    Av_1 = tk.Button(ventana, image = imagenes[0], command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[0]))
-    Av_2 = tk.Button(ventana, image = imagenes[1], command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[1]))
-    Av_3 = tk.Button(ventana, image = imagenes[2], command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[2]))
-    Av_4 = tk.Button(ventana, image = imagenes[3], command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[3]))
-    Av_5 = tk.Button(ventana, image = imagenes[4], command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[4]))
+    Av_1 = tk.Button(ventana, image = imagenes[0], cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[0]))
+    Av_2 = tk.Button(ventana, image = imagenes[1], cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[1]))
+    Av_3 = tk.Button(ventana, image = imagenes[2], cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[2]))
+    Av_4 = tk.Button(ventana, image = imagenes[3], cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[3]))
+    Av_5 = tk.Button(ventana, image = imagenes[4], cursor= "hand2", command = lambda: Vestir_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 0, 0, "", Avatars_seleccionados[4]))
     Botones_anteriores = [Av_1, Av_2, Av_3, Av_4, Av_5]  
     for i in range(0, len(Botones_anteriores)):
         Botones_anteriores[i].grid(row=3, column=i, padx = 2, pady= 2)
@@ -590,7 +589,7 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
         Label = tk.Label(image= Imagen_Av)
         Label.grid(row=3, column=0, padx = 3, pady= 3)
 
-        boton_continuar = tk.Button(ventana, text= "Regresar a menú de opciones", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_continuar], Label, 1)) 
+        boton_continuar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_continuar], Label, 1)) 
         boton_continuar.grid(row = 4, column = 0)
         ventana.mainloop()
 
@@ -606,14 +605,14 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
         Nuevo_Avatar.set_Vestuario(Obj_Vestuario)
 
 
-        Obj_menu.set_texto(" Selecccione la provincia ", 21, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
-        Provi_1 = tk.Button(ventana, text= "San José", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 1], Nuevo_Avatar))
-        Provi_2 = tk.Button(ventana, text= "Alajuela", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 2], Nuevo_Avatar))
-        Provi_3 = tk.Button(ventana, text= "Cartago", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu,  Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 3], Nuevo_Avatar))
-        Provi_4 = tk.Button(ventana, text= "Heredia", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu,  Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 4], Nuevo_Avatar))
-        Provi_5 = tk.Button(ventana, text= "Guanacaste", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 5], Nuevo_Avatar))
-        Provi_6 = tk.Button(ventana, text= "Puntarenas", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 6], Nuevo_Avatar))
-        Provi_7 = tk.Button(ventana, text= "Limón", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 7], Nuevo_Avatar))
+        Obj_menu.set_texto(" Seleccione la provincia ", 21, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
+        Provi_1 = tk.Button(ventana, text= "San José", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 1], Nuevo_Avatar))
+        Provi_2 = tk.Button(ventana, text= "Alajuela", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 2], Nuevo_Avatar))
+        Provi_3 = tk.Button(ventana, text= "Cartago", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu,  Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 3], Nuevo_Avatar))
+        Provi_4 = tk.Button(ventana, text= "Heredia", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu,  Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 4], Nuevo_Avatar))
+        Provi_5 = tk.Button(ventana, text= "Guanacaste", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 5], Nuevo_Avatar))
+        Provi_6 = tk.Button(ventana, text= "Puntarenas", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 6], Nuevo_Avatar))
+        Provi_7 = tk.Button(ventana, text= "Limón", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 6, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], Identificador[4], 7], Nuevo_Avatar))
 
         Botones_anteriores = [Provi_1, Provi_2, Provi_3, Provi_4, Provi_5, Provi_6, Provi_7]
         for x in range(0, len(Botones_anteriores)): 
@@ -621,17 +620,14 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
         ventana.mainloop() 
     
     elif comando == 4:
+        Obj_menu.set_texto("  Seleccione el accesorio ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
+        ImagenAC1 = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Accesorios/A1.png").resize((110, 150)))
+        ImagenAC2 = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Accesorios/A2.png").resize((110, 150)))
+        ImagenAC3 = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Accesorios/A3.png").resize((110, 150))) 
 
-        accesorios = ["C:/Avatar App/Imagenes/Accesorios/A1.png", "C:/Avatar App/Imagenes/Accesorios/A2.png", "C:/Avatar App/Imagenes/Accesorios/A3.png"]
-
-        Obj_menu.set_texto("  Selecccione el accesorio ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
-        ImagenAC1 = ImageTk.PhotoImage(Image.open(accesorios[0],"r").resize((110, 150)))
-        ImagenAC2 = ImageTk.PhotoImage(Image.open(accesorios[1],"r").resize((110, 150)))
-        ImagenAC3 = ImageTk.PhotoImage(Image.open(accesorios[2],"r").resize((110, 150))) 
-
-        BotonAC1 = tk.Button(ventana, image = ImagenAC1, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 5, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], 1], Nuevo_Avatar))
-        BotonAC2 = tk.Button(ventana, image = ImagenAC2, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 5, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], 2], Nuevo_Avatar))
-        BotonAC3 = tk.Button(ventana, image = ImagenAC3, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 5, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], 3], Nuevo_Avatar))
+        BotonAC1 = tk.Button(ventana, image = ImagenAC1, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 5, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], 1], Nuevo_Avatar))
+        BotonAC2 = tk.Button(ventana, image = ImagenAC2, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 5, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], 2], Nuevo_Avatar))
+        BotonAC3 = tk.Button(ventana, image = ImagenAC3, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 5, [Identificador[0], Identificador[1], Identificador[2], Identificador[3], 3], Nuevo_Avatar))
         Botones_anteriores = [BotonAC1, BotonAC2, BotonAC3] 
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
@@ -643,14 +639,14 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
         else:
             Prendas = ["C:/Avatar App/Imagenes/Hombres/A1.png", "C:/Avatar App/Imagenes/Hombres/A2.png", "C:/Avatar App/Imagenes/Hombres/A3.png"]
 
-        Obj_menu.set_texto("  Selecccione la prenda superior ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
+        Obj_menu.set_texto("  Seleccione la prenda superior ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
         ImagenA1 = ImageTk.PhotoImage(Image.open(Prendas[0],"r").resize((110, 150)))
         ImagenA2 = ImageTk.PhotoImage(Image.open(Prendas[1],"r").resize((110, 150)))
         ImagenA3 = ImageTk.PhotoImage(Image.open(Prendas[2],"r").resize((110, 150))) 
 
-        BotonA1 = tk.Button(ventana, image = ImagenA1, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Identificador[0], Identificador[1], Identificador[2], 1], Nuevo_Avatar))
-        BotonA2 = tk.Button(ventana, image = ImagenA2, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Identificador[0], Identificador[1], Identificador[2], 2], Nuevo_Avatar))
-        BotonA3 = tk.Button(ventana, image = ImagenA3, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Identificador[0], Identificador[1], Identificador[2], 3], Nuevo_Avatar))
+        BotonA1 = tk.Button(ventana, image = ImagenA1, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Identificador[0], Identificador[1], Identificador[2], 1], Nuevo_Avatar))
+        BotonA2 = tk.Button(ventana, image = ImagenA2, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Identificador[0], Identificador[1], Identificador[2], 2], Nuevo_Avatar))
+        BotonA3 = tk.Button(ventana, image = ImagenA3, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 4, [Identificador[0], Identificador[1], Identificador[2], 3], Nuevo_Avatar))
         Botones_anteriores = [BotonA1, BotonA2, BotonA3]
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
@@ -662,14 +658,14 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
         else:
             Prendas = ["C:/Avatar App/Imagenes/Hombres/B1.png", "C:/Avatar App/Imagenes/Hombres/B2.png", "C:/Avatar App/Imagenes/Hombres/B3.png"]
 
-        Obj_menu.set_texto("  Selecccione la prenda inferior ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
+        Obj_menu.set_texto("  Seleccione la prenda inferior ", 27, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
         ImagenB1 = ImageTk.PhotoImage(Image.open(Prendas[0],"r").resize((100, 180)))
         ImagenB2 = ImageTk.PhotoImage(Image.open(Prendas[1],"r").resize((100, 100)))
         ImagenB3 = ImageTk.PhotoImage(Image.open(Prendas[2],"r").resize((100, 180)))
 
-        BotonB1 = tk.Button(ventana, image = ImagenB1, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Identificador[0], Identificador[1], 1], Nuevo_Avatar))
-        BotonB2 = tk.Button(ventana, image = ImagenB2, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Identificador[0], Identificador[1], 2], Nuevo_Avatar))
-        BotonB3 = tk.Button(ventana, image = ImagenB3, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Identificador[0], Identificador[1], 3], Nuevo_Avatar))
+        BotonB1 = tk.Button(ventana, image = ImagenB1, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Identificador[0], Identificador[1], 1], Nuevo_Avatar))
+        BotonB2 = tk.Button(ventana, image = ImagenB2, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Identificador[0], Identificador[1], 2], Nuevo_Avatar))
+        BotonB3 = tk.Button(ventana, image = ImagenB3, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, [Identificador[0], Identificador[1], 3], Nuevo_Avatar))
         Botones_anteriores = [BotonB1, BotonB2, BotonB3]
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
@@ -683,14 +679,14 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
         else:
             Calzados = ["C:/Avatar App/Imagenes/Hombres/C1.png", "C:/Avatar App/Imagenes/Hombres/C2.png", "C:/Avatar App/Imagenes/Hombres/C3.png"]
 
-        Obj_menu.set_texto(" Selecccione el calzado ", 19, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
+        Obj_menu.set_texto(" Seleccione el calzado ", 19, 2, "springgreen2", "black", ["helvetica",15], 0, 0)
         ImagenC1 = ImageTk.PhotoImage(Image.open(Calzados[0],"r").resize((100, 100)))
         ImagenC2 = ImageTk.PhotoImage(Image.open(Calzados[1],"r").resize((100, 100)))
         ImagenC3 = ImageTk.PhotoImage(Image.open(Calzados[2],"r").resize((100, 100)))
 
-        BotonC1 = tk.Button(ventana, image = ImagenC1, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Identificador[0], 1], Nuevo_Avatar))
-        BotonC2 = tk.Button(ventana, image = ImagenC2, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Identificador[0], 2], Nuevo_Avatar))
-        BotonC3 = tk.Button(ventana, image = ImagenC3, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Identificador[0], 3], Nuevo_Avatar))
+        BotonC1 = tk.Button(ventana, image = ImagenC1, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Identificador[0], 1], Nuevo_Avatar))
+        BotonC2 = tk.Button(ventana, image = ImagenC2, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Identificador[0], 2], Nuevo_Avatar))
+        BotonC3 = tk.Button(ventana, image = ImagenC3, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, [Identificador[0], 3], Nuevo_Avatar))
         Botones_anteriores = [BotonC1, BotonC2, BotonC3]  
         for i in range(0, len(Botones_anteriores)):
             Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
@@ -698,12 +694,12 @@ def Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, co
 
     elif comando == 0:
         Obj_menu.set_titulo("Crear Avatar")
-        Obj_menu.set_texto(" Selecccione el género ", 19, 2, "springgreen2", "black", ["helvetica",15], 0, 1)
+        Obj_menu.set_texto(" Seleccione el género ", 19, 2, "springgreen2", "black", ["helvetica",15], 0, 1)
         ImagenM = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Hombres/BaseH.png").resize((250, 510)))
         ImagenF = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Mujeres/BaseM.png").resize((250, 510)))
 
-        BotonM = tk.Button(ventana, image = ImagenM, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [2]))
-        BotonF = tk.Button(ventana, image = ImagenF, command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [1])) 
+        BotonM = tk.Button(ventana, image = ImagenM, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [2]))
+        BotonF = tk.Button(ventana, image = ImagenF, cursor= "hand2", command = lambda: Crear_avatar(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, [1])) 
         Botones_anteriores = [BotonM, BotonF] 
         BotonM.grid(row= 2, column= 0, padx = 3, pady = 4)
         BotonF.grid(row= 2, column= 2, padx = 3, pady = 4)
@@ -720,180 +716,65 @@ def Administrador(Personas, vestuarios, ventana, Obj_menu):
     """
     Obj_menu.set_titulo("Administrador")
     Obj_menu.set_texto("       ¿Cuál opción desea realizar?", 30, 2, "springgreen2", "black", ["helvetica",15], 0, 0) 
-    boton_crear_avatar = tk.Button(ventana, text= "Crear avatar", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar], 0))
+    boton_crear_avatar = tk.Button(ventana, text= "Crear avatar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Crear_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar], 0))
     boton_crear_avatar.grid(row= 2, column= 0)
-    boton_vestir_avatar = tk.Button(ventana, text= "Vestir avatar", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Seleccionar_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar]))
+    boton_vestir_avatar = tk.Button(ventana, text= "Vestir avatar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : Seleccionar_avatar(Personas, vestuarios, ventana, Obj_menu, [boton_crear_avatar, boton_vestir_avatar, boton_regresar]))
     boton_vestir_avatar.grid(row= 5, column= 0)
-    boton_regresar = tk.Button(ventana, text= "Regresar", width= 30, height= 1, bg= "black", fg = "springgreen2", font= ["helvetica", 15], command = lambda : regresar_a_login(ventana))
+    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana))
     boton_regresar.grid(row = 8, column = 0) 
     ventana.mainloop()
-    return
-
-def Cuenta_P_Accesorios(Personas, genero, provincia, accesorio):
-    """   Function that founds out the quantity of persons who use a specific accessorie, depending on the province and genre given.
-    Then, returns that quantity.
-
-    Keyword arguments:
-    Personas -- The list with "Persona" objects.
-    genero -- A "Genero" object.    
-    provincia -- A "Provincia" object or a number.
-    accesorio -- A "Accesorio" object.
-    """
-    Personas_accesorio = 0
-    if provincia == 0:       #If "provincia" is '0' the function will find the persons of the genre given
-        for i in Personas:
-            if i.get_Genero() == genero.get_Nombre() and accesorio in i.get_Vestuario(1):
-                Personas_accesorio += 1
-    else:                    #If "provincia" is an object the function will find the persons of the genre and province given
-        for i in Personas:
-            if i.get_Genero() == genero.get_Nombre() and i.get_Provincia() == provincia.get_Nombre() and accesorio in i.get_Vestuario(1):
-                Personas_accesorio += 1
-    return Personas_accesorio
-
-def Consultar_accesorio(Personas, vestuario, provincias, genero):
-    """    Function that shows the quantity and percentage of persons who use a specific accessorie in all provinces, for each genre.
-
-    Keyword arguments:
-    Personas -- The list with "Persona" objects.
-    vestuario -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
-    provincias -- Dictionary that contains the "Provincia" objects.
-    genero -- Dictionary that contains the "Genero" objects.
-    """
-    print("Accesorios disponibles")
-    print(" _______________________________________ ")
-    for j in range(1,len(vestuario[1])+1):                                      #All the accessories are printed, to select one 
-        print("|","Accesorio #",j,"\t",vestuario[1][j].get_Accesorio(),"\t|")   #For do that, the "get_Accesorio" method is applied
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-    accesorio_buscar = int(input("Digite un número correspondiente con el accesorio que desea consultar: "))  #The user selects the accessorie that he wants
-    while accesorio_buscar not in range(1,11):
-        print("Digito incorrecto")
-        accesorio_buscar = int(input("Por favor digite un número correspondiente con el accesorio que desea consultar: "))
-    TOTAL = 0
-    for i in range(1, len(genero)+1):       #For each genre the function "Cuenta_P_Accesorios" is called to get the quantity of persons who use the selected accessorie 
-        Total_accesorios = Cuenta_P_Accesorios(Personas, genero[i], 0, vestuario[1][accesorio_buscar])
-        print("\n\t\t       ___________ ")
-        print("\t\t     ","|",genero[i].get_Nombre(),"|")
-        print("\t\t       ¯¯¯¯¯¯¯¯¯¯¯ ")
-        print(" ____________________________________________________ ")
-        print("| Provincia","\t|","Personas que lo usan","\t|","Porcentaje |") #The statistics per province are printed
-        print("|---------------|-----------------------|------------|")
-        for e in range(1, len(provincias)+1):       #For each province the function "Cuenta_P_Accesorios" is called to get the quantity of persons who use the selected accessorie
-            cantidad_personas = Cuenta_P_Accesorios(Personas, genero[i], provincias[e], vestuario[1][accesorio_buscar])
-            print("|",provincias[e].get_Nombre(), "\t|\t", cantidad_personas, "\t\t|",round((cantidad_personas * 100) / Total_accesorios, 1),"%","    |")
-            print("|---------------|-----------------------|------------|")
-        print("|Total", genero[i].get_Nombre()+"|\t",Total_accesorios,"\t\t|","100 %","     |")    
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-        TOTAL = TOTAL + Total_accesorios            #The total of persons in Costa Rica that use the accessorie is got it
-    print(" ______________________________________________________________ ")
-    print("| Total de personas que usan el accesorio en Costa Rica :",TOTAL,"|")
-    print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
     return 
 
-def Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices):
-    """    Function that shows the information of the persons that have the characteristics selected by the user.
+def muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, id, posicion):
+    if posicion == len(Personas): 
+        Obj_menu.cerrar_texto() 
+        Obj_menu.set_texto(" No existen más avatars que utilizan dicho accesorio", 42, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
+        label = tk.Label() 
+        boton_regresar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 41 , height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_regresar], label, 2)) 
+        boton_regresar.grid(row= 3, column= 0, padx=2, pady=2) 
+        ventana.mainloop() 
 
-    Keyword arguments:
-    Personas -- The list with "Persona" objects.
-    vestuario -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
-    ojos -- Dictionary that contains the "Ojos" objects.
-    cabello -- Dictionary that contains the "Cabello" objects.
-    lista_caracteristicas -- List that contains the characteristics to select, each characteristic is a dictionary which contain objects.
-    lista_indices -- List that contain the options that the user selects.
-    """
-    Rango_edades = {0: 0, 1: 4, 2: 11, 3: 17, 4: 64, 5: 100}   #Dictionary that contains the limits for belong to an specific age group
-    bandera = False      #There is a "flag variable" for comproving if there are or there aren't persons with that characteristics
-    for i in Personas:   #Searches the persons that complies with that characteristics and prints his information
-        if i.get_Edad() <= Rango_edades[lista_indices[4]] and i.get_Edad() > Rango_edades[(lista_indices[4])-1] and i.get_Color_piel() == lista_caracteristicas[0][lista_indices[0]].get_Nombre() and i.get_Genero() == lista_caracteristicas[1][lista_indices[1]].get_Nombre() and i.get_Forma_rostro() == lista_caracteristicas[2][lista_indices[2]].get_Nombre() and i.get_Provincia() == lista_caracteristicas[3][lista_indices[3]].get_Nombre():
-            print("\n ___________________________________ ")
-            print("| Cédula:", i.get_Cedula(),"                |")
-            print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            Muestra_InfoP(i, "            Vestuario            ")
-            print(" ___________________________________ ")
-            print("|               Ojos                |")
-            print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print("\t _______________ ")
-            print("\t| Forma         |")
-            print("\t|---------------|")
-            print("\t|",i.get_Ojos(1),"\t|")
-            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print("\t _______________ ")
-            print("\t| Color         |")
-            print("\t|---------------|")
-            print("\t|",i.get_Ojos(2),"\t|")
-            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print(" ___________________________________ ")
-            print("|             Cabello               |")
-            print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print("\t _______________ ")
-            print("\t| Color         |")
-            print("\t|---------------|")
-            print("\t|",i.get_Cabello(1),"\t|")
-            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print("\t _______________ ")
-            print("\t| Densidad      |")
-            print("\t|---------------|")
-            print("\t|",i.get_Cabello(2),"\t|")
-            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print("\t _______________ ")
-            print("\t| Textura       |")
-            print("\t|---------------|")
-            print("\t|",i.get_Cabello(3),"\t|")
-            print("\t ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-            print("---------------------------------------------------------")
-            bandera = True
-    if bandera == False:
-        print("\n __________________________________________ ")
-        print("| No hay personas con esas caracteristicas |")    
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
-    return
+    elif Botones_anteriores == []: 
+        indice_AC = int((Personas[posicion].get_Clave())) // 1000 
+        if indice_AC == id: 
+            if Personas[posicion].get_Genero() == "Masculino": 
+                direccion = "C:/Avatar App/Imagenes/Hombres/" 
+            else:
+                direccion = "C:/Avatar App/Imagenes/Mujeres/" 
+            Imagen_Av = ImageTk.PhotoImage(Image.open(direccion + Personas[posicion].get_Clave()+ ".png","r").resize((250, 510))) 
+            Label = tk.Label(image= Imagen_Av)
+            Label.grid(row=3, column=0, padx = 3, pady= 3)
 
-def Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador, lista_indices):
-    """    Recursive function that allows the "Analista" user to ask for persons with some characteristics that he selects.
-    
-    Keyword arguments:
-    Personas -- The list with "Persona" objects.
-    vestuario -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
-    ojos -- Dictionary that contains the "Ojos" objects.
-    cabello -- Dictionary that contains the "Cabello" objects.
-    lista_caracteristicas -- List that contains the characteristics to select, each characteristic is a dictionary which contain objects.
-    indicador -- A number that represent the base case for the recursion.
-    lista_indices -- List (empty at the beginning) that will contain the options that the user selects.
-    """
-    atributos_consultar = ["Colores de piel  ", "Género           ", "Formas del rostro", "Provincias       "]
-    if indicador > 3:                       #When the base case is reached, the last menu is printed to select the only characteristic that isn't an object
-        print("\n ___________________ ") 
-        print("| Grupos Etarios    |")      #Which is the age group
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-        print(" ________________________________ ")
-        print("| Digite: 1 para bebés           |")
-        print("| Digite: 2 para niños           |")
-        print("| Digite: 3 para adolescentes    |")
-        print("| Digite: 4 para adultos         |")
-        print("| Digite: 5 para adultos mayores |")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-        comando = int(input("Digite un número correspondiente con el grupo etario: "))
-        while comando not in range(1, 6):
-            print("Digito incorrecto")
-            comando = int(input("Por favor digite un número correspondiente con el menú: "))
-        lista_indices.append(comando)  #After the user selects the option, an identifier that represents the characteristic is appended to "lista_indices"
-        Impresion_personas_consultadas(Personas, vestuario, ojos, cabello, lista_caracteristicas, lista_indices) #The function "Impresion_personas_consultadas" is called
-        return
-    else:                              #While the base case isn't reached, print a menu for each characteristic where the user selects the option that he wants
-        print("\n ___________________ ")
-        print("|",atributos_consultar[indicador],"|")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")
-        print(" _______________________________ ")
-        for i in range(1, len(lista_caracteristicas[indicador])+1):
-            print("| Digite:", i, "para", lista_caracteristicas[indicador][i].get_Nombre(),"\t|")
-        print(" ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ")    
-        caracteristica_deseada = int(input("Digite un número correspondiente con la caracteristica que desea consultar: "))
-        while caracteristica_deseada not in range(1, len(lista_caracteristicas[indicador])+1):
-            print("Digito incorrecto")
-            caracteristica_deseada = int(input("Por favor digite un número correspondiente con la caracteristica que desea consultar: "))
-        lista_indices.append(caracteristica_deseada)     #After the user selects the option, an identifier that represents the characteristic is appended to "lista_indices"
-        Consultar_personas(Personas, vestuario, ojos, cabello, lista_caracteristicas, indicador+1, lista_indices) #Recursion is applied in order to continue with the next characteristic 
+            boton_continuar = tk.Button(ventana, text= "Continuar con el siguiente avatar", cursor= "hand2", width= 26, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : (regresar_usuario(0, 0, 0, Obj_menu, [boton_continuar], Label, 3) , muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, [], id, posicion+1))) 
+            boton_continuar.grid(row = 4, column = 0)
+            ventana.mainloop() 
+        else:
+            muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, [], id, posicion+1) 
+    else:
+        Obj_menu.cerrar_botones(Botones_anteriores) 
+        Obj_menu.cerrar_texto()
+        Obj_menu.set_texto("Se muestran los avatars que utilizan dicho accesorio", 42, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
+        muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, [], id, posicion)  
 
-def Analista(Personas, vestuarios, ventana, Obj_menu):
+def Consultar_accesorio(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
+    Obj_menu.cerrar_botones(Botones_anteriores)
+    Obj_menu.cerrar_texto()
+    Obj_menu.set_titulo("Consultar accesorio")
+    Obj_menu.set_texto(" ¿Cuál accesorio desea consultar? ", 29, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
+
+    ImagenAC1 = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Accesorios/A1.png").resize((110, 150)))
+    ImagenAC2 = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Accesorios/A2.png").resize((110, 150)))
+    ImagenAC3 = ImageTk.PhotoImage(Image.open(r"C:/Avatar App/Imagenes/Accesorios/A3.png").resize((110, 150))) 
+    BotonAC1 = tk.Button(ventana, image = ImagenAC1, cursor= "hand2", command = lambda: muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 1, 0)) 
+    BotonAC2 = tk.Button(ventana, image = ImagenAC2, cursor= "hand2", command = lambda: muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 2, 0))
+    BotonAC3 = tk.Button(ventana, image = ImagenAC3, cursor= "hand2", command = lambda: muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores, 3, 0)) 
+    Botones_anteriores = [BotonAC1, BotonAC2, BotonAC3] 
+    for i in range(0, len(Botones_anteriores)):
+        Botones_anteriores[i].grid(row= i+2, column= 0, padx = 3, pady = 4) 
+    ventana.mainloop()
+    return 
+
+def Analista(Personas, vestuarios, ventana, Obj_menu):  
     """    Is the "Analista" user's function, it allows him to apply for statatistics and information of the country.
     The "Analista" user can do this process as many times as he wants.
 
@@ -902,31 +783,17 @@ def Analista(Personas, vestuarios, ventana, Obj_menu):
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
     Obj_menu.set_titulo("Analista")
-    Obj_menu.set_texto("       ¿Cuál opción desea realizar?", 30, 2, "orange", "white", ["helvetica",15], 0, 0) 
-    boton1 = tk.Button(ventana, text= "Opcion 1", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :regresar_a_login(ventana))
-    boton1.grid(row= 2, column= 0)
-    boton2 = tk.Button(ventana, text= "Opcion 2", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda :regresar_a_login(ventana))
+    Obj_menu.set_texto("       ¿Cuál opción desea realizar?", 30, 2, "deep sky blue", "black", ["helvetica",15], 0, 0)  
+    Boton_Consulta_acc = tk.Button(ventana, text= "Consultar accesorio", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : Consultar_accesorio(Personas, vestuarios, ventana, Obj_menu, [Boton_Consulta_acc, boton2, boton_regresar]))
+    Boton_Consulta_acc.grid(row= 2, column= 0) 
+    boton2 = tk.Button(ventana, text= "Opcion 2", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana)) 
     boton2.grid(row= 5, column= 0) 
-    boton_regresar = tk.Button(ventana, text= "Regresar", width= 30, height= 1, bg= "black", fg = "cyan", font= ["helvetica", 15], command = lambda : regresar_a_login(ventana)) 
+    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana)) 
     boton_regresar.grid(row = 8, column = 0)
-    ventana.mainloop()
-    return
+    ventana.mainloop() 
+    return 
 
-def Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores):
-    vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
-    #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero() )
-    Grabar_informacion_avatars(Personas, False) 
-
-    Obj_menu.cerrar_botones(botones_anteriores) 
-    Obj_menu.cerrar_texto()
-    if comando == 1: 
-        Administrador(Personas, vestuarios, ventana, Obj_menu)   #If the typed password was correct, the "Administrador" function is called
-    elif comando == 2:
-        Analista(Personas, vestuarios, ventana, Obj_menu)        #If the typed password was correct, the "Analista" function is called
-    return
-
-def validar_contrasena(ventana, Obj_menu, botones_anteriores, contrasena, comando): 
+def validar_contrasena(Personas, vestuarios, ventana, Obj_menu, botones_anteriores, contrasena, comando): 
     """    Function that verify the user password, independently of which user was chosen ("Analista", or "Administrador").
 
     Keyword arguments:
@@ -935,33 +802,35 @@ def validar_contrasena(ventana, Obj_menu, botones_anteriores, contrasena, comand
     Personas -- The list with "Persona" objects.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
     """
+    Obj_menu.cerrar_botones(botones_anteriores) 
+    Obj_menu.cerrar_texto() 
     if comando == 1 and contrasena.get()  == "admi123": 
         contrasena.destroy()
-        Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores)               
+        Administrador(Personas, vestuarios, ventana, Obj_menu)              
     elif comando == 2 and contrasena.get() == "ana456" :
         contrasena.destroy()
-        Crea_personas_pordefecto(comando, ventana, Obj_menu, botones_anteriores) 
+        Analista(Personas, vestuarios, ventana, Obj_menu)   
     else:
         contrasena.destroy()
-        Ingresar_contrasena(False, comando, ventana, Obj_menu, botones_anteriores)  
+        Ingresar_contrasena(Personas, vestuarios, False, comando, ventana, Obj_menu, botones_anteriores)  
     return 
 
-def Ingresar_contrasena(estado, comando, ventana, Obj_menu, botones_anteriores): 
+def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu, botones_anteriores): 
     Obj_menu.cerrar_botones(botones_anteriores)
     Obj_menu.cerrar_texto() 
     if estado == True:
-        Obj_menu.set_texto("           Ingrese su contraseña:", 30, 2, "deepskyblue", "black", ["helvetica",15], 0, 0) 
+        Obj_menu.set_texto("           Ingrese su contraseña:", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0) 
     else:
-        Obj_menu.set_texto("          Contraseña incorrecta,                 Vuelva a digitar su contraseña:", 30, 2, "deepskyblue", "black", ["helvetica",15], 0, 0)
+        Obj_menu.set_texto("          Contraseña incorrecta,                 Vuelva a digitar su contraseña:", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0)
 
     Obj_menu.set_titulo("Validar contraseña")
     contraseña = tk.Entry(ventana)
     contraseña.grid(row= 2, column= 0, pady= 2, ipadx= 103, ipady= 5)
     contraseña.config(show= "*")
 
-    boton_continuar = tk.Button(ventana, text= "Continuar", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : validar_contrasena(ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña, comando))
+    boton_continuar = tk.Button(ventana, text= "Continuar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : validar_contrasena(Personas, vestuarios, ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña, comando))
     boton_continuar.grid(row = 5, column = 0)
-    boton_regresar = tk.Button(ventana, text= "Regresar", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : regresar_a_login(ventana))
+    boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2",width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_a_login(Personas, vestuarios, ventana))
     boton_regresar.grid(row = 8, column = 0) 
 
     ventana.mainloop()
@@ -969,37 +838,46 @@ def Ingresar_contrasena(estado, comando, ventana, Obj_menu, botones_anteriores):
 
 def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores, label, comando):
     Obj_menu.cerrar_botones(botones_anteriores)
-    Obj_menu.cerrar_texto()
-    Obj_menu.cerrar_label(label)
+    Obj_menu.cerrar_label(label) 
+    if comando in range(1, 3):
+        Obj_menu.cerrar_texto()  
+        if comando == 1:
+            Administrador(Personas, vestuarios, ventana, Obj_menu)
+        elif comando == 2:
+            Analista(Personas, vestuarios, ventana, Obj_menu) 
+    else:
+        return 
 
-    if comando == 1:
-        Administrador(Personas, vestuarios, ventana, Obj_menu)
-    elif comando == 2:
-        Analista(Personas, vestuarios, ventana, Obj_menu)
-    return
-
-def regresar_a_login(ventana):
+def regresar_a_login(Personas, vestuarios, ventana):
     ventana.destroy()
-    login()
-    return
+    login(Personas, vestuarios) 
+    return 
 
-def login():
+def login(Personas, vestuarios):
     """Is the main function, allows select as which user login."""
     ventana = tk.Tk()
     ventana.iconbitmap("C:/Avatar App/Imagenes/Icono.ico")
     menu_login = menu(ventana)
     menu_login.set_fondo("grey30")
     menu_login.set_titulo("LOGIN")
-    menu_login.set_texto("       Seleccione el tipo de usuario", 30, 2, "deep sky blue", "black", ["helvetica",15], 0, 0)
+    menu_login.set_texto("       Seleccione el tipo de usuario", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0)
 
-    boton_admi = tk.Button(ventana, text= "Administrador", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(True, 1, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
+    boton_admi = tk.Button(ventana, text= "Administrador", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 1, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
     boton_admi.grid(row = 2, column = 0)
 
-    boton_ana = tk.Button(ventana, text= "Analista", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(True, 2, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
+    boton_ana = tk.Button(ventana, text= "Analista", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 2, ventana, menu_login, [boton_admi, boton_ana, boton_salir]))
     boton_ana.grid(row = 5, column = 0)
 
-    boton_salir = tk.Button(ventana, text= "Salir", width= 30, height= 1, bg= "black", fg = "deep sky blue", font= ["helvetica", 15], command = ventana.destroy)
+    boton_salir = tk.Button(ventana, text= "Salir", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = ventana.destroy) 
     boton_salir.grid(row = 8, column = 0)
-    
     ventana.mainloop()
-login()
+    return
+
+def Crea_personas_pordefecto():
+    vestuarios = Crea_vestuario() #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
+    #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
+    Personas = Crea_Personas([], Crea_cedulas(5), Crea_provincias(), vestuarios ,Crea_genero())
+    Grabar_informacion_avatars(Personas, False) 
+    login(Personas, vestuarios) 
+    return 
+Crea_personas_pordefecto() 
