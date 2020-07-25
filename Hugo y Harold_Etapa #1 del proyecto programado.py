@@ -1,8 +1,9 @@
 #Authors: Hugo Méndez and Harold Ramírez
-#Date: June 14th 2020
+#Date: July 10th 2020 
 
-import copy
-import random
+import copy 
+import time
+import random 
 from datetime import date
 import tkinter as tk
 from PIL import ImageTk, Image 
@@ -746,27 +747,23 @@ def vestuarios_mas_utilizados(Personas, vestuarios, ventana, Obj_menu, Botones_a
 
     mayor = max(veces)
     indice_mayor = veces.index(mayor)
-    porcentaje = round((mayor*100)/len(veces),2)
-
-    claves = []
-    for x in range(0,len(personas_genero)):
-        claves.append(personas_genero[x].get_Clave())
+    porcentaje = round((mayor*100)/len(veces),2) 
 
     if Id == "Masculino": 
         direccion = "C:/Avatar App/Imagenes/Hombres/" 
     else:
         direccion = "C:/Avatar App/Imagenes/Mujeres/"
 
+    Obj_menu.set_texto(" Este es el vestuario más utilizado por dicho genero.                       Con un porcentaje de: "+str(porcentaje)+"%", 44, 4, "deep sky blue", "black", ["helvetica",15], 0, 0)
+
     Imagen_Av = ImageTk.PhotoImage(Image.open(direccion + personas_genero[indice_mayor].get_Clave()+".png","r").resize((250, 510))) 
     Label = tk.Label(image= Imagen_Av)
     Label.grid(row=4, column=0, padx = 3, pady= 3)
 
-    Obj_menu.set_texto(" Este es el vestuario más utilizado por dicho genero.                       Con un porcentaje de: "+str(porcentaje)+"%", 44, 4, "deep sky blue", "black", ["helvetica",15], 0, 0)
-
     boton_regresar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 44 , height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_regresar], Label, 2))
     boton_regresar.grid(row= 5, column= 0, padx=2, pady=2)
     ventana.mainloop()
-    return
+    return 
 
 def Consultar_vestuario(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
     Obj_menu.cerrar_botones(Botones_anteriores)
@@ -919,12 +916,55 @@ def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores
         Obj_menu.cerrar_label(label)
         return
 
-def salir(ventana):
-    ventana.destroy()
+def salir(ventana, Obj_menu, botones_anteriores): 
     archi = open("C:/Avatar App/Info_avatars.txt","w")
     archi.writelines("")
-    archi.close()    
-    return
+    archi.close() 
+
+    Obj_menu.cerrar_botones(botones_anteriores)
+    Obj_menu.cerrar_texto() 
+    Obj_menu.set_titulo("Salir") 
+    Obj_menu.set_fondo("black") 
+    Obj_menu.set_texto(" Desarrollado por: Harold Ramírez y Hugo Méndez ", 40, 1, "black", "cyan", ["times new roman",16], 4, 0)   
+
+    caracter = "*                                                                                   *"   
+    letras = [" ","¡", "H", "a", "s","t", "a", " ", "l", "u", "e", "g", "o", "!", "              ^_^ "] 
+    asteriscos = []
+
+    for x in range(0, 3):
+        caracteres = tk.Text(ventana, width= 40, height= 1, bg= "black", fg= "cyan", font= ["times new roman", 16])
+        if x == 0:
+            caracteres.grid(row = 0, column = 0, padx = 3, pady= 3) 
+        elif x == 1:
+            caracteres.grid(row = 3, column = 0, padx = 3, pady= 3) 
+        else:
+            caracteres.grid(row = 5, column = 0, padx = 3, pady= 3)  
+        caracteres.configure(state= "disabled") 
+        asteriscos.append(caracteres) 
+
+    text = tk.Text(ventana, width= 13, height= 2, bg= "black", fg= "cyan", font= ["algerian",28])   
+    text.grid(row = 1, column = 0, padx = 3, pady= 3) 
+    text.configure(state= "disabled") 
+    for l in range(0, len(letras)):
+        for j  in asteriscos:
+            j.configure(state= "normal")
+            j.insert(tk.END, caracter)  
+            j.configure(state= "disabled")
+        ventana.update() 
+        text.configure(state= "normal")
+        text.insert(tk.END, letras[l]) 
+        text.configure(state= "disabled")  
+        ventana.update() 
+        time.sleep(0.5)  
+        for j in asteriscos:
+            j.configure(state= "normal")
+            j.delete("1.0", tk.END)
+            j.configure(state= "disabled")  
+        ventana.update() 
+        time.sleep(0.5) 
+    time.sleep(0.6)
+    ventana.destroy() 
+    return  
 
 def login(Personas, vestuarios, ventana, Obj_menu):
     """Is the main function, allows select as which user login."""
@@ -938,7 +978,7 @@ def login(Personas, vestuarios, ventana, Obj_menu):
     boton_ana = tk.Button(ventana, text= "Analista", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 2, ventana, Obj_menu, [boton_admi, boton_ana, boton_salir]))
     boton_ana.grid(row = 5, column = 0)
 
-    boton_salir = tk.Button(ventana, text= "Salir", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda: salir(ventana))
+    boton_salir = tk.Button(ventana, text= "Salir", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda: salir(ventana, Obj_menu, [boton_admi, boton_ana, boton_salir])) 
     boton_salir.grid(row = 8, column = 0)
     ventana.mainloop()
     return
@@ -952,4 +992,4 @@ def Crea_personas_pordefecto():
     Obj_menu.set_fondo("grey30")
     login(Personas, vestuarios, ventana, Obj_menu)
     return 
-Crea_personas_pordefecto()
+Crea_personas_pordefecto()  
