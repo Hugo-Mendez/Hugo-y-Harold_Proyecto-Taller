@@ -863,27 +863,41 @@ def validar_contrasena(Personas, vestuarios, ventana, Obj_menu, botones_anterior
     """    Function that verify the user password, independently of which user was chosen ("Analista", or "Administrador").
 
     Keyword arguments:
-    contraseña -- The typed password.
-    comando -- Number that indicates which user was chosen ("Usuario", "Analista", or "Administrador").
     Personas -- The list with "Persona" objects.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    ventana -- The graphical interface window.
+    Obj_menu -- The "menu" object.
+    botones_anteriores -- A list with the buttons that were used in the previous function. 
+    contrasena -- A tk.Entry object where the password was typed.
+    comando -- An integer (the identifier) that indicates which kind of user was selected.
     """
-    Obj_menu.cerrar_botones(botones_anteriores) 
-    Obj_menu.cerrar_texto() 
-    if comando == 1 and contrasena.get()  == "admi123": 
-        contrasena.destroy()
+    Obj_menu.cerrar_botones(botones_anteriores)             #The "cerrar_botones" method is applied to the previous buttons
+    Obj_menu.cerrar_texto()                                 #The "cerrar_texto" method is applied 
+    if comando == 1 and contrasena.get()  == "admi123":   #If the password was correct, the respective function is called
+        contrasena.destroy() 
         Administrador(Personas, vestuarios, ventana, Obj_menu)              
     elif comando == 2 and contrasena.get() == "ana456" :
-        contrasena.destroy()
+        contrasena.destroy()  #Anyway, the tk.Entry object (in other words, the password) is destroyed
         Analista(Personas, vestuarios, ventana, Obj_menu)   
     else:
         contrasena.destroy()
-        Ingresar_contrasena(Personas, vestuarios, False, comando, ventana, Obj_menu, botones_anteriores)  
+        Ingresar_contrasena(Personas, vestuarios, False, comando, ventana, Obj_menu, botones_anteriores) #If the password was wrong, the "Ingresar_contrasena" function is called 
     return 
 
-def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu, botones_anteriores): 
-    Obj_menu.cerrar_botones(botones_anteriores)
-    Obj_menu.cerrar_texto() 
+def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu, botones_anteriores):
+    """Function that allows the user to type his password. 
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    estado -- A boolean value that indicates if is the first time that the user is typing his password or if he typed a wrong password, so he is typing it again.
+    comando -- An integer (the identifier) that indicates which kind of user was selected.
+    ventana -- The graphical interface window.
+    Obj_menu -- The "menu" object.
+    botones_anteriores -- A list with the buttons that were used in the previous function. 
+    """
+    Obj_menu.cerrar_botones(botones_anteriores) #The "cerrar_botones" method is applied to the previous buttons
+    Obj_menu.cerrar_texto()                     #The "cerrar_texto" method is applied 
     if estado == True:
         Obj_menu.set_texto("           Ingrese su contraseña:", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0) 
     else:
@@ -893,9 +907,10 @@ def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu
     contraseña = tk.Entry(ventana)
     contraseña.grid(row= 2, column= 0, pady= 2, ipadx= 103, ipady= 5)
     contraseña.config(show= "*")
-
+    #If this button is pressed the function "Validar_contrasena" is called
     boton_continuar = tk.Button(ventana, text= "Continuar", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : validar_contrasena(Personas, vestuarios, ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña, comando))
     boton_continuar.grid(row = 5, column = 0)
+    #If this button is pressed the function "regresar_usuario" is called 
     boton_regresar = tk.Button(ventana, text= "Regresar", cursor= "hand2",width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_continuar, boton_regresar], contraseña ,3))
     boton_regresar.grid(row = 8, column = 0) 
 
@@ -903,12 +918,24 @@ def Ingresar_contrasena(Personas, vestuarios, estado, comando, ventana, Obj_menu
     return   
 
 def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores, label, comando):
-    Obj_menu.cerrar_botones(botones_anteriores)
-    if comando < 4:
+    """    Function that quit the previous: buttons, label or text, depending on an identifier. 
+    Then, call an user's function ("Administrador" or "Analista"), call "login" function or return, depending on the received identifier. 
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    ventana -- The graphical interface window.
+    Obj_menu -- The "menu" object.
+    botones_anteriores -- A list with the buttons that were used in the previous function. 
+    label -- The tk.Label object that will be destroyed, sometimes it could be a tk.Entry or an integer, depending on the received identifier.
+    comando -- An integer (the identifier) that indicates which action will be performed.
+    """
+    Obj_menu.cerrar_botones(botones_anteriores) #Anyway the "cerrar_botones" method is applied to the previous buttons 
+    if comando < 4:                             #Depending on the identifier the specific function is called
         Obj_menu.cerrar_texto()
         if comando == 1:
-            Obj_menu.cerrar_label(label)
-            Administrador(Personas, vestuarios, ventana, Obj_menu)
+            Obj_menu.cerrar_label(label)   
+            Administrador(Personas, vestuarios, ventana, Obj_menu) 
         elif comando == 2:
             if type(label) != int :
                 Obj_menu.cerrar_label(label)  
@@ -1015,4 +1042,4 @@ def Crea_personas_pordefecto():
     Obj_menu.set_fondo("grey30")                                #The "set_fondo" method is applied
     login(Personas, vestuarios, ventana, Obj_menu)          #"login" function is called
     return 
-Crea_personas_pordefecto()
+Crea_personas_pordefecto()  
