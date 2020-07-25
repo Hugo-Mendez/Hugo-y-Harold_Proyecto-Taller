@@ -52,12 +52,15 @@ class Accesorios:
     """    Class for the "Accesorios" objects.
 
     Attributes:
-    Nombre -- The accessorie's name (there are ten accessories).
+    Nombre -- The accessorie's name (there are three accessories).
+    ID -- An identifier that represents each accessorie.
 
     Methods:
     __init__ -- The constructor method.
     set_Accesorio -- Sets the accessorie's name.
+    set_ID -- Sets the accessorie's ID
     get_Accesorio -- Returns the accessorie's name.
+    get_ID -- Returns the accessorie's ID
     """
     def ___init__(self):
         self.Nombre = ""
@@ -78,31 +81,28 @@ class Ropa:
     """    Class for the "Ropa" objects.
 
     Attributes:
-    Nombre -- The clothing's name (there are fourteen kind of clothing).
+    Nombre -- The clothing's name (there are six kind of clothing per genre).
+    ID -- An identifier that represents each garment.
 
     Methods:
     __init__ -- The constructor method.
     set_Ropa -- Sets the clothing's name.
+    set_ID -- Sets the clothing's ID.
     get_Ropa -- Returns the clothing's name.
+    get_ID -- Returns the clothing's ID.
     """
     def ___init__(self):
         self.Nombre = ""
-        self.Tipo = ""
         self.ID = 0
         return
     def set_Ropa(self, nombre):
         self.Nombre = nombre
         return
-    def set_Tipo(self, tipo):
-        self.Tipo = tipo
-        return 
     def set_ID(self, id):
         self.ID = id
         return
     def get_Ropa(self):
         return self.Nombre
-    def get_Tipo(self):
-        return self.Tipo
     def get_ID(self):
         return self.ID 
 
@@ -110,12 +110,15 @@ class Calzado:
     """    Class for the "Calzado" objects.
 
     Attributes:
-    Nombre -- The shoes's name (there are ten kind of shoes).
+    Nombre -- The shoes's kind (there are three kind of shoes per genre).
+    ID -- An identifier that represents each kind of shoe.
 
     Methods:
     __init__ -- The constructor method.
-    set_Calzado -- Sets the shoes's name.
-    get_Calzado -- Returns the shoes's name.
+    set_Calzado -- Sets the shoes's kind.
+    set_ID -- Sets the shoes's ID.
+    get_Calzado -- Returns the shoes's kind.
+    get_ID -- Returns the shoes's ID.
     """
     def ___init__(self):
         self.Nombre = ""
@@ -138,16 +141,17 @@ class Vestuario:
     Attributes:
     Ropa -- a list with "Ropa" objects.
     Calzado -- a "Calzado" object.
-    Accesorios --- a list with "Accesorios" objects.
+    Accesorios --- a list with an "Accesorio" object.
 
     Methods:
     __init__ -- The constructor method.  
     set_Ropa -- Sets the list with clothing.
-    set_Calzado -- Receives the "Calzado" object and applies it the "get_Calzado" method to obtain the kind of shoes.
-    set_Accesorios -- Sets the list with accessories.
+    set_Calzado -- Receives the "Calzado" object.
+    set_Accesorios -- Sets the list with the "Accesorio" object.
     get_Ropa -- Returns the list with clothing.
-    get_Calzado -- Returns the kind of shoes.
-    get_Accesorios -- Returns the list with accessories.
+    get_ID_Calzado -- Applies the get_ID method to the "Calzado" object in order to return the shoes's ID.
+    get_Calzado -- Applies the get_Calzado method to the "Calzado" object in order to return the kind of shoes.
+    get_Accesorios -- Returns the list with the "Accesorio" object.
     """
     def __init__(self):
         self.Ropa = []
@@ -176,15 +180,11 @@ class Persona:
     """    Class for the "Persona" objects.
 
     Attributes:
-    Clave -- A person's key.
+    Clave -- A person's key that represents the person's clothing.
     Cedula -- An unique ID card.
     Edad -- An integer number that represent the age of a person.
     Vestuario -- A "Vestuario" object.
-    Ojos -- A "Ojos" object.
-    Cabello -- A "Cabello" object. 
-    Color_piel -- A "Color_de_piel" object.
     Genero -- A "Genero" object.
-    Forma_rostro -- A "Forma_rostro" object.
     Provincia -- A "Provincia" object.
 
     Methods:
@@ -192,21 +192,15 @@ class Persona:
     set_Cedula -- Sets an ID card.
     set_Edad -- Sets the age.
     set_Vestuario -- Sets a "Vestuario" object.
-    set_Ojos -- Sets a "Ojos" object.
-    set_Cabello -- Sets a "Cabello" object.
-    set_Color_piel -- Sets a "Color_de_piel" object.
     set_Genero -- Sets a "Genero" object.
-    set_Forma_rostro -- Sets a "Forma_Rostro" object.
     set_Provincia -- Sets a "Provincia" object.
+    set_Clave -- Resets the person's key as a "".
     get_Cedula -- Returns the ID card.
     get_Edad --  Returns the age.
-    get_Vestuario -- Receives a numeric identifier and depending on it, returns : the list with clothing, the list with accessories or the kind of shoes.
-    get_Ojos -- Receives a numeric identifier and depending on it, returns : the eyes's shape or the eyes's color.
-    get_Cabello -- Receives a numeric identifier and depending on it, returns : the hair's color, the hair's density or the hair's texture.
-    get_Color_piel -- Takes the "Color_de_piel" object and applies it the "get_Nombre" method to obtain the skin color.
+    get_Vestuario -- Receives a numeric identifier and depending on it, returns : the list with clothing, the list with accessories or the kind of shoes. At the same time, modifies the person's key.
     get_Genero -- Takes the "Genero" object and applies it the "get_Nombre" method to obtain the genre.
-    get_Forma_rostro -- Takes the "Forma_rostro" object and applies it the "get_Nombre" method to obtain the face shape.
     get_Provincia -- Takes the "Provincia" object and applies it the "get_Nombre" method to obtain the province.
+    get_Clave -- Returns the person's key.
     """
     def __Init__(self):
         self.Clave = ""
@@ -241,14 +235,14 @@ class Persona:
     def get_Vestuario(self, identificador):
         if identificador == 1:
             for accesorio in self.Vestuario.get_Accesorios():
-                self.Clave += str(accesorio.get_ID())
+                self.Clave += str(accesorio.get_ID())           
             return self.Vestuario.get_Accesorios()
         elif identificador == 2:
-            self.Clave += str(self.Vestuario.get_ID_Calzado())
+            self.Clave += str(self.Vestuario.get_ID_Calzado())  #The person's key is generated according to the differents IDs of the person's clothing.
             return self.Vestuario.get_Calzado()
         else:
             for prenda in self.Vestuario.get_Ropa():
-                self.Clave += str(prenda.get_ID())
+                self.Clave += str(prenda.get_ID())              
             return self.Vestuario.get_Ropa()
     def get_Genero(self):
         return self.Genero.get_Nombre()
@@ -258,6 +252,21 @@ class Persona:
         return self.Clave
 
 class menu:
+    """    Class for the "menu" objects.
+
+    Attributes:
+    ventana -- A tk.Tk object (graphical interface window)
+    texto -- A tk.Text object (A text square of the window)
+
+    Methods:
+    __init__ -- The constructor method.
+    set_fondo -- Sets the background color of the window.
+    set_titulo -- Sets the title of the window.
+    set_texto -- Sets the indicated characteristics to the "texto" attribute.
+    cerrar_texto -- quits the "texto" attribute.
+    cerrar_botones -- Receives a list with "tk.Button" objects and quit all of them.
+    cerrar_label -- Receives a "tk.Label" object and quits it.
+    """
     def __init__(self, ventana):
         self.ventana = ventana
         self.texto = tk.Text()
@@ -311,9 +320,9 @@ def Crea_provincias():
     return Obj_provincia
 
 def Crea_vestuario():
-    """    Function that creates a dictionary with three dictionaries inside.
-    Those dictionaries stores the accessories, clothes and shoes, respectively.
-    Then, creates a copy of that dictionary and turns his elements to objects of his respective classess and applies them the "set" method.
+    """    Function that creates a dictionary with seven dictionaries inside.
+    Those dictionaries stores the accessories, clothes and shoes.
+    Then, creates a copy of that dictionary and turns his elements to objects of his respective classess and applies them the "set" and "set_ID" methods.
     Lastly returns the dictionary with the objects.
     """
     vestuarios = {1: {1: "Camiseta", 2: "Suéter", 3: "Camiseta de tirantes"}, 2: {1: "Blusa", 2: "Chaqueta", 3: "Abrigo"},
@@ -326,10 +335,6 @@ def Crea_vestuario():
             if i in range(1, 5):                       #Depending on the kind of element, the element is transformed to an object of his respective class
                 Obj_vestuarios[i][e] = Ropa()
                 Obj_vestuarios[i][e].set_Ropa(vestuarios[i][e])
-                if i < 3:
-                    Obj_vestuarios[i][e].set_Tipo("Superior")
-                else:
-                    Obj_vestuarios[i][e].set_Tipo("Inferior")
             elif i in range(5, 7): 
                 Obj_vestuarios[i][e] = Calzado()  
                 Obj_vestuarios[i][e].set_Calzado(vestuarios[i][e])
@@ -373,13 +378,19 @@ def Calcula_Edad(Fecha_na):
     return Años
 
 def Grabar_informacion_avatars(Personas, bandera):
+    """Function that writes or rewrites the persons's information in a ".txt" file, if the file doesn't exist, it is created. 
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    bandera -- A boolean value, that indicates: write or rewrite.
+    """
     if bandera == False:
         archi = open("C:/Avatar App/Info_avatars.txt", "a")
     else:
-        for i in Personas:
+        for i in Personas:    #For each person, his key is reseted.
             i.set_Clave("")
         archi = open("C:/Avatar App/Info_avatars.txt", "w")
-    for i in Personas:
+    for i in Personas:        #The information is obtained throught the differents "get" methods of the "Persona" objects in order to write it in the file.   
         linea = [str(i.get_Cedula()), str(i.get_Edad()), i.get_Genero(), i.get_Provincia(), i.get_Vestuario(1)[0].get_Accesorio(), i.get_Vestuario(2)] 
         for f in i.get_Vestuario(3):
             linea.append(f.get_Ropa())
@@ -388,7 +399,7 @@ def Grabar_informacion_avatars(Personas, bandera):
     archi.close()
     return
 
-def Crea_Personas(Personas,cedulas,provincias,vestuarios,generos):
+def Crea_Personas(cedulas, provincias, vestuarios, generos):
     """    Function that creates a list to store "Persona" objects. 
     Depending on the quantity of ID cards, the function creates "Persona" objects, through a "for" loop.
     All of the attributes are randomly selected for each person.
@@ -398,25 +409,19 @@ def Crea_Personas(Personas,cedulas,provincias,vestuarios,generos):
     cedulas -- Dictionary that contains all the ID cards, previously created.
     provincias -- Dictionary that contains the "Provincia" objects.
     vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
-    genero -- Dictionary that contains the "Genero" objects.
+    generos -- Dictionary that contains the "Genero" objects.
     """
-    if Personas != []:
-        for y in range(1,len(cedulas)+1):
-            for i in range(1, (len(Personas)+1)):  
-                while cedulas[y] == Personas[i-1].get_Cedula(): 
-                    nueva_cedula = Crea_cedulas(1)
-                    cedulas[y] = nueva_cedula[1]
-
+    Personas = []
     for i in range(1,len(cedulas)+1):       #The dictionary that contains ID cards, is toured
         Fecha_na = Crea_Fecha_Nac()         #The function "Crea_Fecha_Nac" is called to generate a random date of birth
         Edad_Años = Calcula_Edad(Fecha_na)  #The function "Calcula_Edad" is called to calculate the person's age
-        Genero = generos[random.randint(1,len(generos))] 
+        Genero = generos[random.randint(1,len(generos))]  #A random genre is selected for each person
 
-        accesorios = [vestuarios[7][random.randint(1,len(vestuarios[7]))]]                        #There is a list to store the person's accesoriess, with the purpose of don't repeat them
+        accesorios = [vestuarios[7][random.randint(1,len(vestuarios[7]))]]  #There is a list to store the person's accesorie.
 
-        Obj_Vestuario = Vestuario()            #The "Vestuario" object is instantiated, for each person
-        if Genero.get_Nombre() == "Femenino ":
-            claves = [2, 4, 6] 
+        Obj_Vestuario = Vestuario()  #The "Vestuario" object is instantiated, for each person
+        if Genero.get_Nombre() == "Femenino ":  #Depending on the genre there are diffenrent keys to access in the "vestuarios" dictionary for getting the right clothing.
+            claves = [2, 4, 6]
         else:
             claves = [1, 3, 5]
         Obj_Vestuario.set_Accesorios(accesorios)
@@ -916,22 +921,29 @@ def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores
         Obj_menu.cerrar_label(label)
         return
 
-def salir(ventana, Obj_menu, botones_anteriores): 
-    archi = open("C:/Avatar App/Info_avatars.txt","w")
+def salir(ventana, Obj_menu, botones_anteriores):
+    """Function that finish the program, also shows a message about it and erases the file's information. 
+
+    Keyword arguments:
+    ventana -- The graphical interface window.
+    Obj_menu -- The "menu" object.
+    botones_anteriores -- A list with the buttons that were used in the previous function. 
+    """
+    archi = open("C:/Avatar App/Info_avatars.txt","w")  #the file's information is erased
     archi.writelines("")
     archi.close() 
-
-    Obj_menu.cerrar_botones(botones_anteriores)
-    Obj_menu.cerrar_texto() 
-    Obj_menu.set_titulo("Salir") 
-    Obj_menu.set_fondo("black") 
+    ventana.iconbitmap("C:/Avatar App/Imagenes/IconoE.ico") 
+    Obj_menu.cerrar_botones(botones_anteriores)     #The "cerrar_botones" method is applied to the previous buttons
+    Obj_menu.cerrar_texto()                         #The "cerrar_texto" method is applied
+    Obj_menu.set_titulo("Salir")
+    Obj_menu.set_fondo("black")
     Obj_menu.set_texto(" Desarrollado por: Harold Ramírez y Hugo Méndez ", 40, 1, "black", "cyan", ["times new roman",16], 4, 0)   
 
-    caracter = "*                                                                                   *"   
-    letras = [" ","¡", "H", "a", "s","t", "a", " ", "l", "u", "e", "g", "o", "!", "              ^_^ "] 
-    asteriscos = []
+    caracter = "💡                                                                                💡"     #String that will be used to print the final message
+    letras = [" ","¡", "H", "a", "s","t", "a", " ", "l", "u", "e", "g", "o", "!", "              ^_^ "]   #String that will be used to print the final message
+    simbolos = []   #List that will contain three differents "tk.Text" objects that will be needed to print the final message.
 
-    for x in range(0, 3):
+    for x in range(0, 3):  #The three "tk.Text" objects are created and added to the "simbolos" list
         caracteres = tk.Text(ventana, width= 40, height= 1, bg= "black", fg= "cyan", font= ["times new roman", 16])
         if x == 0:
             caracteres.grid(row = 0, column = 0, padx = 3, pady= 3) 
@@ -940,56 +952,67 @@ def salir(ventana, Obj_menu, botones_anteriores):
         else:
             caracteres.grid(row = 5, column = 0, padx = 3, pady= 3)  
         caracteres.configure(state= "disabled") 
-        asteriscos.append(caracteres) 
+        simbolos.append(caracteres) 
 
-    text = tk.Text(ventana, width= 13, height= 2, bg= "black", fg= "cyan", font= ["algerian",28])   
-    text.grid(row = 1, column = 0, padx = 3, pady= 3) 
-    text.configure(state= "disabled") 
-    for l in range(0, len(letras)):
-        for j  in asteriscos:
+    text = tk.Text(ventana, width= 13, height= 2, bg= "black", fg= "cyan", font= ["algerian",28]) #Another "tx.Text" object that will be used to print the final message
+    text.grid(row = 1, column = 0, padx = 3, pady= 3)
+    text.configure(state= "disabled")
+    for l in range(0, len(letras)):  #The final message is printed 
+        for j  in simbolos:
             j.configure(state= "normal")
-            j.insert(tk.END, caracter)  
+            j.insert(tk.END, caracter)
             j.configure(state= "disabled")
-        ventana.update() 
+        ventana.update()
         text.configure(state= "normal")
-        text.insert(tk.END, letras[l]) 
-        text.configure(state= "disabled")  
-        ventana.update() 
-        time.sleep(0.5)  
-        for j in asteriscos:
+        text.insert(tk.END, letras[l])
+        text.configure(state= "disabled")
+        ventana.update()
+        time.sleep(0.5)   #The system is interrupted throught the "sleep method" in order to give the impression of blinking
+        for j in simbolos:
             j.configure(state= "normal")
             j.delete("1.0", tk.END)
-            j.configure(state= "disabled")  
+            j.configure(state= "disabled")
         ventana.update() 
         time.sleep(0.5) 
     time.sleep(0.6)
-    ventana.destroy() 
+    ventana.destroy()   #The graphical interface window is destroyed
     return  
 
 def login(Personas, vestuarios, ventana, Obj_menu):
-    """Is the main function, allows select as which user login."""
+    """Function that allows select the kind of user in order to log in as that user. 
+
+    Keyword arguments:
+    Personas -- The list with "Persona" objects.
+    vestuarios -- Dictionary that contains dictionaries, which ones, contain the: "Accesorios", "Ropa" and "Calzado" objects.
+    ventana -- The graphical interface window.
+    Obj_menu -- The "menu" object.
+    """
     ventana.iconbitmap("C:/Avatar App/Imagenes/Icono.ico") 
     Obj_menu.set_titulo("LOGIN")
     Obj_menu.set_texto("       Seleccione el tipo de usuario", 30, 2, "turquoise", "black", ["helvetica",15], 0, 0)
-
+    
+    #If this button is pressed the function "Ingresar_contrasena" is called
     boton_admi = tk.Button(ventana, text= "Administrador", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 1, ventana, Obj_menu, [boton_admi, boton_ana, boton_salir]))
     boton_admi.grid(row = 2, column = 0)
-
+    
+    #If this button is pressed the function "Ingresar_contrasena" is called
     boton_ana = tk.Button(ventana, text= "Analista", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "turquoise", font= ["helvetica", 15], command = lambda : Ingresar_contrasena(Personas, vestuarios, True, 2, ventana, Obj_menu, [boton_admi, boton_ana, boton_salir]))
     boton_ana.grid(row = 5, column = 0)
-
+    
+    #If this button is pressed the function "salir" is called
     boton_salir = tk.Button(ventana, text= "Salir", cursor= "hand2", width= 30, height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda: salir(ventana, Obj_menu, [boton_admi, boton_ana, boton_salir])) 
     boton_salir.grid(row = 8, column = 0)
     ventana.mainloop()
     return
 
 def Crea_personas_pordefecto():
-    vestuarios = Crea_vestuario()                                                                #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable.
-    Personas = Crea_Personas([], Crea_cedulas(10), Crea_provincias(), vestuarios ,Crea_genero())  #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas).
-    Grabar_informacion_avatars(Personas, False)
-    ventana = tk.Tk()
-    Obj_menu = menu(ventana)
-    Obj_menu.set_fondo("grey30")
-    login(Personas, vestuarios, ventana, Obj_menu)
+    """Function that creates a initial quantity of persons."""
+    vestuarios = Crea_vestuario()                                                             #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable
+    Personas = Crea_Personas(Crea_cedulas(10), Crea_provincias(), vestuarios ,Crea_genero())  #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas)
+    Grabar_informacion_avatars(Personas, False)                                               #The "Grabar_informacion_avatars" function is called to store the persons's information in the ".txt" file
+    ventana = tk.Tk()                                              #The graphical interface window is created
+    Obj_menu = menu(ventana)                                       #The "menu" object is instantiated for working on the window previusly created
+    Obj_menu.set_fondo("grey30")                                #The "set_fondo" method is applied
+    login(Personas, vestuarios, ventana, Obj_menu)          #"login" function is called
     return 
-Crea_personas_pordefecto()  
+Crea_personas_pordefecto()
