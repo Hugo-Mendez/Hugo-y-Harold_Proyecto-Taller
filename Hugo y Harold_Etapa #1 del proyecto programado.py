@@ -1066,14 +1066,14 @@ def salir(ventana, Obj_menu, botones_anteriores):
     Obj_menu.cerrar_texto()                         #The "cerrar_texto" method is applied
     Obj_menu.set_titulo("Salir")
     Obj_menu.set_fondo("black")
-    Obj_menu.set_texto(" Desarrollado por: Harold Ramírez y Hugo Méndez ", 40, 1, "black", "cyan", ["times new roman",16], 4, 0)   
+    Obj_menu.set_texto(" Desarrollado por: Harold Ramírez y Hugo Méndez ", 40, 1, "black", "firebrick2", ["times new roman",16], 4, 0)   
 
     caracter = "💡                                                                                💡"     #String that will be used to print the final message
     letras = [" ","¡", "H", "a", "s","t", "a", " ", "l", "u", "e", "g", "o", "!", "              ^_^ "]   #String that will be used to print the final message
     simbolos = []   #List that will contain three differents "tk.Text" objects that will be needed to print the final message.
 
     for x in range(0, 3):  #The three "tk.Text" objects are created and added to the "simbolos" list
-        caracteres = tk.Text(ventana, width= 40, height= 1, bg= "black", fg= "cyan", font= ["times new roman", 16])
+        caracteres = tk.Text(ventana, width= 40, height= 1, bg= "black", fg= "red", font= ["times new roman", 16])
         if x == 0:
             caracteres.grid(row = 0, column = 0, padx = 3, pady= 3) 
         elif x == 1:
@@ -1081,9 +1081,9 @@ def salir(ventana, Obj_menu, botones_anteriores):
         else:
             caracteres.grid(row = 5, column = 0, padx = 3, pady= 3)  
         caracteres.configure(state= "disabled") 
-        simbolos.append(caracteres) 
+        simbolos.append(caracteres)
 
-    text = tk.Text(ventana, width= 13, height= 2, bg= "black", fg= "cyan", font= ["algerian",28]) #Another "tx.Text" object that will be used to print the final message
+    text = tk.Text(ventana, width= 13, height= 2, bg= "black", fg= "firebrick2", font= ["algerian",28]) #Another "tx.Text" object that will be used to print the final message
     text.grid(row = 1, column = 0, padx = 3, pady= 3)
     text.configure(state= "disabled")
     for l in range(0, len(letras)):  #The final message is printed 
@@ -1102,10 +1102,10 @@ def salir(ventana, Obj_menu, botones_anteriores):
             j.delete("1.0", tk.END)
             j.configure(state= "disabled")
         ventana.update() 
-        time.sleep(0.5) 
+        time.sleep(0.5)
     time.sleep(0.6)
     ventana.destroy()   #The graphical interface window is destroyed
-    return  
+    return
 
 def login(Personas, vestuarios, ventana, Obj_menu):
     """Function that allows select the kind of user in order to log in as that user. 
