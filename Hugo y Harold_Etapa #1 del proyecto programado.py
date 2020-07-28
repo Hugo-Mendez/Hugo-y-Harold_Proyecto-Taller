@@ -1,6 +1,10 @@
 #Authors: Hugo Méndez and Harold Ramírez
-#Date: July 10th 2020 
-
+#Date: July 10th 2020
+"""
+User's password:
+Administrador: admi123
+Analista: ana456
+"""
 import copy 
 import time
 import random 
@@ -429,7 +433,6 @@ def Crea_Personas(cedulas, provincias, vestuarios, generos):
         Obj_Vestuario.set_Ropa([vestuarios[claves[0]][random.randint(1, len(vestuarios[claves[0]]))], vestuarios[claves[1]][random.randint(1, len(vestuarios[claves[1]]))]])
 
         Obj_Persona = Persona()                #The "Persona" object is instantiated, for each person
-        Obj_Persona.set_Clave("")
         Obj_Persona.set_Cedula(cedulas[i])
         Obj_Persona.set_Edad(Edad_Años)
         Obj_Persona.set_Vestuario(Obj_Vestuario)    #All the respective "set" methods are applied to the "Persona" object
@@ -877,7 +880,7 @@ def muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Boto
     """ 
     if linea == len(Personas):   #When the "linea" identifier has the same value as the total number of persons, the base case is reached
         Obj_menu.cerrar_texto()  #The "cerrar_texto" method is applied 
-        Obj_menu.set_texto(" No existen más avatars que utilizan dicho accesorio", 42, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
+        Obj_menu.set_texto("No existen más avatares que utilizan dicho accesorio", 42, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
         #If this button is pressed the function "regresar_usuario" is called 
         boton_regresar = tk.Button(ventana, text= "Regresar a menú de opciones", cursor= "hand2", width= 41 , height= 1, bg= "black", fg = "firebrick1", font= ["helvetica", 15], command = lambda : regresar_usuario(Personas, vestuarios, ventana, Obj_menu, [boton_regresar], 0, 2)) 
         boton_regresar.grid(row= 3, column= 0, padx=2, pady=2) 
@@ -905,7 +908,7 @@ def muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, Boto
     else:                                          #Just the first time the function is called: 
         Obj_menu.cerrar_botones(Botones_anteriores)         #The "cerrar_botones" method is applied to the previous buttons
         Obj_menu.cerrar_texto()                             #The "cerrar_texto" method is applied 
-        Obj_menu.set_texto("Se muestran los avatars que utilizan dicho accesorio", 42, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
+        Obj_menu.set_texto("Se muestran los avatares que utilizan dicho accesorio", 43, 2, "deep sky blue", "black", ["helvetica",15], 0, 0) 
         muestra_accesorios_consultados(Personas, vestuarios, ventana, Obj_menu, [], id, linea)  #The function is recursively called to start with the recursion 
 
 def Consultar_accesorio(Personas, vestuarios, ventana, Obj_menu, Botones_anteriores):
@@ -1051,16 +1054,13 @@ def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores
         return
 
 def salir(ventana, Obj_menu, botones_anteriores):
-    """Function that finishes the program, also shows a message about it and erases the file's information. 
+    """Function that finishes the program, also shows a message about it.
 
     Keyword arguments:
     ventana -- The graphical interface window.
     Obj_menu -- The "menu" object.
     botones_anteriores -- A list with the buttons that were used in the previous function. 
     """
-    archi = open("C:/Avatar App/Info_avatars.txt","w")  #the file's information is erased
-    archi.writelines("")
-    archi.close() 
     ventana.iconbitmap("C:/Avatar App/Imagenes/IconoE.ico") 
     Obj_menu.cerrar_botones(botones_anteriores)     #The "cerrar_botones" method is applied to the previous buttons
     Obj_menu.cerrar_texto()                         #The "cerrar_texto" method is applied
@@ -1137,8 +1137,8 @@ def login(Personas, vestuarios, ventana, Obj_menu):
 def Crea_personas_pordefecto():
     """Function that creates a initial quantity of persons."""
     vestuarios = Crea_vestuario()                                                             #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable
-    Personas = Crea_Personas(Crea_cedulas(100), Crea_provincias(), vestuarios ,Crea_genero())  #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas)
-    Grabar_informacion_avatars(Personas, False)                                               #The "Grabar_informacion_avatars" function is called to store the persons's information in the ".txt" file
+    Personas = Crea_Personas(Crea_cedulas(10), Crea_provincias(), vestuarios ,Crea_genero())  #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas)
+    Grabar_informacion_avatars(Personas, True)                                              #The "Grabar_informacion_avatars" function is called to store the persons's information in the ".txt" file
     ventana = tk.Tk()                                              #The graphical interface window is created
     Obj_menu = menu(ventana)                                       #The "menu" object is instantiated for working on the window previusly created
     Obj_menu.set_fondo("grey30")                                #The "set_fondo" method is applied
