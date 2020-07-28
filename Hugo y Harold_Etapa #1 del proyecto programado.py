@@ -1054,7 +1054,7 @@ def regresar_usuario(Personas, vestuarios, ventana, Obj_menu, botones_anteriores
         return
 
 def salir(ventana, Obj_menu, botones_anteriores):
-    """Function that finishes the program, also shows a message about it.
+    """Function that finishes the program, also shows a message about it and erases the file's information. 
 
     Keyword arguments:
     ventana -- The graphical interface window.
@@ -1138,7 +1138,7 @@ def Crea_personas_pordefecto():
     """Function that creates a initial quantity of persons."""
     vestuarios = Crea_vestuario()                                                             #The "Crea_Vestuario" function is called to store the dictionary that it returns, in a variable
     Personas = Crea_Personas(Crea_cedulas(10), Crea_provincias(), vestuarios ,Crea_genero())  #The "Crea_Personas" function is called and the list that it returns is saved in a variable (Personas)
-    Grabar_informacion_avatars(Personas, True)                                              #The "Grabar_informacion_avatars" function is called to store the persons's information in the ".txt" file
+    Grabar_informacion_avatars(Personas, True)                                               #The "Grabar_informacion_avatars" function is called to store the persons's information in the ".txt" file
     ventana = tk.Tk()                                              #The graphical interface window is created
     Obj_menu = menu(ventana)                                       #The "menu" object is instantiated for working on the window previusly created
     Obj_menu.set_fondo("grey30")                                #The "set_fondo" method is applied
